@@ -1,55 +1,150 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <title>@ViewData["Title"] - Tech-In</title>
+    <link rel="icon" href="~/images/logotop.png" />
+    @* ***Meta Tags*** *@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Tech_In</title>
+    <meta name="description" content="Add Search Engine Content here..." />
+    <meta name="keywords" content="Jobs,Questions,Articles,Friends" />
+    <meta name="author" content="Fawad, Hassan and Tayyab" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    @* ***/Meta Tags*** *@
+    @* ***StyleSheets***  *@
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <!-- Owl Carousel -->
+    <link type="text/css" rel="stylesheet" href="~/css/owl.carousel.css" />
+    <link type="text/css" rel="stylesheet" href="~/css/owl.theme.default.css" />
+
+    <!-- Magnific Popup -->
+    <link type="text/css" rel="stylesheet" href="~/css/magnific-popup.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/css/style.css" />
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    @* ***/Stylesheets*** *@
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Tech_In</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+    <!-- Header -->
+    <header id="home">
+        <!-- Background Image -->
+        <div class="bg-img index-background">
+            <div class="overlay"></div>
+        </div>
+        <!-- /Background Image -->
+        <!-- Nav -->
+        <nav id="nav" class="navbar nav-transparent">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- Logo -->
+                    <div class="navbar-brand">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                            <img class="logo" src="~/images/logo.png" alt="logo">
+                            <img class="logo-alt" src="~/images/logo-alt.png" alt="logo">
+                        </a>
+                    </div>
+                    <!-- /Logo -->
+                    <!-- Collapse nav button -->
+                    <div class="nav-collapse">
+                        <span></span>
+                    </div>
+                    <!-- /Collapse nav button -->
+                </div>
+                <!--  Main navigation  -->
+
+                <ul class="main-nav nav navbar-nav">
+                    <li>
+                        <a href="questions.html">Questions</a>
+                    </li>
+                    <li>
+                        <a href="articles.html">Articles</a>
+                    </li>
+                    <li>
+                        <a href="jobView.html">Jobs</a>
+                    </li>
+                    <li>
+                        <a href="profile.html">Users</a>
+                    </li>
                 </ul>
+                
                 @await Html.PartialAsync("_LoginPartial")
+                <!-- /Main navigation -->
+
+            </div>
+        </nav>
+        <!-- /Nav -->
+
+        <!-- home wrapper -->
+        <div class="home-wrapper">
+            <div class="container">
+                <div class="row">
+                    <!-- home content -->
+                    <div class="col-md-7 col-sm-6">
+                        <div class="home-content">
+                            <h1 class="white-text">Tech In</h1>
+                            <p class="white-text">
+                                A platform built for IT Professionals!
+                            </p>
+                            <a href="#question" class="white-btn btn-scrol">Learn more</a>
+                            <!-- <button class="main-btn">Register</button> -->
+                        </div>
+                    </div>
+                    <!--RIght Login-->
+                    <div class="col-md-5 col-sm-6 col-xs-10 custom-xs-push-1">
+                        <div class="jumbotron white-background index-sign-div">
+                            <form class="contact-form">
+                                <h3>Login</h3>
+                                <label class="signup-label">Email</label>
+                                <br />
+                                <input type="email" class="input" placeholder="you@example.com" />
+                                <br />
+                                <label class="signup-label">Password</label>
+                                <input type="password" class="input" placeholder="Password" />
+                                <button class="main-btn btn-block blue-g-btn">
+                                    <b>Sign in</b>
+                                </button>
+
+                                <br />
+                                <a href="#">more options...</a>
+                            </form>
+                        </div>
+                    </div>
+                    <!--/Right Login-->
+                    <!-- /home content -->
+
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - Tech_In</p>
-        </footer>
-    </div>
+        <!-- /home wrapper -->
+
+    </header>
+    <!-- /Header -->
+
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; 2018 - Tech_In</p>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        @*<script src="~/js/jquery.min.js"></script>*@
+        <script src="~/js/owl.carousel.min.js"></script>
+        <script src="~/js/jquery.magnific-popup.js"></script>
+        <script src="~/js/main.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -64,7 +159,9 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/owl.carousel.min.js"></script>
+        <script src="~/js/jquery.magnific-popup.js"></script>
+        <script src="~/js/main.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
