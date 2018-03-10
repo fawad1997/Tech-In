@@ -14,6 +14,8 @@
     @* ***StyleSheets***  *@
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet" />
+    <!--Reset CSS-->
+    <link rel="stylesheet" href="~/css/reset.css" />
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
 
@@ -45,7 +47,7 @@
         </div>
         <!-- /Background Image -->
         <!-- Nav -->
-        <nav id="nav" class="navbar nav-transparent">
+        <nav id="nav" class="navbar @(ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "nav-transparent" : "")">
             <div class="container">
                 <div class="navbar-header">
                     <!-- Logo -->
@@ -66,15 +68,15 @@
 
                 <ul class="main-nav nav navbar-nav">
                     <li>
-                        <a href="questions.html">Questions</a>
+                        <a href="#">Questions</a>
                     </li>
                     <li>
-                        <a href="articles.html">Articles</a>
+                        <a href="#">Articles</a>
                     </li>
                     <li>
-                        <a href="jobView.html">Jobs</a>
+                        <a href="#">Jobs</a>
                     </li>
-                    <li>
+                    <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "User" ? "active" : "")">
                         <a asp-area="" asp-controller="User" asp-action="Index">Users</a>
                     </li>
                 </ul>
