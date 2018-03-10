@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Tech_In.Controllers
 {
-    public class JobsController : Controller
+    public class JobController : Controller
     {
         public IActionResult Index()
         {
