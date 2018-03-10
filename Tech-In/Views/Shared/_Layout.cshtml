@@ -25,7 +25,7 @@
     <link type="text/css" rel="stylesheet" href="~/css/magnific-popup.css" />
 
     <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
@@ -75,17 +75,16 @@
                         <a href="jobView.html">Jobs</a>
                     </li>
                     <li>
-                        <a href="profile.html">Users</a>
+                        <a asp-area="" asp-controller="User" asp-action="Index">Users</a>
                     </li>
                 </ul>
-                
+
                 @await Html.PartialAsync("_LoginPartial")
                 <!-- /Main navigation -->
 
             </div>
         </nav>
         <!-- /Nav -->
-
         <!-- home wrapper -->
         <div class="home-wrapper">
             <div class="container">
@@ -133,10 +132,137 @@
     <!-- /Header -->
 
     @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; 2018 - Tech_In</p>
+    <!-- Footer -->
+    <footer id="footer" class="sm-padding bg-dark">
+
+        <!-- Container -->
+        <div class="container">
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Features</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Questions
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Articles
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Network
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Platform</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Policies
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Terms
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <!-- footer logo -->
+                    <div class="footer-logo">
+                        <a href="index.html">
+                            <img src="~/images/logo-alt.png" alt="logo">
+                        </a>
+                    </div>
+                    <!-- /footer logo -->
+                    <div class="center">
+                        <img style="height:70px;" src="~/images/logotop.png" alt="">
+                    </div>
+
+                    <!-- footer copyright -->
+                    <div class="footer-copyright">
+                        <p>
+                            Copyright © 2018
+                        </p>
+                    </div>
+                    <!-- /footer copyright -->
+
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Company</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Developers
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Resources</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Contact
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Help
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Privacy
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Security
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- /Row -->
+
+        </div>
+        <!-- /Container -->
+
     </footer>
+    <!-- /Footer -->
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
