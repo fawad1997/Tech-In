@@ -71,10 +71,10 @@
                         <a href="#">Questions</a>
                     </li>
                     <li>
-                        <a href="#">Articles</a>
+                        <a asp-area="" asp-controller="Articles" asp-action="Index">Article</a>
                     </li>
                     <li>
-                        <a href="#">Jobs</a>
+                        <a asp-area="" asp-controller="Job" asp-action="Index">Job</a>
                     </li>
                     <li class="@(ViewContext.RouteData.Values["Controller"].ToString() == "User" ? "active" : "")">
                         <a asp-area="" asp-controller="User" asp-action="Index">Users</a>

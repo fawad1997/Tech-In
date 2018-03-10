@@ -6,22 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Tech_In.Controllers
 {
-    public class JobController : Controller
+    public class ArticlesController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult JobSingle()
+        public IActionResult ArticleSingle()
         {
             return View();
         }
-
-        public IActionResult PostJob()
-        {
-            return View();
-        }
-
     }
 }
