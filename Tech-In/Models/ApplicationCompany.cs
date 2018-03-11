@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tech_In.Models.ManageViewModels
+namespace Tech_In.Models
 {
     public class ApplicationCompany
     {
         string CompanyName { set; get; }
         string GroupOfCompany { set; get; }
-        string CEO{ set; get; }
+        string CEO { set; get; }
         string HeadHRDepartment { set; get; }
-        string CEO_CNIC{ set; get; }
+        string CEO_CNIC { set; get; }
         string JobDesignation { set; get; }
         string Industry { set; get; }
         string ServiceProviding { set; get; }
