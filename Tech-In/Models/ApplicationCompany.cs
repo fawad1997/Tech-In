@@ -7,6 +7,7 @@ namespace Tech_In.Models
 {
     public class ApplicationCompany
     {
+        int CompanyID { set; get; }
         string CompanyName { set; get; }
         string GroupOfCompany { set; get; }
         string CEO { set; get; }
