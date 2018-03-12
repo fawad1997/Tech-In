@@ -14,9 +14,7 @@ namespace Tech_In.Data
             : base(options)
         {
         }
-        public DbSet<ApplicationUser> User { get; set; }
-        public DbSet<ApplicationJob> Job { get; set; }
-        public DbSet<ApplicationCompany> Company { get; set; }
+  
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
