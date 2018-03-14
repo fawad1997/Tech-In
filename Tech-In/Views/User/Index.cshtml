@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Profile";
 }
 
     <!-- Blog -->
@@ -47,7 +47,7 @@
                                 <a href="#wall" aria-controls="home" role="tab" data-toggle="tab">Timeline</a>
                             </li>
                             <li role="presentation">
-                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">About</a>
+                                <a href="#about" aria-controls="profile" role="tab" data-toggle="tab">About</a>
                             </li>
                             <li role="presentation">
                                 <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Questions</a>
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             <!--/Wall Div-->
-                            <div role="tabpanel" class="tab-pane" id="profile">
+                            <div role="tabpanel" class="tab-pane" id="about">
                                 <div class="row">
                                     <div class="post">
                                         <div class="row">
@@ -216,7 +216,7 @@
                                                 </h6>
                                                 <br />
                                                 <!--Add-->
-                                                <div class="right-post-icon-div">
+                                                <div class="right-post-icon-div" data-toggle="modal" data-target="#addExperienceModal">
                                                     <div class="round-icon-back">
                                                         <i class="fa fa-plus"></i>
                                                     </div>
@@ -232,7 +232,7 @@
                                                     <strong class="small-h">Java Developer</strong>
                                                     <!--Edit-->
                                                     <div class="edit-exp-round">
-                                                        <div class="round-icon-back">
+                                                        <div class="round-icon-back" data-toggle="modal" data-target="#addExperienceModal">
                                                             <i class="fa fa-pencil"></i>
                                                         </div>
                                                     </div>
@@ -258,7 +258,7 @@
                                                 <div class="col-xs-9 col-md-10">
                                                     <strong class="small-h">Java Developer</strong>
                                                     <!--Edit-->
-                                                    <div class="edit-exp-round">
+                                                    <div class="edit-exp-round" data-toggle="modal" data-target="#addExperienceModal">
                                                         <div class="round-icon-back">
                                                             <i class="fa fa-pencil"></i>
                                                         </div>
@@ -448,14 +448,15 @@
                 </div>
 
                 <!-- ***************Modals********************-->
-                <div class="modal fade" id="personalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                @* Personal Model *@
+                <div class="modal fade" id="personalModal" tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h4 class="modal-title" id="exampleModalLabel">Personal Information</h4>
+                                <h4 class="modal-title">Personal Information</h4>
                             </div>
                             <div class="modal-body">
                                 <form>
@@ -464,7 +465,7 @@
                                             <!--First Name-->
                                             <div class="form-group">
                                                 <label for="recipient-name" class="control-label">First Name:</label>
-                                                <input type="text" class="input" id="recipient-name" autofocus>
+                                                <input type="text" class="input">
                                             </div>
                                             <!--/First Name-->
                                         </div>
@@ -480,13 +481,13 @@
                                     <!--Phone No-->
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Phone No:</label>
-                                        <input type="text" class="input" id="recipient-name">
+                                        <input type="text" class="input">
                                     </div>
                                     <!--/Phone No-->
                                     <!--Email-->
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Email:</label>
-                                        <input type="email" class="input" id="recipient-name">
+                                        <input type="email" class="input">
                                     </div>
                                     <!--/Email-->
                                     <!--DOB-->
@@ -528,6 +529,81 @@
                         </div>
                     </div>
                 </div>
+                @* /Personal Model *@
+                @* Experience Add *@
+
+                <div class="modal fade" id="addExperienceModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Add Experience</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <!--Title-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Title:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Title-->
+                                    <!--Company-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Company:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Company-->
+                                    <!--Location-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Location:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Location-->
+                                    <!--Text Area-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Description:</label>
+                                        <textarea class="input" placeholder="Description"></textarea>
+                                    </div>
+                                    <!--/Text Area-->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!--Start Date-->
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="control-label">From:</label>
+                                                <input type="date" class="input">
+                                            </div>
+                                            <!--/Start Date-->
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <!--End Date-->
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="control-label">To:</label>
+                                                <input type="date" class="input" id="recipient-name">
+                                            </div>
+                                            <!--/End Date-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
+                                            <label for="customCheck1">I currently work here</label>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="main-btn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* /Experience Add *@
+
+
                 <!--/Modals-->
                 <!-- Aside -->
                 <aside id="aside" class="col-md-3">
