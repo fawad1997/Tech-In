@@ -286,7 +286,7 @@
                                                 <br />
                                                 <!--Add-->
                                                 <div class="right-post-icon-div">
-                                                    <div class="round-icon-back">
+                                                    <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
                                                         <i class="fa fa-plus"></i>
                                                     </div>
                                                 </div>
@@ -298,7 +298,7 @@
                                                     <strong class="small-h">Java Developer</strong>
                                                     <!--Edit-->
                                                     <div class="edit-exp-round">
-                                                        <div class="round-icon-back">
+                                                        <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
                                                             <i class="fa fa-pencil"></i>
                                                         </div>
                                                     </div>
@@ -323,7 +323,7 @@
                                                     <strong class="small-h">Java Developer</strong>
                                                     <!--Edit-->
                                                     <div class="edit-exp-round">
-                                                        <div class="round-icon-back">
+                                                        <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
                                                             <i class="fa fa-pencil"></i>
                                                         </div>
                                                     </div>
@@ -349,7 +349,7 @@
                                                 <h6 class="inline small-h">Skills</h6>
                                                 <br />
                                                 <!--Add-->
-                                                <div class="right-post-icon-div">
+                                                <div class="right-post-icon-div" data-toggle="modal" data-target="#skillModal">
                                                     <div class="round-icon-back">
                                                         <i class="fa fa-plus"></i>
                                                     </div>
@@ -602,6 +602,105 @@
                     </div>
                 </div>
                 @* /Experience Add *@
+                @* Education Add *@
+                <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Education</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <!--Title-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">School Name:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Title-->
+                                    <!--Company-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Degree:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Company-->
+                                    <!--Location-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Field of Study:</label>
+                                        <input type="text" class="input">
+                                    </div>
+                                    <!--/Location-->
+                                    <!--Text Area-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Activities:</label>
+                                        <textarea class="input" placeholder="Description"></textarea>
+                                    </div>
+                                    <!--/Text Area-->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <!--Start Date-->
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="control-label">From:</label>
+                                                <input type="date" class="input">
+                                            </div>
+                                            <!--/Start Date-->
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <!--End Date-->
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="control-label">To:</label>
+                                                <input type="date" class="input" id="recipient-name">
+                                            </div>
+                                            <!--/End Date-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
+                                            <label for="customCheck1">I currently work here</label>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="main-btn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* /Education Add *@
+                @* Skill Add *@
+                <div class="modal fade" id="skillModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title">Skills</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <!--SKill-->
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Skills:</label>
+                                        <textarea class="input" placeholder="Description"></textarea>
+                                    </div>
+                                    <!--/Skill-->
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="main-btn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* /Skill Add *@
 
 
                 <!--/Modals-->
