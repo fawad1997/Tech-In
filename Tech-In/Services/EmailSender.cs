@@ -27,15 +27,13 @@ namespace Tech_In.Services
         public Task Execute(string apiKey, string subject, string message, string email)
         {
             var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("hassanali5062.com", "Hassan Ali"),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
-            };
-            msg.AddTo(new EmailAddress(email));
+            var from = new EmailAddress("hassanali5062@gmail.com", "Example User");
+            var to = new EmailAddress(email);
+            var plainTextContent = message;
+            var htmlContent = message;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             return client.SendEmailAsync(msg);
+
         }
     }
 }
