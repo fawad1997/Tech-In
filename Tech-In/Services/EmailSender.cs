@@ -26,8 +26,9 @@ namespace Tech_In.Services
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("hassanali5062@gmail.com", "Example User");
+            //var client = new SendGridClient(apiKey);
+            var client = new SendGridClient("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");
+            var from = new EmailAddress("hassanali5062@gmail.com", "Tech In");
             var to = new EmailAddress(email);
             var plainTextContent = message;
             var htmlContent = message;
