@@ -100,7 +100,7 @@ a:hover, a:focus {
 }
 
 .white-text {
-    color: #FFF;
+    color: #FFF !important;
 }
 
 ::-moz-selection {
@@ -2000,4 +2000,7 @@ hr{
 .blue-g-btn {
     background-color: #1f618d;
     background-image: linear-gradient(-180deg, #1f618d 10%, #1a5276 90%);
+}
+.margin-top10{
+    margin-top:10px !important;
 }
