@@ -10,6 +10,7 @@ namespace Tech_In.Models
     {
         [Key]
         public int CityID { get; set; }
+        [StringLength(maximumLength:50),Display(Name ="City")]
         public string CityName { get; set; }
         public int CountryID { get; set; }
         public Country Country { get; set; }
