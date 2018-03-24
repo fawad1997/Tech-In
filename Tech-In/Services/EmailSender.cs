@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -12,9 +13,11 @@ namespace Tech_In.Services
     // For more details see https://go.microsoft.com/fwlink/?LinkID=532713
     public class EmailSender : IEmailSender
     {
-        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        private readonly IConfiguration configuration;
+        public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor, IConfiguration config)
         {
             Options = optionsAccessor.Value;
+            this.configuration = config;
         }
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
@@ -26,8 +29,9 @@ namespace Tech_In.Services
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
-            //var client = new SendGridClient(apiKey);
-            var client = new SendGridClient("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");
+            apiKey = configuration.GetConnectionString("SendGridKey");
+            var client = new SendGridClient(apiKey);
+            //var client = new SendGridClient();
             var from = new EmailAddress("hassanali5062@gmail.com", "Tech In");
             var to = new EmailAddress(email);
             var plainTextContent = message;
