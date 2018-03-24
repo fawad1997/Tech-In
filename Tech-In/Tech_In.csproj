@@ -7,6 +7,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.0.1" />
