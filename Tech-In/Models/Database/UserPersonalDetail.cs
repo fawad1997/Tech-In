@@ -11,36 +11,30 @@ namespace Tech_In.Models.Model
         [Key]
         public int UserPersonalDetailID { get; set; }
 
-        [StringLength(maximumLength:50,MinimumLength =2),
-            Display(Name ="First Name"),
-            Required]
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
         public string FirstName { get; set; }
 
-        [StringLength(maximumLength:100,MinimumLength =2),
-            Display(Name ="Last Name")]
+        [StringLength(100, MinimumLength = 2)]
         public string LastName { get; set; }
-
-        public string FullName
-        {
-            get
-            {
-                return FirstName + " " + LastName;
-            }
-        }
         
         [StringLength(maximumLength:300,MinimumLength =50)]
         public string Summary { get; set; }
         //AspNetUsers
         public string UserID { get; set; }
 
-        //public string CVImg { get; set; }
+        public byte[] CVImage { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-mm-dd}",ApplyFormatInEditMode =true)]
         public DateTime DOB { get; set; }
+        public short DOBVisibility { get; set; }
+        public short EmailVisibility { get; set; }
+        public short PhonoNoVisibility { get; set; }
 
-        public Gender Gennder { get; set; }
+        public Gender Gender { get; set; }
 
+        public int CityID { get; set; }
         public City City { get; set; }
     }
 
