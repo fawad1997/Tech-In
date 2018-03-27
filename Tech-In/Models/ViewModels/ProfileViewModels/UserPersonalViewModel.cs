@@ -20,6 +20,14 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
         [StringLength(maximumLength: 300, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 50)]
         public string Summary { get; set; }
         //AspNetUsers

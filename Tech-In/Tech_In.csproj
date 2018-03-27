@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-Tech_In-4AE2D5AD-9EDA-459F-BEAA-B8B674E6E795</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180326165605_reset.cs" />
+    <Compile Remove="Data\Migrations\20180326165605_reset.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.13" />

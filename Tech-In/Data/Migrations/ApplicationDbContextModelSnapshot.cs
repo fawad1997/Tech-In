@@ -320,7 +320,7 @@ namespace Tech_In.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("Gennder");
+                    b.Property<int>("Gender");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(100);

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tech_In.Data;
 using Tech_In.Models;
 using Tech_In.Models.AccountViewModels;
 using Tech_In.Services;
@@ -24,17 +25,20 @@ namespace Tech_In.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [TempData]
@@ -64,8 +68,20 @@ namespace Tech_In.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user != null)
+                    {
+                        var userPersonalRow = _context.UserPersonalDetails.Where(a => a.UserID == user.Id).SingleOrDefault();
+                        if (userPersonalRow == null)
+                        {
+                            return RedirectToAction("CompleteProfile", "Home");
+                        }
+                        else
+                        {
+                            _logger.LogInformation("User logged in.");
+                            return RedirectToLocal(returnUrl);
+                        }
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {

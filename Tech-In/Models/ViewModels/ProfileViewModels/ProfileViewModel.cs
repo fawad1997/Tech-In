@@ -9,6 +9,7 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
     public class ProfileViewModel
     {
-        public UserPersonalViewModel UserPersonalVM { get; set; }
+        public string Nam { get; set; }
+        public UserPersonalViewModel UserPersonalVM = new UserPersonalViewModel();
     }
 }

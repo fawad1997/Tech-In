@@ -1,4 +1,4 @@
-﻿
+﻿@model ProfileViewModel
 @{
     ViewData["Title"] = "Profile";
 }
@@ -28,7 +28,7 @@
                     </div>
                     <!--/Edit-->
                     <div class="center">
-                        <h1 class="profile-name">Fawad Bin Tariq</h1>
+                        <h1 class="profile-name">@Model.UserPersonalVM.FirstName</h1>
                         <i class="fa fa-briefcase"></i>
                         <h2 class="profile-name profile-less inline"> Student at Capital University of Science & Technology</h2>
                         <hr class="col-xs-12">

@@ -12,8 +12,8 @@ using Tech_In.Models.Model;
 namespace Tech_In.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180325081107_userpersonaltables")]
-    partial class userpersonaltables
+    [Migration("20180326170918_usertables1")]
+    partial class usertables1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -321,7 +321,7 @@ namespace Tech_In.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<int>("Gennder");
+                    b.Property<int>("Gender");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(100);

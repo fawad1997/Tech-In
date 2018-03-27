@@ -40,7 +40,7 @@
 </head>
 <body>
     @{
-        if (ViewContext.RouteData.Values["Controller"].ToString() == "Home")
+        if (ViewContext.RouteData.Values["Controller"].ToString() == "Home"  && ViewContext.RouteData.Values["Action"].ToString() =="Index")
         {
             <!-- Header -->
             <header id="home">
