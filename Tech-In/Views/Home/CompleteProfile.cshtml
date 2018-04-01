@@ -1,4 +1,4 @@
-﻿@model Tech_In.Models.Model.UserPersonalDetail
+﻿@model Tech_In.Models.ViewModels.ProfileViewModels.CompleteProfileVM
 
 @{
     Layout = null;
@@ -91,38 +91,45 @@
                             </label>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label asp-for="CVImage" class="control-label"></label>
-                        <input asp-for="CVImage" type="file" />
-                        <span asp-validation-for="CVImage" class="text-danger"></span>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <div class="form-group">
+                                <label class="radio-inline">
+                                    <input type="radio" asp-for="Gender" value="1" checked> Male
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" asp-for="Gender" value="2"> Female
+                                </label>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label asp-for="CVImage" class="control-label"></label>
+                                <input asp-for="CVImage" type="file" />
+                                <span asp-validation-for="CVImage" class="text-danger"></span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="DOBVisibility" class="control-label"></label>
-                        <input asp-for="DOBVisibility" class="form-control" />
-                        <span asp-validation-for="DOBVisibility" class="text-danger"></span>
+                    
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label asp-for="CityID" class="control-label"></label>
+                                <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label asp-for="CityID" class="control-label"></label>
+                                <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID"></select>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="form-group">
-                        <label asp-for="EmailVisibility" class="control-label"></label>
-                        <input asp-for="EmailVisibility" class="form-control" />
-                        <span asp-validation-for="EmailVisibility" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhonoNoVisibility" class="control-label"></label>
-                        <input asp-for="PhonoNoVisibility" class="form-control" />
-                        <span asp-validation-for="PhonoNoVisibility" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Gender" class="control-label"></label>
-                        <select asp-for="Gender" class="form-control"></select>
-                        <span asp-validation-for="Gender" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="CityID" class="control-label"></label>
-                        <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID"></select>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="Save & Continue" class="btn btn-default" />
                     </div>
                 </form>
             </div>
