@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Tech_In.Data;
 using Tech_In.Models;
 using Tech_In.Services;
+using Tech_In.Data.interfaces;
+using Tech_In.Data.Repository;
 
 namespace Tech_In
 {
@@ -29,15 +31,22 @@ namespace Tech_In
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(config=>
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+            //Repositry Dependency Injection
+            services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<ICountryRepository, CountryRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IUserEducationRepository, UserEducationRepository>();
+            services.AddTransient<IUserExperienceRepository, UserExperienceRepository>();
+            services.AddTransient<IUserPersonalDetailRepository, UserPersonalDetailRepository>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 config.SignIn.RequireConfirmedEmail = true;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
 
