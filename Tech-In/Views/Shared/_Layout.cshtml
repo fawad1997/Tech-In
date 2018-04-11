@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>@ViewData["Title"] - Tech-In</title>
     <link rel="icon" href="~/images/logotop.png" />
@@ -56,8 +56,8 @@
                             <!-- Logo -->
                             <div class="navbar-brand">
                                 <a asp-area="" asp-controller="Home" asp-action="Index">
-                                    <img class="logo" src="~/images/logo.png" alt="logo">
-                                    <img class="logo-alt" src="~/images/logo-alt.png" alt="logo">
+                                    <img class="logo" src="~/images/logo.png" alt="TechIn">
+                                    <img class="logo-alt" src="~/images/logo-alt.png" alt="TechIn">
                                 </a>
                             </div>
                             <!-- /Logo -->
@@ -71,7 +71,7 @@
 
                         <ul class="main-nav nav navbar-nav">
                             <li>
-                                <a href="#">Questions</a>
+                                <a asp-controller="Question" asp-action="Index">Questions</a>
                             </li>
                             <li>
                                 <a asp-area="" asp-controller="Articles" asp-action="Index">Article</a>
@@ -112,9 +112,9 @@
                                         <h3>Login</h3>
                                         <label class="signup-label">Email</label>
                                         <br />
-                                        <input type="email" class="input" placeholder="you@example.com" />
+                                        <input aria-labelledby="Email" type="email" class="input" placeholder="you@example.com" />
                                         <br />
-                                        <label class="signup-label">Password</label>
+                                        <label aria-labelledby="Password" class="signup-label">Password</label>
                                         <input type="password" class="input" placeholder="Password" />
                                         <button class="main-btn btn-block blue-g-btn">
                                             <b>Sign in</b>
@@ -161,7 +161,7 @@
 
                     <ul class="main-nav nav navbar-nav">
                         <li>
-                            <a href="#">Questions</a>
+                            <a asp-controller="Question" asp-action="Index">Questions</a>
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Articles" asp-action="Index">Article</a>

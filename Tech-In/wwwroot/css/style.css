@@ -1393,6 +1393,19 @@ header {
   background-color: #6195FF;
 }
 
+.widget-tags-sm a {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: 12px;
+    margin: 2px 0px;
+    background: #F4F4F4;
+    color: #10161A;
+}
+
+.widget-tags-sm a:hover {
+    color: #FFF;
+    background-color: #6195FF;
+}
 /* -- posts sidebar -- */
 
 .widget-post {
@@ -2062,6 +2075,49 @@ input:checked + .slider:before {
     border-radius: 34px;
 }
 
-    .slider.round:before {
-        border-radius: 50%;
-    }
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.font-size16{
+    font-size:16px;
+}
+.grey-back{
+    background-color:ghostwhite;
+    text-align:center;
+    padding:5px;
+    height: 56px;
+    border-radius: 3px;
+}
+.answer-back {
+    background-color: mediumseagreen;
+    color:white;
+}
+
+.answer-backuv{
+    color:mediumseagreen;
+}
+.grey-back > span > strong{
+    font-size: 100%;
+}
+.grey-back > span {
+    font-size: 90%;
+}
+.grey-back:hover {
+    background: linear-gradient(to bottom right, gainsboro, white);
+}
+.answer-back:hover {
+    background: linear-gradient(to bottom right, mediumseagreen, seagreen);
+}
+.margin-bottom6{
+    margin-bottom: 6px;
+}
+.small-font{
+    font-size: 80%;
+}
+.normal-font{
+    font-size: 100%;
+}
+.float-right{
+    float:right;
+}
