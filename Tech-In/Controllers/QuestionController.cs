@@ -12,5 +12,10 @@ namespace Tech_In.Controllers
         {
             return View();
         }
+
+        public IActionResult Detail()
+        {
+            return View();
+        }
     }
 }

@@ -2118,6 +2118,16 @@ input:checked + .slider:before {
 .normal-font{
     font-size: 100%;
 }
+.md-font{
+    font-size: 120%;
+}
+.lg-font{
+    font-size: 140%;
+}
+.xlg-font{
+    font-size: 180%;
+}
+
 .float-right{
     float:right;
 }
