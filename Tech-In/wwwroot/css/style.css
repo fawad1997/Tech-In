@@ -2131,3 +2131,22 @@ input:checked + .slider:before {
 .float-right{
     float:right;
 }
+#triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid grey;
+    cursor:pointer;
+}
+#triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 25px solid grey;
+    cursor: pointer;
+}
+.fainted-text{
+    color:gray;
+}

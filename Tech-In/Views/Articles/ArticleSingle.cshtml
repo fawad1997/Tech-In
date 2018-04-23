@@ -87,6 +87,40 @@
                         </div>
                     </div>
                     <!-- /blog author -->
+
+                    <div id="froala-editor">
+                        <p>The buttons below will destroy and init the rich text editor again.</p>
+                    </div>
+                    <p>
+                        <a id="btn-destroy" href="#" class="btn r-btn highlight text-small">Destroy</a>
+                        <a id="btn-init" href="#" class="btn r-btn text-small">Init</a>
+                    </p>
+
+
+                    <script>
+                        $(function () {
+                            $('div#froala-editor').froalaEditor({
+                            })
+                        });
+
+                        // Destroy action.
+                        $('a#btn-destroy').on('click', function (e) {
+                            e.preventDefault();
+
+                            if ($('div#froala-editor').data('froala.editor')) {
+                                $('div#froala-editor').froalaEditor('destroy');
+                            }
+                        });
+
+                        // Initialize action.
+                        $('a#btn-init').on('click', function (e) {
+                            e.preventDefault();
+
+                            if (!$('div#froala-editor').data('froala.editor')) {
+                                $('div#froala-editor').froalaEditor();
+                            }
+                        });
+                    </script>
                     <!-- blog comments -->
                     <div class="blog-comments">
                         <h3 class="title">(1) Comments</h3>

@@ -2,7 +2,6 @@
     ViewData["Title"] = "Detail";
 }
 
-
 <!-- Blog -->
 <div id="blog" class="section">
 
@@ -17,9 +16,23 @@
                 <div class="blog">
                     <div class="blog-content">
                         <h1 class="xlg-font">I can't reduce the apk size using proguard on xamarin.android</h1>
+                        <hr />
+
                         <div class="row">
                             <div class="col-xs-2 col-md-1">
-                                0
+                                <center>
+                                    <div class="row">
+                                        <a id="triangle-up"></a>
+                                    </div>
+                                    <br /><br />
+                                    <div class="row">
+                                        <strong class="lg-font">0</strong>
+                                    </div>
+                                    <br /><br />
+                                    <div class="row">
+                                        <a id="triangle-down"></a>
+                                    </div>
+                                </center>
                             </div>
                             <div class="col-xs-10 col-md-11 ">
                                 <p>
@@ -29,102 +42,43 @@
                                 </p>
                             </div>
                         </div>
-                        <ul class="blog-meta float-right">
-                            <li>
-                                <i class="fa fa-user"></i>Fawad Bin Tariq
-                            </li>
-                            <li>
-                                <i class="fa fa-clock-o"></i>18 Oct
-                            </li>
-                        </ul>
+                        <!-- blog tags -->
+                        <div class="blog-tags">
+                            <a href="#">
+                                <i class="fa fa-tag"></i>Web
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-tag"></i>Design
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-tag"></i>Marketing
+                            </a>
+                            <a href="#">
+                                <i class="fa fa-tag"></i>Development
+                            </a>
+                        </div>
+                        <!-- blog tags -->
                     </div>
 
-                    <!-- blog tags -->
-                    <div class="blog-tags">
-                        <h5>Tags :</h5>
-                        <a href="#">
-                            <i class="fa fa-tag"></i>Web
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-tag"></i>Design
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-tag"></i>Marketing
-                        </a>
-                        <a href="#">
-                            <i class="fa fa-tag"></i>Development
-                        </a>
-                    </div>
-                    <!-- blog tags -->
-                    <!-- blog author -->
-                    <div class="blog-author">
-                        <div class="media">
-                            <div class="media-left">
-                                <img style="height:130px;" class="media-object" src="~/images/a.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <div class="media-heading">
-                                    <h3>Fawad Bin Tariq</h3>
-                                    <div class="author-social">
-                                        <a href="#">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                        <a href="#">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                        <a href="#">
-                                            <i class="fa fa-google-plus"></i>
-                                        </a>
-                                        <a href="#">
-                                            <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <p>
-                                    Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa
-                                    enim nec.
-                                </p>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-8">
+                            <a class="fainted-text">share</a> &nbsp;<a class="fainted-text">comment</a>
+                        </div>
+                        <div class="col-xs-6 col-md-4">
+                            <div class="grey-back float-right">
+                                <span><i class="fa fa-clock-o"></i>  1 min ago</span>
+                                <br />
+                                <img style="height:30px;width:30px;" src="~/images/a.jpg" />
+                                <strong>Fawad Bin Tariq</strong>
                             </div>
                         </div>
                     </div>
-                    <!-- /blog author -->
-                    <!-- blog comments -->
-                    <div class="blog-comments">
-                        <h3 class="title">(1) Comments</h3>
 
-                        <!-- comment -->
-                        <div class="media">
-                            <div class="media-left">
-                                <img style="height:70px;" class="media-object" src="~/images/a.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading">
-                                    Fawad Bin Tariq
-                                    <span class="time">2 min ago</span>
-                                    <a href="#" class="reply">
-                                        Reply
-                                        <i class="fa fa-reply"></i>
-                                    </a>
-                                </h4>
-                                <p>
-                                    Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa
-                                    enim nec.
-                                </p>
-                            </div>
-                        </div>
-                        <!-- /comment -->
-
-                    </div>
-                    <!-- /blog comments -->
-                    <!-- reply form -->
-                    <div class="reply-form">
-                        <h3 class="title">Leave a reply</h3>
-                        <form>
-                            <textarea placeholder="Add Your Commment"></textarea>
-                            <button type="submit" class="main-btn">Submit</button>
-                        </form>
-                    </div>
-                    <!-- /reply form -->
+                    <hr/>
+                    <h4>Your Answer</h4>
+                    <img src="~/images/qeditor.PNG" />
+                    <button type="button" class="main-btn">Post Your Answer</button>
+           
                 </div>
             </main>
             <!-- /Main -->
@@ -132,6 +86,7 @@
             <aside id="aside" class="col-md-3">
 
                 <button class="main-btn btn-block">Ask a Question</button>
+                <hr />
 
                 <!-- Search -->
                 <div class="widget">

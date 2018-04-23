@@ -74,6 +74,18 @@ namespace Tech_In.Controllers
                 return View("Null");
             return Content(user.Id);
         }
+        public IActionResult AddUserExperience()
+        {
+            return null;
+        }
+        public IActionResult UpdateUserExperience()
+        {
+            return null;
+        }
+        public IActionResult DeleteUserExperience()
+        {
+            return null;
+        }
 
     }
 }
