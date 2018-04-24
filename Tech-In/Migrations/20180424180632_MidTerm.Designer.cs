@@ -9,10 +9,10 @@ using System;
 using Tech_In.Data;
 using Tech_In.Models.Model;
 
-namespace Tech_In.Data.Migrations
+namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180424173451_MidTerm")]
+    [Migration("20180424180632_MidTerm")]
     partial class MidTerm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

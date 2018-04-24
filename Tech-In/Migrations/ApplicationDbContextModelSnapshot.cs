@@ -9,7 +9,7 @@ using System;
 using Tech_In.Data;
 using Tech_In.Models.Model;
 
-namespace Tech_In.Data.Migrations
+namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
