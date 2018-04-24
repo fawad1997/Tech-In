@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tech_In.Models;
+using Tech_In.Models.Database;
 using Tech_In.Models.Model;
 
 namespace Tech_In.Data
@@ -20,7 +21,15 @@ namespace Tech_In.Data
         public DbSet<UserPersonalDetail> UserPersonalDetails { get; set; }
         public DbSet<UserExperience> UserExperiences { get; set; }
         public DbSet<UserEducation> UserEducations { get; set; }
-        public DbSet<Company> Companies { get; set; }
+        public DbSet<UserCertification> UserCertifications { get; set; }
+        public DbSet<SkillTag> skillTags { get; set; }
+
+        public DbSet<UserQAComment> UserQAComments { get; set; }
+        public DbSet<UserQAnswer> UserQAnswers { get; set; }
+        public DbSet<UserQAVoting> UserQAVotings { get; set; }
+        public DbSet<UserQuestion> UserQuestions { get; set; }
+        public DbSet<UserSkill> UserSkills { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

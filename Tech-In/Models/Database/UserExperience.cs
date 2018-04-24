@@ -25,8 +25,6 @@ namespace Tech_In.Models.Model
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public int CompanyID { get; set; }
-        public Company Company { get; set; }
         public int CityID { get; set; }
         public City City { get; set; }
 
