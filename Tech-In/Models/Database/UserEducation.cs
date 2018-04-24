@@ -19,10 +19,10 @@ namespace Tech_In.Models.Model
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        public DateTime EduFrom { get; set; }
+        public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        public DateTime EduTo { get; set; }
+        public DateTime EndDate { get; set; }
 
         public Boolean CurrentStatusCheck { get; set; }
 

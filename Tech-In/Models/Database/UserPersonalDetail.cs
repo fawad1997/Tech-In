@@ -28,9 +28,9 @@ namespace Tech_In.Models.Model
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-mm-dd}",ApplyFormatInEditMode =true)]
         public DateTime DOB { get; set; }
-        public short DOBVisibility { get; set; }
-        public short EmailVisibility { get; set; }
-        public short PhonoNoVisibility { get; set; }
+        public Boolean IsDOBPublic { get; set; }
+        public Boolean IsEmailPublic { get; set; }
+        public Boolean IsPhonePublic { get; set; }
 
         public Gender Gender { get; set; }
 

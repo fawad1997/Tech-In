@@ -16,14 +16,14 @@ namespace Tech_In.Models.Model
         public string Description { get; set; }
         [StringLength(maximumLength:100,MinimumLength =2)]
         public string CompanyName { get; set; }
-        public Boolean CurrentStatus { get; set; }
+        public Boolean CurrentWorkCheck { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        public DateTime ExpFrom { get; set; }
+        public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        public DateTime ExpTo { get; set; }
+        public DateTime EndDate { get; set; }
 
         public int CompanyID { get; set; }
         public Company Company { get; set; }
