@@ -20,7 +20,9 @@ namespace Tech_In.Models.Database
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime TimeApproved { get; set; }
 
+
         //AspNetUser
+        [StringLength(maximumLength:450)]
         public string AddedByUserId { get; set; }
     }
 }

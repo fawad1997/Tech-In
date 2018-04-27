@@ -23,6 +23,7 @@ namespace Tech_In.Models.Database
 
 
         //AspNetUser
+        [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
     }
 }

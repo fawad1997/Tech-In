@@ -24,6 +24,7 @@ namespace Tech_In.Models.Database
         public string LiscenceNo { get; set; }
 
         //ApNetUser
+        [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
     }
 }
