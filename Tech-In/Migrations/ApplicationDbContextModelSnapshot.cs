@@ -218,12 +218,31 @@ namespace Tech_In.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("Tech_In.Models.Database.QuestionSkill", b =>
+                {
+                    b.Property<int>("QuestionSkillID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("QuestionUserQuestionID");
+
+                    b.Property<int?>("TagSkillTagID");
+
+                    b.HasKey("QuestionSkillID");
+
+                    b.HasIndex("QuestionUserQuestionID");
+
+                    b.HasIndex("TagSkillTagID");
+
+                    b.ToTable("QuestionSkills");
+                });
+
             modelBuilder.Entity("Tech_In.Models.Database.SkillTag", b =>
                 {
                     b.Property<int>("SkillTagID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AddedByUserId");
+                    b.Property<string>("AddedByUserId")
+                        .HasMaxLength(450);
 
                     b.Property<bool>("ApprovedStatus");
 
@@ -235,7 +254,7 @@ namespace Tech_In.Migrations
 
                     b.HasKey("SkillTagID");
 
-                    b.ToTable("skillTags");
+                    b.ToTable("SkillTags");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserCertification", b =>
@@ -256,7 +275,8 @@ namespace Tech_In.Migrations
 
                     b.Property<string>("URL");
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserCertificationID");
 
@@ -276,7 +296,8 @@ namespace Tech_In.Migrations
 
                     b.Property<int?>("QuestionUserQuestionID");
 
-                    b.Property<int>("UserID");
+                    b.Property<int>("UserID")
+                        .HasMaxLength(450);
 
                     b.Property<bool>("Visibility");
 
@@ -302,7 +323,8 @@ namespace Tech_In.Migrations
 
                     b.Property<int>("QuestionID");
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserQAnswerID");
 
@@ -322,7 +344,8 @@ namespace Tech_In.Migrations
 
                     b.Property<int?>("QuestionUserQuestionID");
 
-                    b.Property<int>("UserID");
+                    b.Property<int>("UserID")
+                        .HasMaxLength(450);
 
                     b.Property<int>("Value");
 
@@ -352,7 +375,8 @@ namespace Tech_In.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserQuestionID");
 
@@ -366,7 +390,8 @@ namespace Tech_In.Migrations
 
                     b.Property<int?>("SkillTagID");
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserSkillID");
 
@@ -399,7 +424,8 @@ namespace Tech_In.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserEducationID");
 
@@ -431,7 +457,8 @@ namespace Tech_In.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserExperienceID");
 
@@ -469,7 +496,8 @@ namespace Tech_In.Migrations
                     b.Property<string>("Summary")
                         .HasMaxLength(300);
 
-                    b.Property<string>("UserID");
+                    b.Property<string>("UserID")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserPersonalDetailID");
 
@@ -529,6 +557,17 @@ namespace Tech_In.Migrations
                         .WithMany("Cities")
                         .HasForeignKey("CountryID")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.QuestionSkill", b =>
+                {
+                    b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionUserQuestionID");
+
+                    b.HasOne("Tech_In.Models.Database.SkillTag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagSkillTagID");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAComment", b =>

@@ -21,6 +21,7 @@ namespace Tech_In.Models.Model
         [StringLength(maximumLength:300,MinimumLength =50)]
         public string Summary { get; set; }
         //AspNetUsers
+        [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
 
         public byte[] CVImage { get; set; }

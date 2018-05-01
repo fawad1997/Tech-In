@@ -13,6 +13,7 @@ namespace Tech_In.Models.Database
 
         public SkillTag SkillTag { get; set; }
         //AspNetUser
+        [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Tech_In.Models.Database
         public DateTime PostTime { get; set; }
 
         //AspNetUser
+        [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
     }
 }

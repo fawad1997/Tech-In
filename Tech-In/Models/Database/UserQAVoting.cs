@@ -21,6 +21,7 @@ namespace Tech_In.Models.Database
         public UserQAnswer Answer { get; set; }
 
         //AspUser
-        public int UserID { get; set; }
+        [StringLength(maximumLength: 450)]
+        public string UserID { get; set; }
     }
 }

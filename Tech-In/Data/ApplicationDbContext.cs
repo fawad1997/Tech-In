@@ -22,13 +22,14 @@ namespace Tech_In.Data
         public DbSet<UserExperience> UserExperiences { get; set; }
         public DbSet<UserEducation> UserEducations { get; set; }
         public DbSet<UserCertification> UserCertifications { get; set; }
-        public DbSet<SkillTag> skillTags { get; set; }
+        public DbSet<SkillTag> SkillTags { get; set; }
 
         public DbSet<UserQAComment> UserQAComments { get; set; }
         public DbSet<UserQAnswer> UserQAnswers { get; set; }
         public DbSet<UserQAVoting> UserQAVotings { get; set; }
         public DbSet<UserQuestion> UserQuestions { get; set; }
         public DbSet<UserSkill> UserSkills { get; set; }
+        public DbSet<QuestionSkill> QuestionSkills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
