@@ -32,5 +32,6 @@ namespace Tech_In.Models.Model
         //ApNetUser
         [StringLength(maximumLength: 450)]
         public string UserID { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Tech_In.Controllers
                     LastName = null,
                     Summary = null,
                     UserID = user.Id,
-                    CityID = 1
+                    CityID = 5
                 };
                 _context.UserPersonalDetails.Add(uPersonal);
                 _context.SaveChanges();
