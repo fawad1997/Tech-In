@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
             }
         }
 
+        public string Email { get; set; }
+
         [StringLength(maximumLength: 300, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 50)]
         public string Summary { get; set; }
         //AspNetUsers
@@ -38,13 +41,18 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
+        public string PhoneNo { get; set; }
         public short DOBVisibility { get; set; }
         public short EmailVisibility { get; set; }
         public short PhonoNoVisibility { get; set; }
 
         public Gender Gender { get; set; }
 
-        public int CityID { get; set; }
-        public City City { get; }
+        //public int CityID { get; set; }
+        public City City { get; set; }
+        public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
+        public List<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
+
+        public Country Country { get; set; }
     }
 }
