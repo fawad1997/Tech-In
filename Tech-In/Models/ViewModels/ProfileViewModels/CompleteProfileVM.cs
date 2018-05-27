@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,7 +9,6 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
     public class CompleteProfileVM
     {
-        public int UserPersonalDetailID { get; set; }
         [Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name ="First Name ")]
@@ -17,6 +17,7 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [StringLength(100, MinimumLength = 2)]
         [Display(Name ="Last Name")]
         public string LastName { get; set; }
+     
         //AspNetUsers
         public string UserID { get; set; }
 
@@ -26,13 +27,17 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         [Display(Name ="Date of Birth")]
         public DateTime DOB { get; set; }
-        [Display(Name ="Visibility")]
-        public short DOBVisibility { get; set; }
+
+        [Display(Name ="Date of Birth Visibility")]
+        public Boolean DOBVisibility { get; set; }
 
         public Gender Gender { get; set; }
 
-        public int CityID { get; set; }
         public City City { get; set; }
+        public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
+
+        public Country Country { get; set; }
+        public List<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
     }
 
     public enum Gender
