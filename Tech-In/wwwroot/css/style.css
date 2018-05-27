@@ -2150,3 +2150,7 @@ input:checked + .slider:before {
 .fainted-text{
     color:gray;
 }
+
+.blue-border{
+    border: 1px solid blue;
+}

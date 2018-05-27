@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,10 +21,7 @@ namespace Tech_In.Models.Model
         
         [StringLength(maximumLength:300,MinimumLength =50)]
         public string Summary { get; set; }
-        //AspNetUsers
-        [StringLength(maximumLength: 450)]
-        public string UserID { get; set; }
-
+        
         public byte[] CVImage { get; set; }
 
         [DataType(DataType.Date)]
@@ -37,6 +35,9 @@ namespace Tech_In.Models.Model
 
         public int CityID { get; set; }
         public City City { get; set; }
+        //ApNetUser
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser AUserId { get; set; }
     }
 
     public enum Gender

@@ -29,20 +29,26 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetCurrentUser(HttpContext);
+            var uaertoAdd = new ApplicationUser();
             ProfileViewModel PVM = new ProfileViewModel();
 
-            var pd = _context.UserPersonalDetails.SingleOrDefault(m => m.UserID == user.Id);
+            var pd = _context.UserPersonalDetail.SingleOrDefault(m => m.AUserId.Id == user.Id);
             if (pd == null)
             {
                 var uPersonal = new UserPersonalDetail() {
                     FirstName = user.Email,
                     LastName = null,
                     Summary = null,
-                    UserID = user.Id,
                     CityID = 1
                 };
-                _context.UserPersonalDetails.Add(uPersonal);
-                _context.SaveChanges();
+                uaertoAdd.UserPersonalDetails.Add(pd);
+                var result = await _userManager.CreateAsync(uaertoAdd);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Resume");
+                }
+                //_context.UserPersonalDetail.Add(uPersonal);
+                //_context.SaveChanges();
             }
             PVM.UserPersonalVM.FirstName = pd.FirstName;
             //PVM.UserPersonalVM.LastName = pd.LastName;

@@ -18,6 +18,11 @@ namespace Tech_In.Controllers
             return View();
         }
 
+        public IActionResult New()
+        {
+            return View();
+        }
+
         public IActionResult Xyz()
         {
             return View();

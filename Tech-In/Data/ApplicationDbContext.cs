@@ -16,25 +16,27 @@ namespace Tech_In.Data
             : base(options)
         {
         }
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<UserPersonalDetail> UserPersonalDetails { get; set; }
-        public DbSet<UserExperience> UserExperiences { get; set; }
-        public DbSet<UserEducation> UserEducations { get; set; }
-        public DbSet<UserCertification> UserCertifications { get; set; }
-        public DbSet<SkillTag> SkillTags { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<UserPersonalDetail> UserPersonalDetail { get; set; }
+        public DbSet<UserExperience> UserExperience { get; set; }
+        public DbSet<UserEducation> UserEducation { get; set; }
+        public DbSet<UserCertification> UserCertification { get; set; }
+        public DbSet<SkillTag> SkillTag { get; set; }
 
-        public DbSet<UserQAComment> UserQAComments { get; set; }
-        public DbSet<UserQAnswer> UserQAnswers { get; set; }
-        public DbSet<UserQAVoting> UserQAVotings { get; set; }
-        public DbSet<UserQuestion> UserQuestions { get; set; }
-        public DbSet<UserSkill> UserSkills { get; set; }
-        public DbSet<QuestionSkill> QuestionSkills { get; set; }
+        public DbSet<UserQAComment> UserQAComment { get; set; }
+        public DbSet<UserQAnswer> UserQAnswer { get; set; }
+        public DbSet<UserQAVoting> UserQAVoting { get; set; }
+        public DbSet<UserQuestion> UserQuestion { get; set; }
+        public DbSet<UserSkill> UserSkill { get; set; }
+        public DbSet<QuestionSkill> QuestionSkill { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+
             //"Server=tcp:techin.database.windows.net,1433;Initial Catalog=techin;Persist Security Info=False;User ID=tech;Password=Fawad****;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
             //Data Source=HACKER\SQLSERVER2017;Initial Catalog=techintest;Integrated Security=False;User ID=sa;Password=root;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
             // Customize the ASP.NET Identity model and override the defaults if needed.

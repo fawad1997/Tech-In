@@ -71,7 +71,7 @@ namespace Tech_In.Controllers
                     var user = await _userManager.FindByEmailAsync(model.Email);
                     if (user != null)
                     {
-                        var userPersonalRow = _context.UserPersonalDetails.Where(a => a.UserID == user.Id).SingleOrDefault();
+                        var userPersonalRow = _context.UserPersonalDetail.Where(a => a.AUserId.Id == user.Id).SingleOrDefault();
                         if (userPersonalRow == null)
                         {
                             return RedirectToAction("CompleteProfile", "Home");
