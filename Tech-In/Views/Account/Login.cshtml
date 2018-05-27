@@ -11,10 +11,21 @@
 
 
 <div style="padding:50px;">
-    <div  class="alert alert-danger alert-dismissable">
-        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-        @ViewBag.Message 
+    @{
+        if (ViewBag.Message != null)
+        {
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="alert alert-success alert-dismissable">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                @ViewBag.Message
+            </div>
+        </div>
     </div>
+        }
+
+    }
+
     <h2 style="text-align:center;">@ViewData["Title"]</h2>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -41,8 +52,11 @@
                             </label>
                         </div>
                     </div>
+                    
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Log in</button>
+                        <button type="submit" class="main-btn btn-block blue-g-btn">
+                            <b>Log in</b>
+                        </button>
                     </div>
                     <div class="form-group">
                         <p>

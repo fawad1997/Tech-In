@@ -48,6 +48,10 @@ namespace Tech_In.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
+            if(TempData["success"] != null)
+            {
+                ViewBag.Message = "Confirmation has been sent to your provided email. proceed to login after confirmation!";
+            }
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -248,10 +252,10 @@ namespace Tech_In.Controllers
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    ViewBag.Message = "Confirmation has been sent to your provided email. proceed to login after confirmation.";
+                    TempData["success"] = true;
                     //return RedirectToLocal(returnUrl);
                     //return RedirectToAction("Login");
-                    return View("Login",new LoginViewModel());
+                    return RedirectToAction("Login");
                 }
                 AddErrors(result);
             }

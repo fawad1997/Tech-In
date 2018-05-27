@@ -54,7 +54,9 @@ namespace Tech_In.Controllers
         [HttpPost]
         public IActionResult AddPersonalDetails(CompleteProfileVM profileVM)
         {
-            UserPersonalDetail PersonalDetails = new UserPersonalDetail
+            var user = new ApplicationUser();
+
+            UserPersonalDetail personalDetails = new UserPersonalDetail
             {
                 ////PersonalDetails.UserPersonalDetailID = 1;
                 FirstName = profileVM.FirstName,
@@ -68,13 +70,16 @@ namespace Tech_In.Controllers
                 DOB = new DateTime(),
                 IsDOBPublic=true,
                 Gender=Models.Model.Gender.Male,
-                CityID=5
-
+                CityID=1
             };
-            //PersonalDetails.CityID = 2;
-            _context.UserPersonalDetail.Add(PersonalDetails);
-            _context.SaveChanges();
+            //user.UserPersonalDetails.Add(personalDetails);
+            //var result = _userManager.CreateAsync(user);
+            
             return RedirectToAction("Index", "User");
+            
+            //return Content("Error");
+            //_context.UserPersonalDetail.Add(PersonalDetails);
+           // _context.SaveChanges();
         }
 
         [Authorize]
