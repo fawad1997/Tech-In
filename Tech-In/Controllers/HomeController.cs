@@ -37,8 +37,8 @@ namespace Tech_In.Controllers
         public IActionResult CompleteProfile()
         {
             CompleteProfileVM vm = new CompleteProfileVM();
-            var countries = _context.Countries.ToList();
-            var cities = _context.Cities.ToList();
+            var countries = _context.Country.ToList();
+            var cities = _context.City.ToList();
             foreach(var city in cities)
             {
                 vm.Cities.Add(new SelectListItem { Value = city.CityID.ToString(), Text = city.CityName });
@@ -72,7 +72,7 @@ namespace Tech_In.Controllers
 
             };
             //PersonalDetails.CityID = 2;
-            _context.UserPersonalDetails.Add(PersonalDetails);
+            _context.UserPersonalDetail.Add(PersonalDetails);
             _context.SaveChanges();
             return RedirectToAction("Index", "User");
         }
@@ -93,8 +93,8 @@ namespace Tech_In.Controllers
             userPersonal.IsPhonePublic = false;
             userPersonal.LastName = vM.LastName;
             userPersonal.FirstName = vM.FirstName;
-            userPersonal.UserID = user.Id;
-            _context.UserPersonalDetails.Add(userPersonal);
+            userPersonal.AUserId.Id = user.Id;
+            _context.UserPersonalDetail.Add(userPersonal);
             await _context.SaveChangesAsync();
             return View("Index");
         }

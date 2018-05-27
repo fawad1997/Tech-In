@@ -16,5 +16,9 @@ namespace Tech_In.Models
         public virtual ICollection<UserExperience> UserExperiences { get; set; }
         public virtual ICollection<UserEducation> UserEducations { get; set; }
         public virtual ICollection<UserPersonalDetail> UserPersonalDetails { get; set; }
+        public virtual ICollection<UserQuestion> Questions { get; set; }
+        public virtual ICollection<UserQAnswer> UserQAnswers { get; set; }
+        public virtual ICollection<UserQAVoting> UserQAVotings { get; set; }
+        public virtual ICollection<UserQAComment> UserQAComments { get; set; }
     }
 }

@@ -80,22 +80,6 @@ namespace Tech_In.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserQuestion",
-                columns: table => new
-                {
-                    UserQuestionID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(maxLength: 200, nullable: false),
-                    PostTime = table.Column<DateTime>(nullable: false),
-                    Title = table.Column<string>(maxLength: 50, nullable: false),
-                    UserID = table.Column<string>(maxLength: 450, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserQuestion", x => x.UserQuestionID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -226,6 +210,28 @@ namespace Tech_In.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserQuestion",
+                columns: table => new
+                {
+                    UserQuestionID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(maxLength: 200, nullable: false),
+                    PostTime = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserQuestion", x => x.UserQuestionID);
+                    table.ForeignKey(
+                        name: "FK_UserQuestion_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "City",
                 columns: table => new
                 {
@@ -306,7 +312,7 @@ namespace Tech_In.Migrations
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     PostTime = table.Column<DateTime>(nullable: false),
                     QuestionID = table.Column<int>(nullable: false),
-                    UserID = table.Column<string>(maxLength: 450, nullable: true)
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,6 +323,12 @@ namespace Tech_In.Migrations
                         principalTable: "UserQuestion",
                         principalColumn: "UserQuestionID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserQAnswer_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -428,7 +440,7 @@ namespace Tech_In.Migrations
                     Description = table.Column<string>(nullable: true),
                     IsAnswer = table.Column<bool>(nullable: false),
                     QuestionUserQuestionID = table.Column<int>(nullable: true),
-                    UserID = table.Column<string>(maxLength: 450, nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     Visibility = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -446,6 +458,12 @@ namespace Tech_In.Migrations
                         principalTable: "UserQuestion",
                         principalColumn: "UserQuestionID",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAComment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -457,7 +475,7 @@ namespace Tech_In.Migrations
                     AnswerUserQAnswerID = table.Column<int>(nullable: true),
                     IsAnswer = table.Column<bool>(nullable: false),
                     QuestionUserQuestionID = table.Column<int>(nullable: true),
-                    UserID = table.Column<string>(maxLength: 450, nullable: true),
+                    UserId = table.Column<string>(nullable: true),
                     Value = table.Column<int>(nullable: false),
                     Visibility = table.Column<bool>(nullable: false)
                 },
@@ -475,6 +493,12 @@ namespace Tech_In.Migrations
                         column: x => x.QuestionUserQuestionID,
                         principalTable: "UserQuestion",
                         principalColumn: "UserQuestionID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAVoting_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -578,9 +602,19 @@ namespace Tech_In.Migrations
                 column: "QuestionUserQuestionID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserQAComment_UserId",
+                table: "UserQAComment",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserQAnswer_QuestionID",
                 table: "UserQAnswer",
                 column: "QuestionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserQAnswer_UserId",
+                table: "UserQAnswer",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserQAVoting_AnswerUserQAnswerID",
@@ -591,6 +625,16 @@ namespace Tech_In.Migrations
                 name: "IX_UserQAVoting_QuestionUserQuestionID",
                 table: "UserQAVoting",
                 column: "QuestionUserQuestionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserQAVoting_UserId",
+                table: "UserQAVoting",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserQuestion_UserId",
+                table: "UserQuestion",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSkill_SkillTagID",
@@ -657,13 +701,13 @@ namespace Tech_In.Migrations
                 name: "SkillTag");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Country");
 
             migrationBuilder.DropTable(
                 name: "UserQuestion");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

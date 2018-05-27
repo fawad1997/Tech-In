@@ -12,7 +12,7 @@ using Tech_In.Models.Model;
 namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180527070006_test1")]
+    [Migration("20180527072549_test1")]
     partial class test1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,8 +299,7 @@ namespace Tech_In.Migrations
 
                     b.Property<int?>("QuestionUserQuestionID");
 
-                    b.Property<string>("UserID")
-                        .HasMaxLength(450);
+                    b.Property<string>("UserId");
 
                     b.Property<bool>("Visibility");
 
@@ -309,6 +308,8 @@ namespace Tech_In.Migrations
                     b.HasIndex("AnswerUserQAnswerID");
 
                     b.HasIndex("QuestionUserQuestionID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserQAComment");
                 });
@@ -326,12 +327,13 @@ namespace Tech_In.Migrations
 
                     b.Property<int>("QuestionID");
 
-                    b.Property<string>("UserID")
-                        .HasMaxLength(450);
+                    b.Property<string>("UserId");
 
                     b.HasKey("UserQAnswerID");
 
                     b.HasIndex("QuestionID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserQAnswer");
                 });
@@ -347,8 +349,7 @@ namespace Tech_In.Migrations
 
                     b.Property<int?>("QuestionUserQuestionID");
 
-                    b.Property<string>("UserID")
-                        .HasMaxLength(450);
+                    b.Property<string>("UserId");
 
                     b.Property<int>("Value");
 
@@ -359,6 +360,8 @@ namespace Tech_In.Migrations
                     b.HasIndex("AnswerUserQAnswerID");
 
                     b.HasIndex("QuestionUserQuestionID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserQAVoting");
                 });
@@ -378,10 +381,11 @@ namespace Tech_In.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("UserID")
-                        .HasMaxLength(450);
+                    b.Property<string>("UserId");
 
                     b.HasKey("UserQuestionID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserQuestion");
                 });
@@ -593,6 +597,10 @@ namespace Tech_In.Migrations
                     b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionUserQuestionID");
+
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserQAComments")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAnswer", b =>
@@ -601,6 +609,10 @@ namespace Tech_In.Migrations
                         .WithMany()
                         .HasForeignKey("QuestionID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserQAnswers")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAVoting", b =>
@@ -612,6 +624,17 @@ namespace Tech_In.Migrations
                     b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionUserQuestionID");
+
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserQAVotings")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserQuestion", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Questions")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserSkill", b =>

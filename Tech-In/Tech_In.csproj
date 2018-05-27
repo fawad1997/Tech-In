@@ -8,6 +8,10 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20180326165605_reset.cs" />
     <Compile Remove="Data\Migrations\20180326165605_reset.Designer.cs" />
+    <Compile Remove="Migrations\20180527070006_test1.cs" />
+    <Compile Remove="Migrations\20180527070006_test1.Designer.cs" />
+    <Compile Remove="Migrations\20180527071829_test1.cs" />
+    <Compile Remove="Migrations\20180527071829_test1.Designer.cs" />
   </ItemGroup>
 
 
@@ -104,6 +108,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

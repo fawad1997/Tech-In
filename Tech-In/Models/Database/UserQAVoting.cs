@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,8 +21,8 @@ namespace Tech_In.Models.Database
         public UserQuestion Question { get; set; }
         public UserQAnswer Answer { get; set; }
 
-        //AspUser
-        [StringLength(maximumLength: 450)]
-        public string UserID { get; set; }
+        //AspNetUser
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
