@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace Tech_In.Models.Database
     public class SkillTag
     {
         [Key]
-        public int SkillTagID { get; set; }
+        public int SkillTagId { get; set; }
 
         [Required,StringLength(maximumLength:20,MinimumLength =1)]
         public string SkillName { get; set; }
@@ -21,8 +22,9 @@ namespace Tech_In.Models.Database
         public DateTime TimeApproved { get; set; }
 
 
-        //AspNetUser
-        [StringLength(maximumLength:450)]
-        public string AddedByUserId { get; set; }
+        //ApNetUser Added By
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

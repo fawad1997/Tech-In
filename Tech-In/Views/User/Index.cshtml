@@ -615,30 +615,31 @@
                             </button>
                             <h4 class="modal-title">Education</h4>
                         </div>
-                        <div class="modal-body">
-                            <form>
+                        <form method="post">
+                            <div class="modal-body">
+
                                 <!--Title-->
                                 <div class="form-group">
-                                    <label for="recipient-name" class="control-label">School Name:</label>
-                                    <input type="text" class="input">
+                                    <label class="control-label">School Name:</label>
+                                    <input type="text" class="input" asp-for="UserEducationVM.SchoolName">
                                 </div>
                                 <!--/Title-->
                                 <!--Company-->
                                 <div class="form-group">
                                     <label for="recipient-name" class="control-label">Degree:</label>
-                                    <input type="text" class="input">
+                                    <input type="text" class="input" asp-for="UserEducationVM.Title">
                                 </div>
                                 <!--/Company-->
                                 <!--Location-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Field of Study:</label>
-                                    <input type="text" class="input">
-                                </div>
+                                @*<div class="form-group">
+                    <label for="recipient-name" class="control-label">Field of Study:</label>
+                    <input type="text" class="input" asp-for="UserEducationVM.">
+                </div>*@
                                 <!--/Location-->
                                 <!--Text Area-->
                                 <div class="form-group">
                                     <label for="recipient-name" class="control-label">Activities:</label>
-                                    <textarea class="input" placeholder="Description"></textarea>
+                                    <textarea class="input" placeholder="Description" asp-for="UserEducationVM.Details"></textarea>
                                 </div>
                                 <!--/Text Area-->
                                 <div class="row">
@@ -646,7 +647,7 @@
                                         <!--Start Date-->
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">From:</label>
-                                            <input type="date" class="input">
+                                            <input type="date" class="input" asp-for="UserEducationVM.StartDate">
                                         </div>
                                         <!--/Start Date-->
                                     </div>
@@ -654,7 +655,7 @@
                                         <!--End Date-->
                                         <div class="form-group">
                                             <label for="recipient-name" class="control-label">To:</label>
-                                            <input type="date" class="input" id="recipient-name">
+                                            <input type="date" class="input" id="recipient-name" asp-for="UserEducationVM.EndDate">
                                         </div>
                                         <!--/End Date-->
                                     </div>
@@ -662,16 +663,17 @@
                                 <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
-                                        <label for="customCheck1">I currently work here</label>
+                                        <label asp-for="UserEducationVM.CurrentStatus">I currently work here</label>
                                     </div>
                                 </div>
 
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="main-btn">Save</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" asp-action="AddUserEducation" class="main-btn">Save</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
             </div>

@@ -220,29 +220,26 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Database.QuestionSkill", b =>
                 {
-                    b.Property<int>("QuestionSkillID")
+                    b.Property<int>("QuestionSkillId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("QuestionUserQuestionID");
+                    b.Property<int>("SkillTagId");
 
-                    b.Property<int?>("TagSkillTagID");
+                    b.Property<int>("UserQuestionId");
 
-                    b.HasKey("QuestionSkillID");
+                    b.HasKey("QuestionSkillId");
 
-                    b.HasIndex("QuestionUserQuestionID");
+                    b.HasIndex("SkillTagId");
 
-                    b.HasIndex("TagSkillTagID");
+                    b.HasIndex("UserQuestionId");
 
                     b.ToTable("QuestionSkill");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.SkillTag", b =>
                 {
-                    b.Property<int>("SkillTagID")
+                    b.Property<int>("SkillTagId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AddedByUserId")
-                        .HasMaxLength(450);
 
                     b.Property<bool>("ApprovedStatus");
 
@@ -252,14 +249,18 @@ namespace Tech_In.Migrations
 
                     b.Property<DateTime>("TimeApproved");
 
-                    b.HasKey("SkillTagID");
+                    b.Property<string>("UserId");
+
+                    b.HasKey("SkillTagId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("SkillTag");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserCertification", b =>
                 {
-                    b.Property<int>("UserCertificationID")
+                    b.Property<int>("UserCertificationId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CertificationDate");
@@ -278,7 +279,7 @@ namespace Tech_In.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("UserCertificationID");
+                    b.HasKey("UserCertificationId");
 
                     b.HasIndex("UserId");
 
@@ -290,32 +291,32 @@ namespace Tech_In.Migrations
                     b.Property<int>("UserQACommentID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AnswerUserQAnswerID");
-
                     b.Property<string>("Description");
 
                     b.Property<bool>("IsAnswer");
 
-                    b.Property<int?>("QuestionUserQuestionID");
-
                     b.Property<string>("UserId");
+
+                    b.Property<int?>("UserQAnswerId");
+
+                    b.Property<int?>("UserQuestionId");
 
                     b.Property<bool>("Visibility");
 
                     b.HasKey("UserQACommentID");
 
-                    b.HasIndex("AnswerUserQAnswerID");
-
-                    b.HasIndex("QuestionUserQuestionID");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserQAnswerId");
+
+                    b.HasIndex("UserQuestionId");
 
                     b.ToTable("UserQAComment");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAnswer", b =>
                 {
-                    b.Property<int>("UserQAnswerID")
+                    b.Property<int>("UserQAnswerId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
@@ -324,15 +325,15 @@ namespace Tech_In.Migrations
 
                     b.Property<DateTime>("PostTime");
 
-                    b.Property<int>("QuestionID");
-
                     b.Property<string>("UserId");
 
-                    b.HasKey("UserQAnswerID");
+                    b.Property<int>("UserQuestionId");
 
-                    b.HasIndex("QuestionID");
+                    b.HasKey("UserQAnswerId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserQuestionId");
 
                     b.ToTable("UserQAnswer");
                 });
@@ -342,13 +343,13 @@ namespace Tech_In.Migrations
                     b.Property<int>("UserQAVotingID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AnswerUserQAnswerID");
-
                     b.Property<bool>("IsAnswer");
 
-                    b.Property<int?>("QuestionUserQuestionID");
-
                     b.Property<string>("UserId");
+
+                    b.Property<int?>("UserQAnswerId");
+
+                    b.Property<int?>("UserQuestionId");
 
                     b.Property<int>("Value");
 
@@ -356,18 +357,18 @@ namespace Tech_In.Migrations
 
                     b.HasKey("UserQAVotingID");
 
-                    b.HasIndex("AnswerUserQAnswerID");
-
-                    b.HasIndex("QuestionUserQuestionID");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserQAnswerId");
+
+                    b.HasIndex("UserQuestionId");
 
                     b.ToTable("UserQAVoting");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQuestion", b =>
                 {
-                    b.Property<int>("UserQuestionID")
+                    b.Property<int>("UserQuestionId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
@@ -382,7 +383,7 @@ namespace Tech_In.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("UserQuestionID");
+                    b.HasKey("UserQuestionId");
 
                     b.HasIndex("UserId");
 
@@ -394,13 +395,13 @@ namespace Tech_In.Migrations
                     b.Property<int>("UserSkillID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("SkillTagID");
+                    b.Property<int>("SkillTagId");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("UserSkillID");
 
-                    b.HasIndex("SkillTagID");
+                    b.HasIndex("SkillTagId");
 
                     b.HasIndex("UserId");
 
@@ -431,7 +432,8 @@ namespace Tech_In.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450);
 
                     b.HasKey("UserEducationID");
 
@@ -444,7 +446,7 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Model.UserExperience", b =>
                 {
-                    b.Property<int>("UserExperienceID")
+                    b.Property<int>("UserExperienceId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CityID");
@@ -467,7 +469,7 @@ namespace Tech_In.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("UserExperienceID");
+                    b.HasKey("UserExperienceId");
 
                     b.HasIndex("CityID");
 
@@ -571,13 +573,22 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Database.QuestionSkill", b =>
                 {
-                    b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
+                    b.HasOne("Tech_In.Models.Database.SkillTag", "SkillTag")
                         .WithMany()
-                        .HasForeignKey("QuestionUserQuestionID");
+                        .HasForeignKey("SkillTagId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Tech_In.Models.Database.SkillTag", "Tag")
+                    b.HasOne("Tech_In.Models.Database.UserQuestion", "UserQuestion")
                         .WithMany()
-                        .HasForeignKey("TagSkillTagID");
+                        .HasForeignKey("UserQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.SkillTag", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserCertification", b =>
@@ -589,44 +600,44 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAComment", b =>
                 {
-                    b.HasOne("Tech_In.Models.Database.UserQAnswer", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerUserQAnswerID");
-
-                    b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionUserQuestionID");
-
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserQAComments")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("Tech_In.Models.Database.UserQAnswer", "UserQAnswer")
+                        .WithMany()
+                        .HasForeignKey("UserQAnswerId");
+
+                    b.HasOne("Tech_In.Models.Database.UserQuestion", "UserQuestion")
+                        .WithMany()
+                        .HasForeignKey("UserQuestionId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAnswer", b =>
                 {
-                    b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserQAnswers")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("Tech_In.Models.Database.UserQuestion", "UserQuestion")
+                        .WithMany()
+                        .HasForeignKey("UserQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAVoting", b =>
                 {
-                    b.HasOne("Tech_In.Models.Database.UserQAnswer", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerUserQAnswerID");
-
-                    b.HasOne("Tech_In.Models.Database.UserQuestion", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionUserQuestionID");
-
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserQAVotings")
                         .HasForeignKey("UserId");
+
+                    b.HasOne("Tech_In.Models.Database.UserQAnswer", "UserQAnswer")
+                        .WithMany()
+                        .HasForeignKey("UserQAnswerId");
+
+                    b.HasOne("Tech_In.Models.Database.UserQuestion", "UserQuestion")
+                        .WithMany()
+                        .HasForeignKey("UserQuestionId");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQuestion", b =>
@@ -640,7 +651,8 @@ namespace Tech_In.Migrations
                 {
                     b.HasOne("Tech_In.Models.Database.SkillTag", "SkillTag")
                         .WithMany()
-                        .HasForeignKey("SkillTagID");
+                        .HasForeignKey("SkillTagId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserSkill")
@@ -678,7 +690,7 @@ namespace Tech_In.Migrations
                         .HasForeignKey("CityID")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Tech_In.Models.ApplicationUser", "AUserId")
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserPersonalDetails")
                         .HasForeignKey("UserId");
                 });

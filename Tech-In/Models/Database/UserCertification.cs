@@ -10,7 +10,7 @@ namespace Tech_In.Models.Database
     public class UserCertification
     {
         [Key]
-        public int UserCertificationID { get; set; }
+        public int UserCertificationId { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3), Required]
         public string Name { get; set; }
         [DataType(DataType.Url)]
@@ -24,8 +24,9 @@ namespace Tech_In.Models.Database
         public DateTime ExpirationDate { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3)]
         public string LiscenceNo { get; set; }
-        
+
         //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

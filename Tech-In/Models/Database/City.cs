@@ -13,6 +13,6 @@ namespace Tech_In.Models
         [StringLength(maximumLength:50),Display(Name ="City")]
         public string CityName { get; set; }
         public int CountryID { get; set; }
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
     }
 }

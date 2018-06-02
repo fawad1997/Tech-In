@@ -33,7 +33,7 @@ namespace Tech_In.Controllers
             var uaertoAdd = new ApplicationUser();
             ProfileViewModel PVM = new ProfileViewModel();
 
-            var pd = _context.UserPersonalDetail.SingleOrDefault(m => m.AUserId.Id == user.Id);
+            var pd = _context.UserPersonalDetail.SingleOrDefault(m => m.UserId == user.Id);
             //Populating Data To VM
 
 
@@ -44,6 +44,7 @@ namespace Tech_In.Controllers
             PVM.UserPersonalVM.PhoneNo = user.PhoneNumber;
             PVM.UserPersonalVM.Email = user.Email;
             PVM.UserPersonalVM.DOB = pd.DOB;
+
             if (pd.Gender == Models.Model.Gender.Male)
                 PVM.UserPersonalVM.Gender = Models.ViewModels.ProfileViewModels.Gender.Male;
             else
@@ -72,7 +73,7 @@ namespace Tech_In.Controllers
             if (ModelState.IsValid)
             {
                 var user = _userManager.GetCurrentUser(HttpContext);
-                var pd = _context.UserPersonalDetail.Where(p => p.AUserId.Id == user.Id.ToString()).FirstOrDefault();
+                var pd = _context.UserPersonalDetail.Where(p => p.UserId == user.Id.ToString()).FirstOrDefault();
                 //var pd = new UserPersonalDetail
                 //{
                 //    FirstName = vm.UserPersonalVM.FirstName,
@@ -122,6 +123,31 @@ namespace Tech_In.Controllers
         public IActionResult DeleteUserExperience()
         {
             return null;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUserEducation(ProfileViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetCurrentUser(HttpContext);
+                UserEducation userEducation = new UserEducation
+                {
+                    Title = vm.UserEducationVM.Title,
+                    SchoolName = vm.UserEducationVM.SchoolName,
+                    Details = vm.UserEducationVM.Details,
+                    CurrentStatusCheck = true,
+                    StartDate = vm.UserEducationVM.StartDate,
+                    EndDate = vm.UserEducationVM.EndDate,
+                    CityID = 1,
+                    UserId = user.Id
+                };
+                _context.UserEducation.Add(userEducation);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            return Content("Error" );
         }
 
     }

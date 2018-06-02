@@ -10,7 +10,7 @@ namespace Tech_In.Models.Model
     public class UserExperience
     {
         [Key]
-        public int UserExperienceID { get; set; }
+        public int UserExperienceId { get; set; }
         [StringLength(maximumLength:50,MinimumLength =3),Required]
         public string Title { get; set; }
         [StringLength(maximumLength:200,MinimumLength =10)]
@@ -29,7 +29,8 @@ namespace Tech_In.Models.Model
         public int CityID { get; set; }
         public City City { get; set; }
 
-        //AspNetUser
+        //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

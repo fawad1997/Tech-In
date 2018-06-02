@@ -36,8 +36,9 @@ namespace Tech_In.Models.Model
         public int CityID { get; set; }
         public City City { get; set; }
         //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public virtual ApplicationUser AUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
     public enum Gender

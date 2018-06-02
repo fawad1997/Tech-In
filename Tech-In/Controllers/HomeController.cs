@@ -98,7 +98,7 @@ namespace Tech_In.Controllers
             userPersonal.IsPhonePublic = false;
             userPersonal.LastName = vM.LastName;
             userPersonal.FirstName = vM.FirstName;
-            userPersonal.AUserId.Id = user.Id;
+            userPersonal.UserId = user.Id;
             _context.UserPersonalDetail.Add(userPersonal);
             await _context.SaveChangesAsync();
             return View("Index");
