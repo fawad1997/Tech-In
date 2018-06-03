@@ -41,11 +41,11 @@ namespace Tech_In.Controllers
             var cities = _context.City.ToList();
             foreach(var city in cities)
             {
-                vm.Cities.Add(new SelectListItem { Value = city.CityID.ToString(), Text = city.CityName });
+                vm.Cities.Add(new SelectListItem { Value = city.CityId.ToString(), Text = city.CityName });
             }
             foreach(var country in countries)
             {
-                vm.Countries.Add(new SelectListItem { Value = country.CountryID.ToString(), Text = country.CountryName });
+                vm.Countries.Add(new SelectListItem { Value = country.CountryId.ToString(), Text = country.CountryName });
             }
             return View(vm);
         }
@@ -89,7 +89,7 @@ namespace Tech_In.Controllers
             var user = await _userManager.GetCurrentUser(HttpContext);
             UserPersonalDetail userPersonal = new UserPersonalDetail();
             userPersonal.City = vM.City;
-            userPersonal.CityID = vM.City.CityID;
+            userPersonal.CityID = vM.City.CityId;
             userPersonal.CVImage = vM.CVImage;
             userPersonal.DOB = vM.DOB;
             userPersonal.IsDOBPublic = vM.DOBVisibility;

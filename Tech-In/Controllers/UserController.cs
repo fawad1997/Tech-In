@@ -49,19 +49,26 @@ namespace Tech_In.Controllers
                 PVM.UserPersonalVM.Gender = Models.ViewModels.ProfileViewModels.Gender.Male;
             else
                 PVM.UserPersonalVM.Gender = Models.ViewModels.ProfileViewModels.Gender.Female;
-            PVM.UserPersonalVM.City = _context.City.Where(c => c.CityID == pd.CityID).FirstOrDefault();
-            int conID = PVM.UserPersonalVM.City.CountryID;
-            PVM.UserPersonalVM.Country = _context.Country.Where(cit => cit.CountryID==conID).FirstOrDefault();
+            PVM.UserPersonalVM.City = _context.City.Where(c => c.CityId == pd.CityID).FirstOrDefault();
+            int conID = PVM.UserPersonalVM.City.CountryId;
+            PVM.UserPersonalVM.Country = _context.Country.Where(cit => cit.CountryId==conID).FirstOrDefault();
             var cities = _context.City.ToList();
             var countries = _context.Country.ToList();
             foreach (var city in cities)
             {
-                PVM.UserPersonalVM.Cities.Add(new SelectListItem { Value = city.CityID.ToString(), Text = city.CityName });
+                PVM.UserPersonalVM.Cities.Add(new SelectListItem { Value = city.CityId.ToString(), Text = city.CityName });
             }
             foreach (var country in countries)
             {
-                PVM.UserPersonalVM.Countries.Add(new SelectListItem { Value = country.CountryID.ToString(), Text = country.CountryName });
+                PVM.UserPersonalVM.Countries.Add(new SelectListItem { Value = country.CountryId.ToString(), Text = country.CountryName });
             }
+
+
+
+            List<ExperienceVM> userExperienceList = _context.UserExperience.Where(x => x.UserId == user.Id).Select(c => new ExperienceVM { Title = c.Title, UserExperienceId = c.UserExperienceId, CityId = c.CityID, CityName = c.City.CityName, CountryName=c.City.Country.CountryName,CompanyName = c.CompanyName, CurrentWorkCheck = c.CurrentWorkCheck, Description = c.Description, StartDate = c.StartDate, EndDate = c.EndDate }).ToList();
+            ViewBag.UserExperienceList = userExperienceList;
+
+          //  ViewBag.CountryList = new SelectList(GetCountryList(), "CountryID", "CountryName");
 
             return View(PVM);
         }
@@ -148,6 +155,70 @@ namespace Tech_In.Controllers
                 return RedirectToAction("Index");
             }
             return Content("Error" );
+        }
+
+        public IActionResult AddEditUserExperience(int Id)
+        {
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+            ExperienceVM vm = new ExperienceVM();
+            if (Id > 0)
+            {
+                UserExperience exp = _context.UserExperience.SingleOrDefault(x => x.UserExperienceId == Id);
+                vm.Title = exp.Title;
+                vm.CompanyName = exp.CompanyName;
+                vm.CityId = exp.CityID;
+                vm.CurrentWorkCheck = exp.CurrentWorkCheck;
+                vm.Description = exp.Description;
+                vm.StartDate = exp.StartDate;
+                vm.EndDate = exp.EndDate;
+            }
+            return PartialView(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateExperience(ExperienceVM vm)
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if (vm.UserExperienceId > 0)
+            {
+                UserExperience exp= _context.UserExperience.SingleOrDefault(x => x.UserExperienceId == vm.UserExperienceId);
+                exp.Title = vm.Title;
+                exp.CompanyName = vm.CompanyName;
+                exp.CityID = vm.CityId;
+                exp.CurrentWorkCheck = vm.CurrentWorkCheck;
+                exp.Description = vm.Description;
+                exp.StartDate = vm.StartDate;
+                exp.EndDate = vm.EndDate;
+            }
+            else
+            {
+                UserExperience exp = new UserExperience();
+                exp.Title = vm.Title;
+                exp.CompanyName = vm.CompanyName;
+                exp.CityID = vm.CityId;
+                exp.CurrentWorkCheck = vm.CurrentWorkCheck;
+                exp.Description = vm.Description;
+                exp.StartDate = vm.StartDate;
+                exp.EndDate = vm.EndDate;
+                exp.UserId = user.Id;
+                _context.UserExperience.Add(exp);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+            //return View("Index");
+        }
+
+        public List<Country> GetCountryList()
+        {
+            List<Country> countries = _context.Country.ToList();
+            return countries;
+        }
+
+        public IActionResult GetCitiesList(int CountryId)
+        {
+            List<City> cities = _context.City.Where(x => x.CountryId == CountryId).ToList();
+            ViewBag.CitiesList = new SelectList(cities, "CityId", "CityName");
+            return PartialView("CitiesPartial");
         }
 
     }

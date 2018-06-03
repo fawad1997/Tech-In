@@ -9,10 +9,10 @@ namespace Tech_In.Models
     public class City
     {
         [Key]
-        public int CityID { get; set; }
+        public int CityId { get; set; }
         [StringLength(maximumLength:50),Display(Name ="City")]
         public string CityName { get; set; }
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
         public virtual Country Country { get; set; }
     }
 }

@@ -12,9 +12,10 @@ using Tech_In.Models.Model;
 namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180602162812_test1")]
+    partial class test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,24 +183,24 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.City", b =>
                 {
-                    b.Property<int>("CityId")
+                    b.Property<int>("CityID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CityName")
                         .HasMaxLength(50);
 
-                    b.Property<int>("CountryId");
+                    b.Property<int>("CountryID");
 
-                    b.HasKey("CityId");
+                    b.HasKey("CityID");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("CountryID");
 
                     b.ToTable("City");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Country", b =>
                 {
-                    b.Property<int>("CountryId")
+                    b.Property<int>("CountryID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CountryCode")
@@ -213,7 +214,7 @@ namespace Tech_In.Migrations
                     b.Property<string>("CountryPhoneCode")
                         .HasMaxLength(5);
 
-                    b.HasKey("CountryId");
+                    b.HasKey("CountryID");
 
                     b.ToTable("Country");
                 });
@@ -567,7 +568,7 @@ namespace Tech_In.Migrations
                 {
                     b.HasOne("Tech_In.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryId")
+                        .HasForeignKey("CountryID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

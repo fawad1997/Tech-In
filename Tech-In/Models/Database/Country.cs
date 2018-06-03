@@ -9,7 +9,7 @@ namespace Tech_In.Models
     public class Country
     {
         [Key]
-        public int CountryID { get; set; }
+        public int CountryId { get; set; }
 
         [StringLength(maximumLength:50),Display(Name ="Country"),Required]
         public string CountryName { get; set; }

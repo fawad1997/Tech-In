@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Profile";
 }
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <!-- Blog -->
 <div id="blog" class="section sm-padding">
 
@@ -31,7 +32,7 @@
                     <i class="fa fa-briefcase"></i>
                     <h2 class="profile-name profile-less inline"> Student at Capital University of Science & Technology</h2>
                     <hr class="col-xs-12">
-                    <br/>
+                    <br />
                     <p>
                         @Model.UserPersonalVM.Summary
                     </p>
@@ -205,6 +206,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <!--Experience-->
                                 <div class="post">
                                     <div class="row">
@@ -215,7 +217,7 @@
                                             </h6>
                                             <br />
                                             <!--Add-->
-                                            <div class="right-post-icon-div" data-toggle="modal" data-target="#addExperienceModal">
+                                            <div class="right-post-icon-div" onclick="AddEditExp(0)">
                                                 <div class="round-icon-back">
                                                     <i class="fa fa-plus"></i>
                                                 </div>
@@ -223,60 +225,49 @@
                                             <!--/Add-->
                                             <hr />
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xs-3 col-md-2">
-                                                <img src="~/images/java.png" alt="" class="img-thumbnail margin-left20" />
-                                            </div>
-                                            <div class="col-xs-9 col-md-10">
-                                                <strong class="small-h">Java Developer</strong>
-                                                <!--Edit-->
-                                                <div class="edit-exp-round">
-                                                    <div class="round-icon-back" data-toggle="modal" data-target="#addExperienceModal">
-                                                        <i class="fa fa-pencil"></i>
+                                        @if (ViewBag.UserExperienceList != null)
+                                        {
+                                            foreach(var item in ViewBag.UserExperienceList)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-xs-3 col-md-2">
+                                                        <img src="~/images/noimg.svg" alt="" class="img-thumbnail margin-left20" />
+                                                    </div>
+                                                    <div class="col-xs-9 col-md-10">
+                                                        <strong class="small-h">@item.Title</strong>
+                                                        <!--Edit-->
+                                                        <div class="edit-exp-round">
+                                                            <div class="round-icon-back" data-toggle="modal" data-target="#addExperienceModal">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </div>
+                                                        </div>
+                                                        <!--/Edit-->
+                                                        <p class="xsmall-h">
+                                                            @item.CompanyName, @item.CityName, @item.CountryName
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                        </p>
+                                                        <p class="black">@item.Description</p>
+                                                        <p>
+                                                            @item.StartDate - @if (item.CurrentWorkCheck)
+                                                            { <span>Current</span> }
+                                                            else {
+                                                                @item.EndDate
+                                                                  }
+                                                            &bull;
+                                                            <small>1 Month</small>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-xs-12">
+                                                        <hr class="margin-both-lr" />
                                                     </div>
                                                 </div>
-                                                <!--/Edit-->
-                                                <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                </p>
-                                                <p class="black">You can write 100 words description here...</p>
-                                                <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
-                                                </p>
-                                            </div>
-                                            <div class="col-xs-12">
-                                                <hr class="margin-both-lr" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-3 col-md-2">
-                                                <img src="~/images/java.png" alt="" class="img-thumbnail margin-left20" />
-                                            </div>
-                                            <div class="col-xs-9 col-md-10">
-                                                <strong class="small-h">Java Developer</strong>
-                                                <!--Edit-->
-                                                <div class="edit-exp-round" data-toggle="modal" data-target="#addExperienceModal">
-                                                    <div class="round-icon-back">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </div>
-                                                </div>
-                                                <!--/Edit-->
-                                                <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                </p>
-                                                <p class="black">You can write 100 words description here...</p>
-                                                <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
-                                                </p>
-                                            </div>
-                                        </div>
+
+                                            }
+                                        }
                                     </div>
                                 </div>
                                 <!--/Experience-->
+
                                 <!--Education-->
                                 <div class="post">
                                     <div class="row">
@@ -514,13 +505,13 @@
                                 <!--Country-->
                                 <div class="form-group">
                                     <label asp-for="UserPersonalVM.Country" class="control-label"></label>
-                                    <select class="form-control" asp-for="UserPersonalVM.Country.CountryID" asp-items="Model.UserPersonalVM.Countries"></select>
+                                    <select class="form-control" asp-for="UserPersonalVM.Country.CountryId" asp-items="Model.UserPersonalVM.Countries"></select>
                                 </div>
                                 <!--/Country-->
                                 <!--City-->
                                 <div class="form-group">
                                     <label asp-for="UserPersonalVM.City" class="control-label"></label>
-                                    <select class="form-control" asp-for="UserPersonalVM.City.CityID" asp-items="Model.UserPersonalVM.Cities"></select>
+                                    <select class="form-control" asp-for="UserPersonalVM.City.CityId" asp-items="Model.UserPersonalVM.Cities"></select>
                                 </div>
                                 <!--/City-->
                             </div>
@@ -533,78 +524,24 @@
                 </div>
             </div>
             @* /Personal Model *@
-            @* Experience Add *@
 
-            <div class="modal fade" id="addExperienceModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+            @* Add/Edit Experience Modal Show *@
+            <div class="modal fade" id="myExp">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">Add Experience</h4>
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Experience</h3>
                         </div>
-                        <div class="modal-body">
-                            <form>
-                                <!--Title-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Title:</label>
-                                    <input type="text" class="input">
-                                </div>
-                                <!--/Title-->
-                                <!--Company-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Company:</label>
-                                    <input type="text" class="input">
-                                </div>
-                                <!--/Company-->
-                                <!--Location-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Location:</label>
-                                    <input type="text" class="input">
-                                </div>
-                                <!--/Location-->
-                                <!--Text Area-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Description:</label>
-                                    <textarea class="input" placeholder="Description"></textarea>
-                                </div>
-                                <!--/Text Area-->
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!--Start Date-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">From:</label>
-                                            <input type="date" class="input">
-                                        </div>
-                                        <!--/Start Date-->
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <!--End Date-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">To:</label>
-                                            <input type="date" class="input" id="recipient-name">
-                                        </div>
-                                        <!--/End Date-->
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
-                                        <label for="customCheck1">I currently work here</label>
-                                    </div>
-                                </div>
+                        <div class="modal-body" id="viewExpBody">
 
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="main-btn">Save</button>
+
                         </div>
                     </div>
                 </div>
             </div>
-            @* /Experience Add *@
+            @* /Add/Edit Experience Modal Show *@
+
             @* Education Add *@
             <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -632,9 +569,9 @@
                                 <!--/Company-->
                                 <!--Location-->
                                 @*<div class="form-group">
-                    <label for="recipient-name" class="control-label">Field of Study:</label>
-                    <input type="text" class="input" asp-for="UserEducationVM.">
-                </div>*@
+                                <label for="recipient-name" class="control-label">Field of Study:</label>
+                                <input type="text" class="input" asp-for="UserEducationVM.">
+                            </div>*@
                                 <!--/Location-->
                                 <!--Text Area-->
                                 <div class="form-group">
@@ -708,6 +645,7 @@
             @* /Skill Add *@
 
 
+
             <!--/Modals-->
             <!-- Aside -->
             <aside id="aside" class="col-md-3">
@@ -735,3 +673,19 @@
 
 </div>
 <!-- /Blog -->
+<script>
+    $(document).ready(function () {
+        
+
+    })
+//Add and Edit Experience Modal Show Function
+    var AddEditExp = function (id) {
+        var url = "/User/AddEditUserExperience?Id=" + id;
+
+        $("#viewExpBody").load(url, function () {
+            $("#myExp").modal("show");
+
+        })
+
+    }
+</script>

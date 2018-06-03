@@ -12,8 +12,8 @@ using Tech_In.Models.Model;
 namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180602162058_test1")]
-    partial class test1
+    [Migration("20180603060556_test2")]
+    partial class test2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,24 +183,24 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.City", b =>
                 {
-                    b.Property<int>("CityID")
+                    b.Property<int>("CityId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CityName")
                         .HasMaxLength(50);
 
-                    b.Property<int>("CountryID");
+                    b.Property<int>("CountryId");
 
-                    b.HasKey("CityID");
+                    b.HasKey("CityId");
 
-                    b.HasIndex("CountryID");
+                    b.HasIndex("CountryId");
 
                     b.ToTable("City");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Country", b =>
                 {
-                    b.Property<int>("CountryID")
+                    b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CountryCode")
@@ -214,7 +214,7 @@ namespace Tech_In.Migrations
                     b.Property<string>("CountryPhoneCode")
                         .HasMaxLength(5);
 
-                    b.HasKey("CountryID");
+                    b.HasKey("CountryId");
 
                     b.ToTable("Country");
                 });
@@ -568,7 +568,7 @@ namespace Tech_In.Migrations
                 {
                     b.HasOne("Tech_In.Models.Country", "Country")
                         .WithMany("Cities")
-                        .HasForeignKey("CountryID")
+                        .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
