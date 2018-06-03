@@ -225,49 +225,59 @@
                                             <!--/Add-->
                                             <hr />
                                         </div>
+                                        <input type="hidden" id="hiddenExpId" />
                                         @if (ViewBag.UserExperienceList != null)
-                                        {
-                                            foreach(var item in ViewBag.UserExperienceList)
-                                            {
-                                                <div class="row">
-                                                    <div class="col-xs-3 col-md-2">
-                                                        <img src="~/images/noimg.svg" alt="" class="img-thumbnail margin-left20" />
-                                                    </div>
-                                                    <div class="col-xs-9 col-md-10">
-                                                        <strong class="small-h">@item.Title</strong>
-                                                        <!--Edit-->
-                                                        <div class="edit-exp-round">
-                                                            <div class="round-icon-back" data-toggle="modal" data-target="#addExperienceModal">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </div>
-                                                        </div>
-                                                        <!--/Edit-->
-                                                        <p class="xsmall-h">
-                                                            @item.CompanyName, @item.CityName, @item.CountryName
-                                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                        </p>
-                                                        <p class="black">@item.Description</p>
-                                                        <p>
-                                                            @item.StartDate - @if (item.CurrentWorkCheck)
-                                                            { <span>Current</span> }
-                                                            else {
-                                                                @item.EndDate
-                                                                  }
-                                                            &bull;
-                                                            <small>1 Month</small>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-xs-12">
-                                                        <hr class="margin-both-lr" />
+                                {
+                                    foreach (var item in ViewBag.UserExperienceList)
+                                    {
+                                        <div class="row" id="row_exp_@item.UserExperienceId">
+                                            <div class="col-xs-3 col-md-2">
+                                                <img src="~/images/noimg.svg" alt="" class="img-thumbnail margin-left20" />
+                                            </div>
+                                            <div class="col-xs-9 col-md-10">
+                                                <strong class="small-h">@item.Title</strong>
+                                                <!--Delete-->
+                                                <div onclick="confirmDelExp(@item.UserExperienceId)" class="delete-exp-round">
+                                                    <div class="round-icon-back-del" data-toggle="modal" data-target="#addExperienceModal">
+                                                        <i class="fa fa-trash-o"></i>
                                                     </div>
                                                 </div>
+                                                <!--/Delete-->
+                                                <!--Edit-->
+                                                <div onclick="AddEditExp(@item.UserExperienceId)" class="edit-exp-round">
+                                                    <div class="round-icon-back" data-toggle="modal" data-target="#addExperienceModal">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </div>
+                                                </div>
+                                                <!--/Edit-->
+                                                <p class="xsmall-h">
+                                                    @item.CompanyName, @item.CityName, @item.CountryName
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                </p>
+                                                <p class="black">@item.Description</p>
+                                                <p>
+                                                    @item.StartDate.ToString("dd MMM yyyy") -
+                                                    @if (item.CurrentWorkCheck)
+                                            {<span>Current</span> }
+                                    else
+                                    {
 
-                                            }
-                                        }
+                                        @item.EndDate.ToString("dd MMM yyyy")
+                                    }
+                                                    &bull;
+                                                    @*<small>1 Month</small>*@
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <hr class="margin-both-lr" />
+                                            </div>
+                                        </div>
+
+                            }
+                        }
                                     </div>
                                 </div>
                                 <!--/Experience-->
-
                                 <!--Education-->
                                 <div class="post">
                                     <div class="row">
@@ -542,6 +552,32 @@
             </div>
             @* /Add/Edit Experience Modal Show *@
 
+            @* Delete Experience Modal *@
+            <div class="modal fade" id="delExpModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Delete User Experience</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Are you sure ? You want to delete this. </h6>
+                            <div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDiv">
+                                <div style="position: relative; left: -50%;">
+                                    <img src="~/images/load.gif" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                            <a href="#" class="btn btn-danger" onclick="DeleteExperience()">Confirm</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @* /Delete Experience Modal *@
+
             @* Education Add *@
             <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -675,8 +711,7 @@
 <!-- /Blog -->
 <script>
     $(document).ready(function () {
-        
-
+       
     })
 //Add and Edit Experience Modal Show Function
     var AddEditExp = function (id) {
@@ -687,5 +722,27 @@
 
         })
 
+    }
+
+    //Delete Experiec=nce Model Popup
+    var confirmDelExp = function (id) {
+        $("#hiddenExpId").val(id);
+        $("#delExpModal").modal('show');
+    }
+    //Delete Experience
+    var DeleteExperience = function () {
+        $("#loaderDiv").show();
+        var empId = $("#hiddenExpId").val();
+        $.ajax({
+            type: "POST",
+            url: "/User/DeleteUserExperience",
+            data: { Id: empId },
+            success: function (result) {
+                $("#loaderDiv").hide();
+                $("#delExpModal").modal('hide');
+                $("#row_exp_" + empId).remove();
+            }
+
+        })
     }
 </script>

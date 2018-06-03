@@ -94,6 +94,7 @@ namespace Tech_In.Controllers
             return RedirectToAction("Index");
         }
 
+
         public IActionResult Resume()
         {
             //Get Object from parameter and generate Resume
@@ -119,18 +120,8 @@ namespace Tech_In.Controllers
                 return View("Null");
             return Content(user.Id);
         }
-        public IActionResult AddUserExperience()
-        {
-            return null;
-        }
-        public IActionResult UpdateUserExperience()
-        {
-            return null;
-        }
-        public IActionResult DeleteUserExperience()
-        {
-            return null;
-        }
+       
+       
 
         [HttpPost]
         public async Task<IActionResult> AddUserEducation(ProfileViewModel vm)
@@ -157,6 +148,8 @@ namespace Tech_In.Controllers
             return Content("Error" );
         }
 
+        //User Experience
+
         public IActionResult AddEditUserExperience(int Id)
         {
             ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
@@ -171,6 +164,7 @@ namespace Tech_In.Controllers
                 vm.Description = exp.Description;
                 vm.StartDate = exp.StartDate;
                 vm.EndDate = exp.EndDate;
+                vm.UserExperienceId = Id;
             }
             return PartialView(vm);
         }
@@ -206,6 +200,20 @@ namespace Tech_In.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
             //return View("Index");
+        }
+
+        public JsonResult DeleteUserExperience(int Id)
+        {
+            bool result = false;
+            UserExperience exp = _context.UserExperience.SingleOrDefault(x => x.UserExperienceId == Id);
+            if (exp != null)
+            {
+                _context.Remove(exp);
+                _context.SaveChanges();
+                result = true;
+            }
+            
+            return Json(result);
         }
 
         public List<Country> GetCountryList()
