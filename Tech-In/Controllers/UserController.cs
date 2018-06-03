@@ -318,7 +318,7 @@ namespace Tech_In.Controllers
             List<Country> countries = _context.Country.ToList();
             return countries;
         }
-
+        
         public IActionResult GetCitiesList(int CountryId)
         {
             List<City> cities = _context.City.Where(x => x.CountryId == CountryId).ToList();

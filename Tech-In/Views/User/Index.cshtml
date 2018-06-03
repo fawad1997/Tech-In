@@ -178,8 +178,13 @@
                                                     <br />
                                                     <strong>Last Name : </strong>
                                                     <br />
-                                                    <strong>Phone no : </strong>
-                                                    <br />
+                                                    @if (@Model.UserPersonalVM.PhoneNo != null)
+    {
+                                                <strong>Phone no : </strong>
+                                                <br />
+
+}
+
                                                     <strong>Email : </strong>
                                                     <br />
                                                     <strong>Date of Birth : </strong>

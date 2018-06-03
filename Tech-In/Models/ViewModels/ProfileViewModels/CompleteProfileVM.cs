@@ -33,11 +33,9 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
 
         public Gender Gender { get; set; }
 
-        public City City { get; set; }
-        public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
-
-        public Country Country { get; set; }
-        public List<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
+        public int CityId { get; set; }
+        public int CountryId { get; set; }
+        
     }
 
     public enum Gender
