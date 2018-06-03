@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Tech_In.Data;
 using Tech_In.Models;
+using Tech_In.Models.Database;
 using Tech_In.Models.Model;
 using Tech_In.Models.ViewModels.ProfileViewModels;
 using Tech_In.Services;
@@ -68,6 +69,11 @@ namespace Tech_In.Controllers
             List<ExperienceVM> userExperienceList = _context.UserExperience.Where(x => x.UserId == user.Id).Select(c => new ExperienceVM { Title = c.Title, UserExperienceId = c.UserExperienceId, CityId = c.CityID, CityName = c.City.CityName, CountryName=c.City.Country.CountryName,CompanyName = c.CompanyName, CurrentWorkCheck = c.CurrentWorkCheck, Description = c.Description, StartDate = c.StartDate, EndDate = c.EndDate }).ToList();
             ViewBag.UserExperienceList = userExperienceList;
 
+            List<EducationVM> userEducationList = _context.UserEducation.Where(x => x.UserId == user.Id).Select(c => new EducationVM { Title = c.Title, Details = c.Details, SchoolName = c.SchoolName, StartDate = c.StartDate, EndDate = c.EndDate, CurrentStatusCheck = c.CurrentStatusCheck, CityId = c.CityId, CityName = c.City.CityName, CountryName = c.City.Country.CountryName, UserEducationID=c.UserEducationId }).ToList();
+            ViewBag.UserEducationList = userEducationList;
+
+            List<CertificationVM> userCertificationList = _context.UserCertification.Where(x => x.UserId == user.Id).Select(c => new CertificationVM { Name = c.Name, URL = c.URL, UserCertificationId = c.UserCertificationId, LiscenceNo = c.LiscenceNo, CertificationDate = c.CertificationDate, ExpirationDate = c.ExpirationDate }).ToList();
+            ViewBag.UserCertificationList = userCertificationList;
           //  ViewBag.CountryList = new SelectList(GetCountryList(), "CountryID", "CountryName");
 
             return View(PVM);
@@ -111,42 +117,7 @@ namespace Tech_In.Controllers
             byte[] abytes = userPDF.PrepareReport();
             return File(abytes, "application/pdf");
         }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> GetID()
-        {
-            var user = await _userManager.GetCurrentUser(HttpContext);
-            if (user == null)
-                return View("Null");
-            return Content(user.Id);
-        }
        
-       
-
-        [HttpPost]
-        public async Task<IActionResult> AddUserEducation(ProfileViewModel vm)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.GetCurrentUser(HttpContext);
-                UserEducation userEducation = new UserEducation
-                {
-                    Title = vm.UserEducationVM.Title,
-                    SchoolName = vm.UserEducationVM.SchoolName,
-                    Details = vm.UserEducationVM.Details,
-                    CurrentStatusCheck = true,
-                    StartDate = vm.UserEducationVM.StartDate,
-                    EndDate = vm.UserEducationVM.EndDate,
-                    CityID = 1,
-                    UserId = user.Id
-                };
-                _context.UserEducation.Add(userEducation);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-            return Content("Error" );
-        }
 
         //User Experience
 
@@ -216,6 +187,132 @@ namespace Tech_In.Controllers
             return Json(result);
         }
 
+        //User Education
+        public IActionResult AddEditUserEducation(int Id)
+        {
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+            EducationVM vm = new EducationVM();
+            if (Id > 0)
+            {
+                UserEducation edu = _context.UserEducation.SingleOrDefault(x => x.UserEducationId == Id);
+                vm.Title = edu.Title;
+                vm.SchoolName = edu.SchoolName;
+                vm.Details = edu.Details;
+                vm.StartDate = edu.StartDate;
+                vm.EndDate = edu.EndDate;
+                vm.CurrentStatusCheck = edu.CurrentStatusCheck;
+                vm.CityId = edu.CityId;
+                vm.UserEducationID = edu.UserEducationId;
+            }
+            return PartialView(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEducation(EducationVM vm)
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if (vm.UserEducationID > 0)
+            {
+                UserEducation edu = _context.UserEducation.SingleOrDefault(x => x.UserEducationId == vm.UserEducationID);
+                edu.Title = vm.Title;
+                edu.SchoolName = vm.SchoolName;
+                edu.CityId = vm.CityId;
+                edu.CurrentStatusCheck = vm.CurrentStatusCheck;
+                edu.Details = vm.Details;
+                edu.StartDate = vm.StartDate;
+                edu.EndDate = vm.EndDate;
+            }
+            else
+            {
+                UserEducation edu = new UserEducation();
+                edu.Title = vm.Title;
+                edu.SchoolName = vm.SchoolName;
+                edu.CityId = vm.CityId;
+                edu.CurrentStatusCheck = vm.CurrentStatusCheck;
+                edu.Details = vm.Details;
+                edu.StartDate = vm.StartDate;
+                edu.EndDate = vm.EndDate;
+                edu.UserId = user.Id;
+                _context.UserEducation.Add(edu);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+            //return View("Index");
+        }
+
+        public JsonResult DeleteUserEducation(int Id)
+        {
+            bool result = false;
+            UserEducation edu = _context.UserEducation.SingleOrDefault(x => x.UserEducationId == Id);
+            if (edu != null)
+            {
+                _context.Remove(edu);
+                _context.SaveChanges();
+                result = true;
+            }
+
+            return Json(result);
+        }
+
+        //Certification
+        public IActionResult AddEditUserCertification(int Id)
+        {
+            CertificationVM vm = new CertificationVM();
+            if (Id > 0)
+            {
+                UserCertification cert = _context.UserCertification.SingleOrDefault(x => x.UserCertificationId == Id);
+                vm.Name = cert.Name;
+                vm.CertificationDate = cert.CertificationDate;
+                vm.ExpirationDate = cert.ExpirationDate;
+                vm.LiscenceNo = cert.LiscenceNo;
+                vm.URL = cert.URL;
+                vm.UserCertificationId = cert.UserCertificationId;
+            }
+            return PartialView(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCertification(CertificationVM vm)
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if (vm.UserCertificationId > 0)
+            {
+                UserCertification cert = _context.UserCertification.SingleOrDefault(x => x.UserCertificationId == vm.UserCertificationId);
+                cert.Name = vm.Name;
+                cert.CertificationDate = vm.CertificationDate;
+                cert.ExpirationDate = vm.ExpirationDate;
+                cert.LiscenceNo = vm.LiscenceNo;
+                cert.URL = vm.URL;
+            }
+            else
+            {
+                UserCertification cert = new UserCertification();
+                cert.Name = vm.Name;
+                cert.CertificationDate = vm.CertificationDate;
+                cert.ExpirationDate = vm.ExpirationDate;
+                cert.LiscenceNo = vm.LiscenceNo;
+                cert.URL = vm.URL;
+                cert.UserId = user.Id;
+                _context.UserCertification.Add(cert);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+            //return View("Index");
+        }
+
+        public JsonResult DeleteUserCertification(int Id)
+        {
+            bool result = false;
+            UserCertification cert = _context.UserCertification.SingleOrDefault(x => x.UserCertificationId == Id);
+            if (cert != null)
+            {
+                _context.Remove(cert);
+                _context.SaveChanges();
+                result = true;
+            }
+
+            return Json(result);
+        }
         public List<Country> GetCountryList()
         {
             List<Country> countries = _context.Country.ToList();
@@ -228,6 +325,16 @@ namespace Tech_In.Controllers
             ViewBag.CitiesList = new SelectList(cities, "CityId", "CityName");
             return PartialView("CitiesPartial");
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> GetID()
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if (user == null)
+                return View("Null");
+            return Content(user.Id);
+        }
+
 
     }
 }

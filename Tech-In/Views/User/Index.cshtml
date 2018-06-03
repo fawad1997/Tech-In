@@ -226,7 +226,7 @@
                                             <hr />
                                         </div>
                                         <input type="hidden" id="hiddenExpId" />
-                                        @if (ViewBag.UserExperienceList != null)
+                                        @if (ViewBag.UserExperienceList != null && ViewBag.UserExperienceList.Count != 0)
                                 {
                                     foreach (var item in ViewBag.UserExperienceList)
                                     {
@@ -263,7 +263,7 @@
                                     {
 
                                         @item.EndDate.ToString("dd MMM yyyy")
-                                    }
+                            }
                                                     &bull;
                                                     @*<small>1 Month</small>*@
                                                 </p>
@@ -275,6 +275,14 @@
 
                             }
                         }
+                        else
+                        {
+                            <div class="row">
+                                <p class="xsmall-h"><center>No Experience</center></p>
+                            </div>
+
+
+                }
                                     </div>
                                 </div>
                                 <!--/Experience-->
@@ -285,32 +293,51 @@
                                             <h6 class="inline small-h">Education</h6>
                                             <br />
                                             <!--Add-->
-                                            <div class="right-post-icon-div">
-                                                <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
+                                            <div class="right-post-icon-div" onclick="viewEduModal(0)">
+                                                <div class="round-icon-back">
                                                     <i class="fa fa-plus"></i>
                                                 </div>
                                             </div>
                                             <!--/Add-->
                                             <hr />
                                         </div>
-                                        <div class="row">
+                                        <input type="hidden" id="hiddenEduId" />
+                                        @if (ViewBag.UserEducationList != null && ViewBag.UserEducationList.Count != 0)
+                                {
+                                    foreach (var item in ViewBag.UserEducationList)
+                                    {
+                                        <div class="row" id="row_exp_@item.UserEducationID">
                                             <div class="col-xs-12 margin-both-lr">
-                                                <strong class="small-h">Java Developer</strong>
+                                                <strong class="small-h">@item.Title</strong>
+                                                <!--Delete-->
+                                                <div onclick="confirmDelEdu(@item.UserEducationID)" class="delete-exp-round">
+                                                    <div class="round-icon-back-del" data-toggle="modal" data-target="#addExperienceModal">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </div>
+                                                </div>
+                                                <!--/Delete-->
                                                 <!--Edit-->
-                                                <div class="edit-exp-round">
-                                                    <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
+                                                <div class="edit-exp-round" onclick="viewEduModal(@item.UserEducationID)">
+                                                    <div class="round-icon-back">
                                                         <i class="fa fa-pencil"></i>
                                                     </div>
                                                 </div>
                                                 <!--/Edit-->
                                                 <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
+                                                    @item.SchoolName, @item.CityName, @item.CountryName
                                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                 </p>
-                                                <p class="black">You can write 100 words description here...</p>
+                                                <p class="black">@item.Details</p>
                                                 <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
+                                                    @item.StartDate.ToString("dd MMM yyyy") -
+                                                    @if (item.CurrentStatusCheck)
+                                            {<span>Current</span> }
+                                    else
+                                    {
+
+                                        @item.EndDate.ToString("dd MMM yyyy")
+                            }
+                                                    @*<small>1 Month</small>*@
                                                 </p>
                                             </div>
                                             <div class="col-xs-12">
@@ -318,27 +345,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-xs-12 margin-both-lr">
-                                                <strong class="small-h">Java Developer</strong>
-                                                <!--Edit-->
-                                                <div class="edit-exp-round">
-                                                    <div class="round-icon-back" data-toggle="modal" data-target="#addEducationModal">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </div>
-                                                </div>
-                                                <!--/Edit-->
-                                                <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                </p>
-                                                <p class="black">You can write 100 words description here...</p>
-                                                <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
-                                                </p>
-                                            </div>
-                                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <p class="xsmall-h"><center>No Education</center></p>
+                            </div>
+
+                }
+
                                     </div>
                                 </div>
                                 <!--/Education-->
@@ -373,14 +389,14 @@
                                     </div>
                                 </div>
                                 <!--/Skills-->
-                                <!--Education-->
+                                <!--Certification-->
                                 <div class="post">
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <h6 class="inline small-h">Certifications</h6>
                                             <br />
                                             <!--Add-->
-                                            <div class="right-post-icon-div">
+                                            <div class="right-post-icon-div" onclick="viewCertModal(0)">
                                                 <div class="round-icon-back">
                                                     <i class="fa fa-plus"></i>
                                                 </div>
@@ -388,52 +404,60 @@
                                             <!--/Add-->
                                             <hr />
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xs-12 margin-both-lr">
-                                                <strong class="small-h">Java Developer</strong>
-                                                <!--Edit-->
-                                                <div class="edit-exp-round">
-                                                    <div class="round-icon-back">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </div>
+                                        <input type="hidden" id="hiddenCertId" />
+                                        @if (ViewBag.UserCertificationList != null && ViewBag.UserCertificationList.Count != 0)
+    {
+        foreach (var item in ViewBag.UserCertificationList)
+        {
+                                    <div class="row" id="row_cert_@item.UserCertificationId">
+                                        <div class="col-xs-12 margin-both-lr">
+                                            <strong class="small-h">@item.Name</strong>
+                                            <!--Delete-->
+                                            <div onclick="confirmDelCert(@item.UserCertificationId)" class="delete-exp-round">
+                                                <div class="round-icon-back-del">
+                                                    <i class="fa fa-trash-o"></i>
                                                 </div>
-                                                <!--/Edit-->
-                                                <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                </p>
-                                                <p class="black">You can write 100 words description here...</p>
-                                                <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
-                                                </p>
                                             </div>
-                                            <div class="col-xs-12">
-                                                <hr class="margin-both-lr" />
+                                            <!--/Delete-->
+                                            <!--Edit-->
+                                            <div class="edit-exp-round" onclick="viewCertModal(@item.UserCertificationId)">
+                                                <div class="round-icon-back">
+                                                    <i class="fa fa-pencil"></i>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <!--/Edit-->
+                                            @if (@item.URL != null)
+        {
+                                    <p class="xsmall-h">
+                                        Url : @item.URL
 
-                                        <div class="row">
-                                            <div class="col-xs-12 margin-both-lr">
-                                                <strong class="small-h">Java Developer</strong>
-                                                <!--Edit-->
-                                                <div class="edit-exp-round">
-                                                    <div class="round-icon-back">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </div>
-                                                </div>
-                                                <!--/Edit-->
-                                                <p class="xsmall-h">
-                                                    VIRE Technologies, Lahore, Pakistan
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                </p>
-                                                <p class="black">You can write 100 words description here...</p>
-                                                <p>
-                                                    Jan 2018 - Feb 2018 &bull;
-                                                    <small>1 Month</small>
-                                                </p>
-                                            </div>
+                                    </p>
+}
+
+                                            @if (@item.LiscenceNo != null)
+        {
+                                    <p class="black">Liscence No : @item.LiscenceNo</p>
+}
+
+                                            <p>
+                                                Certification Date : @item.CertificationDate  <br />Expiration Date : @item.ExpirationDate
+                                                @*<small>1 Month</small>*@
+                                            </p>
                                         </div>
+                                        <div class="col-xs-12">
+                                            <hr class="margin-both-lr" />
+                                        </div>
+                                    </div>
+}
+}
+else
+{
+                                    <div class="row">
+                                        <p class="xsmall-h"><center>No Certification</center></p>
+                                    </div>
+
+}
+
                                     </div>
                                 </div>
                                 <!--/Education-->
@@ -562,7 +586,7 @@
                         </div>
                         <div class="modal-body">
                             <h6>Are you sure ? You want to delete this. </h6>
-                            <div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDiv">
+                            <div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDivExp">
                                 <div style="position: relative; left: -50%;">
                                     <img src="~/images/load.gif" />
                                 </div>
@@ -579,78 +603,87 @@
             @* /Delete Experience Modal *@
 
             @* Education Add *@
-            <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="myEdu">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">Education</h4>
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Education</h3>
                         </div>
-                        <form method="post">
-                            <div class="modal-body">
+                        <div class="modal-body" id="viewEduBody">
 
-                                <!--Title-->
-                                <div class="form-group">
-                                    <label class="control-label">School Name:</label>
-                                    <input type="text" class="input" asp-for="UserEducationVM.SchoolName">
-                                </div>
-                                <!--/Title-->
-                                <!--Company-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Degree:</label>
-                                    <input type="text" class="input" asp-for="UserEducationVM.Title">
-                                </div>
-                                <!--/Company-->
-                                <!--Location-->
-                                @*<div class="form-group">
-                                <label for="recipient-name" class="control-label">Field of Study:</label>
-                                <input type="text" class="input" asp-for="UserEducationVM.">
-                            </div>*@
-                                <!--/Location-->
-                                <!--Text Area-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Activities:</label>
-                                    <textarea class="input" placeholder="Description" asp-for="UserEducationVM.Details"></textarea>
-                                </div>
-                                <!--/Text Area-->
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!--Start Date-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">From:</label>
-                                            <input type="date" class="input" asp-for="UserEducationVM.StartDate">
-                                        </div>
-                                        <!--/Start Date-->
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <!--End Date-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">To:</label>
-                                            <input type="date" class="input" id="recipient-name" asp-for="UserEducationVM.EndDate">
-                                        </div>
-                                        <!--/End Date-->
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" id="customCheck1" checked="" type="checkbox">
-                                        <label asp-for="UserEducationVM.CurrentStatus">I currently work here</label>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" asp-action="AddUserEducation" class="main-btn">Save</button>
-                            </div>
-
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
             @* /Education Add *@
+            @* Education Delete *@
+            <div class="modal fade" id="delEduModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Delete User Education</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Are you sure ? You want to delete this. </h6>
+                            <div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDivEdu">
+                                <div style="position: relative; left: -50%;">
+                                    <img src="~/images/load.gif" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                            <a href="#" class="btn btn-danger" onclick="DeleteEducation()">Confirm</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @* /Delete Education Modal *@
+            @* Certification Add *@
+            <div class="modal fade" id="myCert">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Certification</h3>
+                        </div>
+                        <div class="modal-body" id="viewCertBody">
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* /Certification Add *@
+            @* Certification Delete *@
+            <div class="modal fade" id="delCertModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Delete User Certification</h3>
+                        </div>
+                        <div class="modal-body">
+                            <h6>Are you sure ? You want to delete this. </h6>
+                            <div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDivCert">
+                                <div style="position: relative; left: -50%;">
+                                    <img src="~/images/load.gif" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                            <a href="#" class="btn btn-danger" onclick="DeleteCertification()">Confirm</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @* /Delete Certification Modal *@
             @* Skill Add *@
             <div class="modal fade" id="skillModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -731,16 +764,80 @@
     }
     //Delete Experience
     var DeleteExperience = function () {
-        $("#loaderDiv").show();
+        $("#loaderDivExp").show();
         var empId = $("#hiddenExpId").val();
         $.ajax({
             type: "POST",
             url: "/User/DeleteUserExperience",
             data: { Id: empId },
             success: function (result) {
-                $("#loaderDiv").hide();
+                $("#loaderDivExp").hide();
                 $("#delExpModal").modal('hide');
                 $("#row_exp_" + empId).remove();
+            }
+
+        })
+    }
+
+    //Education
+    var viewEduModal = function (id) {
+        var url = "/User/AddEditUserEducation?Id=" + id;
+
+        $("#viewEduBody").load(url, function () {
+            $("#myEdu").modal("show");
+
+        })
+
+    }
+    var confirmDelEdu = function (id) {
+        $("#hiddenEduId").val(id);
+        $("#delEduModal").modal('show');
+
+    }
+    var DeleteEducation = function () {
+        $("#loaderDivEdu").show();
+        var eduId = $("#hiddenEduId").val();
+        $.ajax({
+            type: "POST",
+            url: "/User/DeleteUserEducation",
+            data: { Id: eduId },
+            success: function (result) {
+                $("#loaderDivEdu").hide();
+                $("#delEduModal").modal('hide');
+                $("#row_exp_" + eduId).remove();
+            }
+
+        })
+    }
+
+    //Certification
+    var viewCertModal = function (id) {
+        var url = "/User/AddEditUserCertification?Id=" + id;
+
+        $("#viewCertBody").load(url, function () {
+            $("#myCert").modal("show");
+
+        })
+    }
+
+    var confirmDelCert = function (id) {
+        $("#hiddenCertId").val(id);
+        $("#delCertModal").modal('show');
+
+    }
+
+    var DeleteCertification = function () {
+        $("#loaderDivCert").show();
+        var certId = $("#hiddenCertId").val();
+        $.ajax({
+            type: "POST",
+            url: "/User/DeleteUserCertification",
+            data: { Id: certId },
+            success: function (result) {
+                $("#loaderDivCert").hide();
+                debugger
+                $("#delCertModal").modal('hide');
+                $("#row_cert_" + certId).remove();
             }
 
         })

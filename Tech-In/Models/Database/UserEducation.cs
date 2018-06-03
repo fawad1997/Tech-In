@@ -10,7 +10,7 @@ namespace Tech_In.Models.Model
     public class UserEducation
     {
         [Key]
-        public int UserEducationID { get; set; }
+        public int UserEducationId { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3), Required]
         public string Title { get; set; }
         [StringLength(maximumLength: 100, MinimumLength = 3), Required]
@@ -27,7 +27,7 @@ namespace Tech_In.Models.Model
 
         public Boolean CurrentStatusCheck { get; set; }
 
-        public int CityID { get; set; }
+        public int CityId { get; set; }
         public City City { get; set; }
 
         [StringLength(maximumLength:450)]
