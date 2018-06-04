@@ -52,7 +52,7 @@ namespace Tech_In.Migrations
                 name: "Country",
                 columns: table => new
                 {
-                    CountryID = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CountryCode = table.Column<string>(maxLength: 3, nullable: false),
                     CountryName = table.Column<string>(maxLength: 50, nullable: false),
@@ -60,7 +60,7 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.CountryID);
+                    table.PrimaryKey("PK_Country", x => x.CountryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -241,19 +241,19 @@ namespace Tech_In.Migrations
                 name: "City",
                 columns: table => new
                 {
-                    CityID = table.Column<int>(nullable: false)
+                    CityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CityName = table.Column<string>(maxLength: 50, nullable: true),
-                    CountryID = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.CityID);
+                    table.PrimaryKey("PK_City", x => x.CityId);
                     table.ForeignKey(
-                        name: "FK_City_Country_CountryID",
-                        column: x => x.CountryID,
+                        name: "FK_City_Country_CountryId",
+                        column: x => x.CountryId,
                         principalTable: "Country",
-                        principalColumn: "CountryID",
+                        principalColumn: "CountryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -341,9 +341,9 @@ namespace Tech_In.Migrations
                 name: "UserEducation",
                 columns: table => new
                 {
-                    UserEducationID = table.Column<int>(nullable: false)
+                    UserEducationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CityID = table.Column<int>(nullable: false),
+                    CityId = table.Column<int>(nullable: false),
                     CurrentStatusCheck = table.Column<bool>(nullable: false),
                     Details = table.Column<string>(maxLength: 200, nullable: true),
                     EndDate = table.Column<DateTime>(nullable: false),
@@ -354,12 +354,12 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEducation", x => x.UserEducationID);
+                    table.PrimaryKey("PK_UserEducation", x => x.UserEducationId);
                     table.ForeignKey(
-                        name: "FK_UserEducation_City_CityID",
-                        column: x => x.CityID,
+                        name: "FK_UserEducation_City_CityId",
+                        column: x => x.CityId,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserEducation_AspNetUsers_UserId",
@@ -391,7 +391,7 @@ namespace Tech_In.Migrations
                         name: "FK_UserExperience_City_CityID",
                         column: x => x.CityID,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserExperience_AspNetUsers_UserId",
@@ -426,7 +426,7 @@ namespace Tech_In.Migrations
                         name: "FK_UserPersonalDetail_City_CityID",
                         column: x => x.CityID,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserPersonalDetail_AspNetUsers_UserId",
@@ -548,9 +548,9 @@ namespace Tech_In.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_CountryID",
+                name: "IX_City_CountryId",
                 table: "City",
-                column: "CountryID");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionSkill_SkillTagId",
@@ -573,9 +573,9 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserEducation_CityID",
+                name: "IX_UserEducation_CityId",
                 table: "UserEducation",
-                column: "CityID");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEducation_UserId",

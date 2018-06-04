@@ -410,10 +410,10 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Model.UserEducation", b =>
                 {
-                    b.Property<int>("UserEducationID")
+                    b.Property<int>("UserEducationId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CityID");
+                    b.Property<int>("CityId");
 
                     b.Property<bool>("CurrentStatusCheck");
 
@@ -435,9 +435,9 @@ namespace Tech_In.Migrations
                     b.Property<string>("UserId")
                         .HasMaxLength(450);
 
-                    b.HasKey("UserEducationID");
+                    b.HasKey("UserEducationId");
 
-                    b.HasIndex("CityID");
+                    b.HasIndex("CityId");
 
                     b.HasIndex("UserId");
 
@@ -663,7 +663,7 @@ namespace Tech_In.Migrations
                 {
                     b.HasOne("Tech_In.Models.City", "City")
                         .WithMany()
-                        .HasForeignKey("CityID")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
