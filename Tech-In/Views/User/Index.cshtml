@@ -30,7 +30,8 @@
                 <div class="center">
                     <h1 class="profile-name">@Model.UserPersonalVM.FullName</h1>
                     <i class="fa fa-briefcase"></i>
-                    <h2 class="profile-name profile-less inline"> Student at Capital University of Science & Technology</h2>
+                    
+                    @*<h2 class="profile-name profile-less inline"> Student at Capital University of Science & Technology</h2>*@
                     <hr class="col-xs-12">
                     <br />
                     <p>
@@ -184,7 +185,6 @@
                                                 <br />
 
 }
-
                                                     <strong>Email : </strong>
                                                     <br />
                                                     <strong>Date of Birth : </strong>
@@ -598,8 +598,8 @@ else
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                            <a href="#" class="btn btn-danger" onclick="DeleteExperience()">Confirm</a>
+                            <button href="#" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-danger" onclick="DeleteExperience()">Confirm</button>
                         </div>
 
                     </div>
@@ -641,7 +641,7 @@ else
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                            <a href="#" class="btn btn-danger" onclick="DeleteEducation()">Confirm</a>
+                            <button class="btn btn-danger" onclick="DeleteEducation()">Confirm</button>
                         </div>
 
                     </div>
@@ -682,7 +682,7 @@ else
                         </div>
                         <div class="modal-footer">
                             <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
-                            <a href="#" class="btn btn-danger" onclick="DeleteCertification()">Confirm</a>
+                            <button class="btn btn-danger" onclick="DeleteCertification()">Confirm</button>
                         </div>
 
                     </div>
