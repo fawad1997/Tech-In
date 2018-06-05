@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Tech_In.Models.ViewModels.ProfileViewModels;
 
 namespace Tech_In.Services
 {
@@ -17,9 +18,13 @@ namespace Tech_In.Services
         PdfPTable _pdfPTable = new PdfPTable(6);
         PdfPCell _pdfPCell;
         MemoryStream _memoryStream = new MemoryStream();
+        ProfileViewModal _user;
         //University _university = new University();
         #endregion
-
+        public PDFGenerator(ProfileViewModal pVM)
+        {
+            _user = pVM;
+        }
 
         public byte[] PrepareReport()
         {
@@ -39,8 +44,12 @@ namespace Tech_In.Services
             this.ReportHeader();
             this.HorizontalLine();
             this.Objective();
-            this.Experience();
-            this.Education();
+            foreach(ExperienceVM vm in _user.ExpVMList)
+                this.Experience(vm);
+
+            foreach(EducationVM vm in _user.EduVMList)
+                this.Education(vm);
+
             this.Projects();
             this.Achievements();
             _pdfPTable.HeaderRows = 2;
@@ -53,7 +62,7 @@ namespace Tech_In.Services
         {
             //Name
             _fontStyle = FontFactory.GetFont("Calibri", 16f, 1);
-            _pdfPCell = new PdfPCell(new Phrase("Fawad Bin Tariq", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(_user.UserPersonalVM.FullName, _fontStyle));
             _pdfPCell.Colspan = _totalColumn;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
@@ -86,7 +95,8 @@ namespace Tech_In.Services
 
 
             _fontStyle = FontFactory.GetFont("Calibri", 8f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("[Add Image Here]", _fontStyle));
+            //_pdfPCell = new PdfPCell(new Phrase("[Add Image Here]", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase("", _fontStyle));
             _pdfPCell.Colspan = 1;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
@@ -107,7 +117,7 @@ namespace Tech_In.Services
             _pdfPTable.AddCell(_pdfPCell);
 
             _fontStyle = FontFactory.GetFont("Calibri", 9f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("fawad_12@outlook.com", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(_user.UserPersonalVM.Email, _fontStyle));
             _pdfPCell.Colspan = 2;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.VerticalAlignment = Element.ALIGN_BOTTOM;
@@ -128,7 +138,7 @@ namespace Tech_In.Services
             _pdfPTable.AddCell(_pdfPCell);
 
             _fontStyle = FontFactory.GetFont("Calibri", 9f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("+92-305-5513575", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(_user.UserPersonalVM.PhoneNo, _fontStyle));
             _pdfPCell.Colspan = 2;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.VerticalAlignment = Element.ALIGN_BOTTOM;
@@ -174,7 +184,10 @@ namespace Tech_In.Services
             _pdfPTable.CompleteRow();
 
             _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("Independent, motivated individual seeking a position in a challenging environment, in an organization where I can apply and expand my programming and development skills to contribute positively to the growth of the company and achieve individual and team goals.", _fontStyle));
+            if(_user.UserPersonalVM.Summary!=null)
+                _pdfPCell = new PdfPCell(new Phrase(_user.UserPersonalVM.Summary, _fontStyle));
+            else
+                _pdfPCell = new PdfPCell(new Phrase("No Summary added yet!", _fontStyle));
             _pdfPCell.Colspan = _totalColumn;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
@@ -185,7 +198,7 @@ namespace Tech_In.Services
             _pdfPTable.CompleteRow();
         }
 
-        private void Education()
+        private void Education(EducationVM vm)
         {
             _fontStyle = FontFactory.GetFont("Calibri", 11f, 1);
             _fontStyle.SetColor(33, 97, 140);
@@ -200,7 +213,7 @@ namespace Tech_In.Services
 
             _fontStyle = FontFactory.GetFont("Calibri", 10f, 1);
             _fontStyle.SetColor(25, 111, 61);
-            _pdfPCell = new PdfPCell(new Phrase("Capital University of Science & Technology", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(vm.SchoolName, _fontStyle));
             _pdfPCell.Colspan = 4;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
@@ -209,7 +222,10 @@ namespace Tech_In.Services
             _pdfPTable.AddCell(_pdfPCell);
 
             _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("2015 - 2019", _fontStyle));
+            if(vm.CurrentStatusCheck)
+                _pdfPCell = new PdfPCell(new Phrase(vm.StartDate.ToString("dd MMM yyyy") + " - Current", _fontStyle));
+            else
+                _pdfPCell = new PdfPCell(new Phrase(vm.StartDate.ToString("dd MMM yyyy")+ " - "+vm.EndDate.ToString("dd MMM yyyy"), _fontStyle));
             _pdfPCell.Colspan = 2;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
             _pdfPCell.Border = 0;
@@ -220,7 +236,7 @@ namespace Tech_In.Services
             _pdfPTable.CompleteRow();
 
             _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
-            _pdfPCell = new PdfPCell(new Phrase("B.S. (Computer Science)", _fontStyle));
+            _pdfPCell = new PdfPCell(new Phrase(vm.Title, _fontStyle));
             _pdfPCell.Colspan = 4;
             _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
             _pdfPCell.Border = 0;
@@ -241,7 +257,7 @@ namespace Tech_In.Services
             NewLine();
         }
 
-        private void Experience()
+        private void Experience(ExperienceVM vm)
         {
             NewLine();
 
@@ -256,40 +272,42 @@ namespace Tech_In.Services
             _pdfPTable.AddCell(_pdfPCell);
             _pdfPTable.CompleteRow();
 
-            for (int i = 0; i < 2; i++)
-            {
-                _fontStyle = FontFactory.GetFont("Calibri", 10f, 1);
-                _fontStyle.SetColor(25, 111, 61);
-                _pdfPCell = new PdfPCell(new Phrase("Student Assistant at Capital University of Science & Technology", _fontStyle));
-                _pdfPCell.Colspan = 4;
-                _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
-                _pdfPCell.Border = 0;
-                _pdfPCell.BackgroundColor = BaseColor.WHITE;
-                _pdfPCell.ExtraParagraphSpace = 0;
-                _pdfPTable.AddCell(_pdfPCell);
 
-                _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
-                _pdfPCell = new PdfPCell(new Phrase("2018 - 2019", _fontStyle));
-                _pdfPCell.Colspan = 2;
-                _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
-                _pdfPCell.Border = 0;
-                _pdfPCell.BackgroundColor = BaseColor.WHITE;
-                _pdfPCell.ExtraParagraphSpace = 0;
-                _pdfPTable.AddCell(_pdfPCell);
+            _fontStyle = FontFactory.GetFont("Calibri", 10f, 1);
+            _fontStyle.SetColor(25, 111, 61);
+            _pdfPCell = new PdfPCell(new Phrase(vm.Title, _fontStyle));
+            _pdfPCell.Colspan = 4;
+            _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            _pdfPCell.Border = 0;
+            _pdfPCell.BackgroundColor = BaseColor.WHITE;
+            _pdfPCell.ExtraParagraphSpace = 0;
+            _pdfPTable.AddCell(_pdfPCell);
+
+            _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
+            if (vm.CurrentWorkCheck)
+                _pdfPCell = new PdfPCell(new Phrase(vm.StartDate.ToString("dd MMM yyyy") + " - Current", _fontStyle));
+            else
+                _pdfPCell = new PdfPCell(new Phrase(vm.StartDate.ToString("dd MMM yyyy") + " - " + vm.EndDate.ToString("dd MMM yyyy"), _fontStyle));
+
+            _pdfPCell.Colspan = 2;
+            _pdfPCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+            _pdfPCell.Border = 0;
+            _pdfPCell.BackgroundColor = BaseColor.WHITE;
+            _pdfPCell.ExtraParagraphSpace = 0;
+            _pdfPTable.AddCell(_pdfPCell);
+
+            _pdfPTable.CompleteRow();
+
+            _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
+            _pdfPCell = new PdfPCell(new Phrase(vm.Description, _fontStyle));
+            _pdfPCell.Colspan = _totalColumn;
+            _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
+            _pdfPCell.Border = 0;
+            _pdfPCell.BackgroundColor = BaseColor.WHITE;
+            _pdfPCell.ExtraParagraphSpace = 0;
+            _pdfPTable.AddCell(_pdfPCell);
 
                 _pdfPTable.CompleteRow();
-
-                _fontStyle = FontFactory.GetFont("Calibri", 10f, 0);
-                _pdfPCell = new PdfPCell(new Phrase("Job brief description here", _fontStyle));
-                _pdfPCell.Colspan = _totalColumn;
-                _pdfPCell.HorizontalAlignment = Element.ALIGN_LEFT;
-                _pdfPCell.Border = 0;
-                _pdfPCell.BackgroundColor = BaseColor.WHITE;
-                _pdfPCell.ExtraParagraphSpace = 0;
-                _pdfPTable.AddCell(_pdfPCell);
-
-                _pdfPTable.CompleteRow();
-            }
             NewLine();
 
         }

@@ -25,7 +25,7 @@
         @Html.ValidationMessageFor(m => m.LiscenceNo, "", new { @class = "red" })
     </div>
     <!--/Liscence No-->
-   
+
     <div class="row">
         <div class="col-sm-6">
             <!--Start Date-->
@@ -59,12 +59,10 @@
             }
         </button>
     </div>
-</form>
-<div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDiv">
-    <div style="position: relative; left: -50%;">
+    <div class="cent" id="loaderDiv">
         <img src="~/images/load.gif" />
     </div>
-</div>
+</form>
 <script>
     $(document).ready(function () {
         //Submit Form

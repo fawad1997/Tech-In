@@ -32,37 +32,12 @@ namespace Tech_In.Controllers
         {
             var user = await _userManager.GetCurrentUser(HttpContext);
             var uaertoAdd = new ApplicationUser();
-            ProfileViewModel PVM = new ProfileViewModel();
+            ProfileViewModal PVM = new ProfileViewModal();
 
-            var pd = _context.UserPersonalDetail.SingleOrDefault(m => m.UserId == user.Id);
-            //Populating Data To VM
-
-
-            //User Personal Details
-            PVM.UserPersonalVM.FirstName = pd.FirstName;
-            PVM.UserPersonalVM.LastName = pd.LastName;
-            PVM.UserPersonalVM.Summary = pd.Summary;
+            PVM.UserPersonalVM = _context.UserPersonalDetail.Where(m => m.UserId == user.Id).Select(x => new UserPersonalViewModel { FirstName = x.FirstName,LastName=x.LastName,Summary=x.Summary,DOB=x.DOB, UserPersonalDetailID = x.UserPersonalDetailId, Gender = x.Gender,CityName = x.City.CityName, CountryName = x.City.Country.CountryName }).SingleOrDefault();
+            
             PVM.UserPersonalVM.PhoneNo = user.PhoneNumber;
             PVM.UserPersonalVM.Email = user.Email;
-            PVM.UserPersonalVM.DOB = pd.DOB;
-
-            if (pd.Gender == Models.Model.Gender.Male)
-                PVM.UserPersonalVM.Gender = Models.ViewModels.ProfileViewModels.Gender.Male;
-            else
-                PVM.UserPersonalVM.Gender = Models.ViewModels.ProfileViewModels.Gender.Female;
-            PVM.UserPersonalVM.City = _context.City.Where(c => c.CityId == pd.CityID).FirstOrDefault();
-            int conID = PVM.UserPersonalVM.City.CountryId;
-            PVM.UserPersonalVM.Country = _context.Country.Where(cit => cit.CountryId==conID).FirstOrDefault();
-            var cities = _context.City.ToList();
-            var countries = _context.Country.ToList();
-            foreach (var city in cities)
-            {
-                PVM.UserPersonalVM.Cities.Add(new SelectListItem { Value = city.CityId.ToString(), Text = city.CityName });
-            }
-            foreach (var country in countries)
-            {
-                PVM.UserPersonalVM.Countries.Add(new SelectListItem { Value = country.CountryId.ToString(), Text = country.CountryName });
-            }
 
 
 
@@ -79,45 +54,63 @@ namespace Tech_In.Controllers
             return View(PVM);
         }
 
+        public async Task<IActionResult> UpdatePersonalDetail(int Id)
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+            UserPersonalViewModel vm = new UserPersonalViewModel();
+            if (Id > 0)
+            {
+                UserPersonalDetail personalDetail = _context.UserPersonalDetail.SingleOrDefault(x => x.UserPersonalDetailId == Id);
+                vm.UserPersonalDetailID = personalDetail.UserPersonalDetailId;
+                vm.DOB = personalDetail.DOB;
+                vm.FirstName = personalDetail.FirstName;
+                vm.LastName = personalDetail.LastName;
+                vm.PhoneNo = user.PhoneNumber;
+                vm.Email = user.Email;
+                vm.CityId = personalDetail.CityId;
+                if (personalDetail.Gender == Gender.Male)
+                {
+                    vm.Gender = Gender.Male;
+                }
+                else
+                {
+                    vm.Gender = Gender.Female;
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+            return PartialView(vm);
+        }
 
         [HttpPost]
-        public IActionResult UpdatePersonalDetails(ProfileViewModel vm)
+        public async Task<IActionResult> UpdatePersonalDetails(UserPersonalViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                var user = _userManager.GetCurrentUser(HttpContext);
-                var pd = _context.UserPersonalDetail.Where(p => p.UserId == user.Id.ToString()).FirstOrDefault();
-                //var pd = new UserPersonalDetail
-                //{
-                //    FirstName = vm.UserPersonalVM.FirstName,
-                //    LastName = vm.UserPersonalVM.LastName,
-                //    DOB = vm.UserPersonalVM.DOB,
-                //    CityID = vm.UserPersonalVM.City.CityID
-                //};
-                _context.UserPersonalDetail.Update(pd);
+                var user = await _userManager.GetCurrentUser(HttpContext);
+                var pd = _context.UserPersonalDetail.Where(p => p.UserId == user.Id).FirstOrDefault();
+                pd.FirstName = vm.FirstName;
+                pd.LastName = vm.LastName;
+                pd.DOB = vm.DOB;
+                pd.CityId = vm.CityId;
+                if (vm.Gender == 0)
+                {
+                    pd.Gender = Models.Model.Gender.Male;
+                }
+                else
+                {
+                    pd.Gender = Models.Model.Gender.Female;
+                }
+                user.PhoneNumber = vm.PhoneNo;
                 _context.SaveChanges();
             }
             return RedirectToAction("Index");
         }
 
-
-        public IActionResult Resume()
-        {
-            //Get Object from parameter and generate Resume
-            //university = new University();
-            //university.Name = "CUST";
-            //university.Chancler = "Amir";
-            //university.PublishedDate = new DateTime(1990, 08, 08);
-            //university.City = "Islamabad";
-            //university.Country = "Pakistan";
-            //university.Students = GetStudents();
-            //university.Address = "Kahota Road";
-
-            PDFGenerator userPDF = new PDFGenerator();
-            byte[] abytes = userPDF.PrepareReport();
-            return File(abytes, "application/pdf");
-        }
-       
+        
 
         //User Experience
 
@@ -313,6 +306,36 @@ namespace Tech_In.Controllers
 
             return Json(result);
         }
+
+        public async Task<IActionResult> Resume()
+        {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            ProfileViewModal pVM = new ProfileViewModal();
+            //Personal Details
+            pVM.UserPersonalVM = _context.UserPersonalDetail.Where(m => m.UserId == user.Id).Select(x => new UserPersonalViewModel { FirstName = x.FirstName, LastName = x.LastName, Summary = x.Summary, DOB = x.DOB, UserPersonalDetailID = x.UserPersonalDetailId, Gender = x.Gender, CityName = x.City.CityName, CountryName = x.City.Country.CountryName }).SingleOrDefault();
+            pVM.UserPersonalVM.PhoneNo = user.PhoneNumber;
+            pVM.UserPersonalVM.Email = user.Email;
+
+            //Education
+            pVM.EduVMList = _context.UserEducation.Where(x => x.UserId == user.Id).Select(c => new EducationVM { Title = c.Title, Details = c.Details, SchoolName = c.SchoolName, StartDate = c.StartDate, EndDate = c.EndDate, CurrentStatusCheck = c.CurrentStatusCheck, CityId = c.CityId, CityName = c.City.CityName, CountryName = c.City.Country.CountryName, UserEducationID = c.UserEducationId }).ToList();
+            pVM.ExpVMList = _context.UserExperience.Where(x => x.UserId == user.Id).Select(c => new ExperienceVM { Title = c.Title, UserExperienceId = c.UserExperienceId, CityId = c.CityID, CityName = c.City.CityName, CountryName = c.City.Country.CountryName, CompanyName = c.CompanyName, CurrentWorkCheck = c.CurrentWorkCheck, Description = c.Description, StartDate = c.StartDate, EndDate = c.EndDate }).ToList();
+
+
+            //Get Object from parameter and generate Resume
+            //university = new University();
+            //university.Name = "CUST";
+            //university.Chancler = "Amir";
+            //university.PublishedDate = new DateTime(1990, 08, 08);
+            //university.City = "Islamabad";
+            //university.Country = "Pakistan";
+            //university.Students = GetStudents();
+            //university.Address = "Kahota Road";
+
+            PDFGenerator userPDF = new PDFGenerator(pVM);
+            byte[] abytes = userPDF.PrepareReport();
+            return File(abytes, "application/pdf");
+        }
+
         public List<Country> GetCountryList()
         {
             List<Country> countries = _context.Country.ToList();

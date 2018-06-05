@@ -7,7 +7,7 @@
     <div class="form-group">
         <label for="recipient-name" class="control-label">Title:</label>
         @Html.TextBoxFor(m => m.Title, new { @class = "input", @placeholder = "Experience Title..." })
-        @Html.ValidationMessageFor(m=>m.Title,"",new { @class="red" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "red" })
     </div>
     <!--/Title-->
     <!--Company-->
@@ -88,12 +88,10 @@
             }
         </button>
     </div>
-</form>
-<div style="text-align:center;position:absolute;left:50%;display:none;" id="loaderDiv">
-    <div style="position: relative; left: -50%;">
+    <div class="cent" id="loaderDiv">
         <img src="~/images/load.gif" />
     </div>
-</div>
+</form>
 <script>
     $(document).ready(function () {
         //Submit Form

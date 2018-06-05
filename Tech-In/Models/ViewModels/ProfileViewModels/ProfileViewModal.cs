@@ -7,12 +7,12 @@ using Tech_In.Models.Model;
 
 namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
-    public class ProfileViewModel
+    public class ProfileViewModal
     {
         public string Nam { get; set; }
         public UserPersonalViewModel UserPersonalVM = new UserPersonalViewModel();
-        public EducationVM UserEducationVM { get; set; }
 
-        public IEnumerable<EducationVM> EVMList { get; set; }
+        public IEnumerable<EducationVM> EduVMList { get; set; }
+        public IEnumerable<ExperienceVM> ExpVMList { get; set; }
     }
 }

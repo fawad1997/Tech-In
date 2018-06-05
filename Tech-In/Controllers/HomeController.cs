@@ -49,7 +49,7 @@ namespace Tech_In.Controllers
 
             var user = await _userManager.GetCurrentUser(HttpContext);
             UserPersonalDetail userPersonal = new UserPersonalDetail();
-            userPersonal.CityID = vm.CityId;
+            userPersonal.CityId = vm.CityId;
             userPersonal.FirstName = vm.FirstName;
             userPersonal.LastName = vm.LastName;
             userPersonal.IsDOBPublic = vm.DOBVisibility;

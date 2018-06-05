@@ -42,17 +42,12 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime DOB { get; set; }
         public string PhoneNo { get; set; }
-        public short DOBVisibility { get; set; }
-        public short EmailVisibility { get; set; }
-        public short PhonoNoVisibility { get; set; }
 
         public Gender Gender { get; set; }
 
-        //public int CityID { get; set; }
-        public City City { get; set; }
-        public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
-
-        public Country Country { get; set; }
+        public int CityId { get; set; }
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
+        public string CityName { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model ProfileViewModel
+﻿@model ProfileViewModal
 @{
     ViewData["Title"] = "Profile";
 }
@@ -17,7 +17,7 @@
                 </div>
                 <!--Cover Div-->
                 <div class="profile-pic-align">
-                    <img src="~/images/a.jpg" class="img-responsive img-rounded profile-pic" />
+                    <img src="~/images/noimg.svg" class="img-responsive img-rounded profile-pic" />
                 </div>
                 <!--/Profile Picture-->
                 <!--Edit-->
@@ -30,7 +30,7 @@
                 <div class="center">
                     <h1 class="profile-name">@Model.UserPersonalVM.FullName</h1>
                     <i class="fa fa-briefcase"></i>
-                    
+
                     @*<h2 class="profile-name profile-less inline"> Student at Capital University of Science & Technology</h2>*@
                     <hr class="col-xs-12">
                     <br />
@@ -62,10 +62,10 @@
                                 <div class="post">
                                     <div class="row">
                                         <div class="col-xs-2 col-md-1">
-                                            <img src="~/images/a.jpg" class="post-img img-circle" />
+                                            <img src="~/images/noimg.svg" class="post-img img-circle" />
                                         </div>
                                         <div class="col-xs-10 col-md-11">
-                                            <h6 class="inline small-h">Fawad Bin Tariq</h6>
+                                            <h6 class="inline small-h">@Model.UserPersonalVM.FullName</h6>
                                             <br />
                                             <!--Edit-->
                                             <div class="right-post-icon-div">
@@ -79,15 +79,7 @@
                                         <div class="col-xs-12">
                                             <hr />
                                             <p class="black">
-                                                Here are a few highlights of our recent #TalkLikeTED Masterclass organised by DEMO for The World Bank The DEMO team recently
-                                                conducted a #TalkLikeTED Communications & Storytelling Masterclass for
-                                                the World Bank. The workshop helped refine the knowledge and skills of
-                                                the employees in terms of grasping basic communication techniques, presentation
-                                                skills and much more. The session was very informative and interactive
-                                                while the participants were full of optimism and energy. This was part
-                                                of DEMO's Masterclass & Storytelling Series, which proved promising as
-                                                all the participants developed the core basics for creating and presenting
-                                                the best presentations and stories.
+                                                I am sorry if you are seeing it. Please Ignore this message as this module is pending yet and will be done in next semester. have a nice day
                                             </p>
                                             <p>7 Likes</p>
                                             <hr />
@@ -109,10 +101,10 @@
                                 <div class="post">
                                     <div class="row">
                                         <div class="col-xs-2 col-md-1">
-                                            <img src="~/images/a.jpg" class="post-img img-circle" />
+                                            <img src="~/images/noimg.svg" class="post-img img-circle" />
                                         </div>
                                         <div class="col-xs-10 col-md-11">
-                                            <h6 class="inline small-h">Fawad Bin Tariq</h6>
+                                            <h6 class="inline small-h">@Model.UserPersonalVM.FullName</h6>
                                             <br />
                                             <!--Edit-->
                                             <div class="right-post-icon-div">
@@ -126,15 +118,7 @@
                                         <div class="col-xs-12">
                                             <hr />
                                             <p class="black">
-                                                Here are a few highlights of our recent #TalkLikeTED Masterclass organised by DEMO for The World Bank The DEMO team recently
-                                                conducted a #TalkLikeTED Communications & Storytelling Masterclass for
-                                                the World Bank. The workshop helped refine the knowledge and skills of
-                                                the employees in terms of grasping basic communication techniques, presentation
-                                                skills and much more. The session was very informative and interactive
-                                                while the participants were full of optimism and energy. This was part
-                                                of DEMO's Masterclass & Storytelling Series, which proved promising as
-                                                all the participants developed the core basics for creating and presenting
-                                                the best presentations and stories.
+                                                I am sorry if you are seeing it. Please Ignore this message as this module is pending yet and will be done in next semester. have a nice day
                                             </p>
                                             <p>7 Likes</p>
                                             <hr />
@@ -164,8 +148,8 @@
                                             <h6 class="inline small-h">Personal Information</h6>
                                             <br />
                                             <!--Edit-->
-                                            <div class="right-post-icon-div">
-                                                <div class="round-icon-back" data-toggle="modal" data-target="#personalModal">
+                                            <div class="right-post-icon-div" onclick="EditPersonalD(@Model.UserPersonalVM.UserPersonalDetailID)">
+                                                <div class="round-icon-back">
                                                     <i class="fa fa-pencil"></i>
                                                 </div>
                                             </div>
@@ -180,11 +164,11 @@
                                                     <strong>Last Name : </strong>
                                                     <br />
                                                     @if (@Model.UserPersonalVM.PhoneNo != null)
-    {
+                                            {
                                                 <strong>Phone no : </strong>
                                                 <br />
 
-}
+                                    }
                                                     <strong>Email : </strong>
                                                     <br />
                                                     <strong>Date of Birth : </strong>
@@ -201,10 +185,10 @@
                                                     <p class="black zero-margin">@Model.UserPersonalVM.LastName</p>
                                                     <p class="black zero-margin">@Model.UserPersonalVM.PhoneNo</p>
                                                     <p class="black zero-margin">@Model.UserPersonalVM.Email</p>
-                                                    <p class="black zero-margin">@Model.UserPersonalVM.DOB</p>
+                                                    <p class="black zero-margin">@Model.UserPersonalVM.DOB.ToString("dd MMM yyyy")</p>
                                                     <p class="black zero-margin">@Model.UserPersonalVM.Gender</p>
-                                                    <p class="black zero-margin">@Model.UserPersonalVM.Country.CountryName</p>
-                                                    <p class="black zero-margin">@Model.UserPersonalVM.City.CityName</p>
+                                                    <p class="black zero-margin">@Model.UserPersonalVM.CountryName</p>
+                                                    <p class="black zero-margin">@Model.UserPersonalVM.CityName</p>
                                                 </div>
                                             </div>
 
@@ -411,57 +395,57 @@
                                         </div>
                                         <input type="hidden" id="hiddenCertId" />
                                         @if (ViewBag.UserCertificationList != null && ViewBag.UserCertificationList.Count != 0)
-    {
-        foreach (var item in ViewBag.UserCertificationList)
-        {
-                                    <div class="row" id="row_cert_@item.UserCertificationId">
-                                        <div class="col-xs-12 margin-both-lr">
-                                            <strong class="small-h">@item.Name</strong>
-                                            <!--Delete-->
-                                            <div onclick="confirmDelCert(@item.UserCertificationId)" class="delete-exp-round">
-                                                <div class="round-icon-back-del">
-                                                    <i class="fa fa-trash-o"></i>
+                                {
+                                    foreach (var item in ViewBag.UserCertificationList)
+                                    {
+                                        <div class="row" id="row_cert_@item.UserCertificationId">
+                                            <div class="col-xs-12 margin-both-lr">
+                                                <strong class="small-h">@item.Name</strong>
+                                                <!--Delete-->
+                                                <div onclick="confirmDelCert(@item.UserCertificationId)" class="delete-exp-round">
+                                                    <div class="round-icon-back-del">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--/Delete-->
-                                            <!--Edit-->
-                                            <div class="edit-exp-round" onclick="viewCertModal(@item.UserCertificationId)">
-                                                <div class="round-icon-back">
-                                                    <i class="fa fa-pencil"></i>
+                                                <!--/Delete-->
+                                                <!--Edit-->
+                                                <div class="edit-exp-round" onclick="viewCertModal(@item.UserCertificationId)">
+                                                    <div class="round-icon-back">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!--/Edit-->
-                                            @if (@item.URL != null)
-        {
-                                    <p class="xsmall-h">
-                                        Url : @item.URL
+                                                <!--/Edit-->
+                                                @if (@item.URL != null)
+                                        {
+                                            <p class="xsmall-h">
+                                                Url : @item.URL
 
-                                    </p>
-}
-
-                                            @if (@item.LiscenceNo != null)
-        {
-                                    <p class="black">Liscence No : @item.LiscenceNo</p>
-}
-
-                                            <p>
-                                                Certification Date : @item.CertificationDate  <br />Expiration Date : @item.ExpirationDate
-                                                @*<small>1 Month</small>*@
                                             </p>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <hr class="margin-both-lr" />
-                                        </div>
-                                    </div>
-}
-}
-else
-{
-                                    <div class="row">
-                                        <p class="xsmall-h"><center>No Certification</center></p>
-                                    </div>
+                                }
 
-}
+                                                @if (@item.LiscenceNo != null)
+                                        {
+                                            <p class="black">Liscence No : @item.LiscenceNo</p>
+                                }
+
+                                                <p>
+                                                    Certification Date : @item.CertificationDate.ToString("dd MMM yyyy")  <br />Expiration Date : @item.ExpirationDate.ToString("dd MMM yyyy")
+                                                    @*<small>1 Month</small>*@
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <hr class="margin-both-lr" />
+                                            </div>
+                                        </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <p class="xsmall-h"><center>No Certification</center></p>
+                            </div>
+
+                }
 
                                     </div>
                                 </div>
@@ -476,93 +460,23 @@ else
 
             </div>
 
-            <!-- ***************Modals********************-->
-            @* Personal Model *@
-            <div class="modal fade" id="personalModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+            @* Edit PersonalDetails Modal Show *@
+            <div class="modal fade" id="myPD">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title">Personal Information</h4>
+                            <a href="#" class="close" data-dismiss="modal">&times;</a>
+                            <h3 class="modal-title">Experience</h3>
                         </div>
+                        <div class="modal-body" id="viewPDBody">
 
-                        <form method="post">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!--First Name-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">First Name:</label>
-                                            <input type="text" class="input" asp-for="UserPersonalVM.FirstName">
-                                        </div>
-                                        <!--/First Name-->
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <!--Last Name-->
-                                        <div class="form-group">
-                                            <label for="recipient-name" class="control-label">Last Name:</label>
-                                            <input type="text" class="input" asp-for="UserPersonalVM.LastName">
-                                        </div>
-                                        <!--/Last Name-->
-                                    </div>
-                                </div>
-                                <!--Phone No-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Phone No:</label>
-                                    <input type="text" class="input" asp-for="UserPersonalVM.PhoneNo">
-                                </div>
-                                <!--/Phone No-->
-                                <!--Email-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Email:</label>
-                                    <input type="email" class="input" asp-for="UserPersonalVM.Email" disabled>
-                                </div>
-                                <!--/Email-->
-                                <!--DOB-->
-                                <div class="form-group">
-                                    <label for="recipient-name" class="control-label">Date of Birth:</label>
-                                    <input type="date" class="input" asp-for="UserPersonalVM.DOB">
-                                </div>
-                                <!--/DOB-->
-                                <!--Gender-->
 
-                                <div class="form-group">
-                                    <div>
-                                        <label asp-for="UserPersonalVM.Gender">
-                                            @Html.RadioButtonFor(model => model.UserPersonalVM.Gender, new { id = "sex" })
-                                            @Html.Label("sex" + Gender.Male, "Male")
-                                        </label>
-
-                                        @Html.RadioButtonFor(model => model.UserPersonalVM.Gender, new { id = "sex" })
-                                        @Html.Label("sex" + Gender.Female, "Female")
-
-                                    </div>
-                                </div>
-                                <!--/Gender-->
-                                <!--Country-->
-                                <div class="form-group">
-                                    <label asp-for="UserPersonalVM.Country" class="control-label"></label>
-                                    <select class="form-control" asp-for="UserPersonalVM.Country.CountryId" asp-items="Model.UserPersonalVM.Countries"></select>
-                                </div>
-                                <!--/Country-->
-                                <!--City-->
-                                <div class="form-group">
-                                    <label asp-for="UserPersonalVM.City" class="control-label"></label>
-                                    <select class="form-control" asp-for="UserPersonalVM.City.CityId" asp-items="Model.UserPersonalVM.Cities"></select>
-                                </div>
-                                <!--/City-->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="white-btn btn-default" data-dismiss="modal">Close</button>
-                                <button asp-action="UpdatePersonalDetails" class="main-btn">Save</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            @* /Personal Model *@
+            @* / Edit Personal Details Modal Show *@
+
 
             @* Add/Edit Experience Modal Show *@
             <div class="modal fade" id="myExp">
@@ -570,7 +484,7 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <a href="#" class="close" data-dismiss="modal">&times;</a>
-                            <h3 class="modal-title">Experience</h3>
+                            <h3 class="modal-title">Personal Details</h3>
                         </div>
                         <div class="modal-body" id="viewExpBody">
 
@@ -751,6 +665,15 @@ else
     $(document).ready(function () {
        
     })
+
+    var EditPersonalD = function (id) {
+        var url = "/User/UpdatePersonalDetail?Id=" + id;
+        $("#viewPDBody").load(url, function () {
+            $("#myPD").modal("show");
+
+        })
+
+    }
 //Add and Edit Experience Modal Show Function
     var AddEditExp = function (id) {
         var url = "/User/AddEditUserExperience?Id=" + id;

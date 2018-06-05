@@ -1,0 +1,144 @@
+﻿@model UserPersonalViewModel
+
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<form id="PDForm">
+    @Html.HiddenFor(m => m.UserPersonalDetailID)
+    <div class="row">
+        <div class="col-sm-6">
+            <!--First Name-->
+            <div class="form-group">
+                <label class="control-label">First Name:</label>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "input", @placeholder = "First Name" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "red" })
+            </div>
+            <!--/First Name-->
+        </div>
+        <div class="col-sm-6">
+            <!--Last Name-->
+            <div class="form-group">
+                <label class="control-label">Last Name:</label>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "input", @placeholder = "Last Name" })
+                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "red" })
+            </div>
+            <!--/Last Name-->
+        </div>
+    </div>
+    <!--Phone No-->
+    <div class="form-group">
+        <label class="control-label">Phone No:</label>
+        @Html.TextBoxFor(m => m.PhoneNo, new { @class = "input", @placeholder = "e.g. +923055513575" })
+        @Html.ValidationMessageFor(m => m.PhoneNo, "", new { @class = "red" })
+    </div>
+    <!--/Phone No-->
+    <!--Phone No-->
+    <div class="form-group">
+        <label class="control-label">Email:</label>
+        @Html.TextBoxFor(m => m.Email, new { @class = "input", @disabled = "true" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "red" })
+    </div>
+    <!--/Phone No-->
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label asp-for="DOB" class="control-label"></label>
+                <input asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <label asp-for="Gender" class="control-label"></label>
+            <div class="form-group">
+                <label class="radio-inline">
+                    <input type="radio" asp-for="Gender" value="0" checked> Male
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" asp-for="Gender" value="1"> Female
+                </label>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <!--Country-->
+            <div class="form-group">
+                <label for="recipient-name" class="control-label">Country:</label>
+                @if (ViewBag.CountryList != null)
+                {
+                    @Html.DropDownListFor(model => model.CountryId, ViewBag.CountryList as SelectList, "--Select--", new { @class = "form-control" })
+                }
+
+            </div>
+            <!--/Country-->
+        </div>
+        <div class="col-sm-6">
+            <!--City-->
+            <div class="form-group">
+                <label for="recipient-name" class="control-label">City:</label>
+                @Html.DropDownListFor(m => m.CityId, new SelectList(""), "--Select--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CityId, "", new { @class = "red" })
+            </div>
+            <!--/City-->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button id="PDSubmit" type="button" class="main-btn btn-block">
+            Update
+        </button>
+    </div>
+
+    <div class="cent" id="loaderDiv">
+        <img src="~/images/load.gif" />
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        //Submit Form
+        debugger
+        $("#PDSubmit").click(function () {
+            if (!$("#PDForm").valid()) {
+                return false;
+            }
+            $("#loaderDiv").show();
+            debugger
+            var pDFormData = $("#PDForm").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/User/UpdatePersonalDetails",
+                data: pDFormData,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myPD").modal("hide");
+                    window.location.href = "/User/Index";
+
+                }
+
+            })
+
+        })
+
+
+        //For DIsplaying Cities List
+        $("#CountryId").change(function () {
+            var countryId = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                url: "/User/GetCitiesList?CountryId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+
+                    $("#CityId").empty();
+                    $("#CityId").append(response);
+
+                }
+
+            })
+        })
+
+    })
+</script>
