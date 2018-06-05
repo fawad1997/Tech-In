@@ -28,9 +28,22 @@ namespace Tech_In.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if(user == null)
+            {
+                return View();
+            }
+            else
+            {
+                var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+                if (userPersonalRow == null)
+                {
+                    return RedirectToAction("CompleteProfile", "Home");
+                }
+            }
+            return View("Welcome");
         }
 
         [Authorize]
@@ -44,27 +57,33 @@ namespace Tech_In.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CompleteProfileAsync(CompleteProfileVM vm)
+        public async Task<IActionResult> CompleteProfile(CompleteProfileVM vm)
         {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetCurrentUser(HttpContext);
+                UserPersonalDetail userPersonal = new UserPersonalDetail();
+                userPersonal.CityId = vm.CityId;
+                userPersonal.FirstName = vm.FirstName;
+                userPersonal.LastName = vm.LastName;
+                userPersonal.IsDOBPublic = vm.DOBVisibility;
+                userPersonal.DOB = vm.DOB;
+                if (vm.Gender == 0)
+                {
+                    userPersonal.Gender = Models.Model.Gender.Male;
+                }
+                else
+                {
+                    userPersonal.Gender = Models.Model.Gender.Female;
+                }
+                userPersonal.UserId = user.Id;
+                _context.UserPersonalDetail.Add(userPersonal);
+                await _context.SaveChangesAsync();
 
-            var user = await _userManager.GetCurrentUser(HttpContext);
-            UserPersonalDetail userPersonal = new UserPersonalDetail();
-            userPersonal.CityId = vm.CityId;
-            userPersonal.FirstName = vm.FirstName;
-            userPersonal.LastName = vm.LastName;
-            userPersonal.IsDOBPublic = vm.DOBVisibility;
-            if(vm.Gender == 0)
-            {
-                userPersonal.Gender = Models.Model.Gender.Male;
+                return RedirectToAction("Index", "User");
             }
-            else
-            {
-                userPersonal.Gender = Models.Model.Gender.Female;
-            }
-            userPersonal.UserId = user.Id;
-            _context.UserPersonalDetail.Add(userPersonal);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index","User");
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+            return View("CompleteProfile");
         }
 
         public List<Country> GetCountryList()

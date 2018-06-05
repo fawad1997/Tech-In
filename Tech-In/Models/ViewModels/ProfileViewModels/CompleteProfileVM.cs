@@ -13,10 +13,12 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         [Required]
         [StringLength(50, MinimumLength = 2)]
         [Display(Name = "First Name ")]
+        [RegularExpression(@"^[a-zA-Z\s]+$",ErrorMessage ="First Name can only contain aplhabets")]
         public string FirstName { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
         [Display(Name = "Last Name")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Last Name can only contain aplhabets")]
         public string LastName { get; set; }
 
         //AspNetUsers
@@ -25,7 +27,7 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         public byte[] CVImage { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true,NullDisplayText ="Date of Birth can't be Null")]
         [Display(Name = "Date of Birth")]
         public DateTime DOB { get; set; }
 
@@ -34,7 +36,9 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
 
         public Gender Gender { get; set; }
 
+        [Required]
         public int CityId { get; set; }
+
         public int CountryId { get; set; }
 
     }

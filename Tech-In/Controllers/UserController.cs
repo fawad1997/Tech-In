@@ -30,8 +30,15 @@ namespace Tech_In.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //Check User Profile is complete or not
             var user = await _userManager.GetCurrentUser(HttpContext);
-            var uaertoAdd = new ApplicationUser();
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
+
+
             ProfileViewModal PVM = new ProfileViewModal();
 
             PVM.UserPersonalVM = _context.UserPersonalDetail.Where(m => m.UserId == user.Id).Select(x => new UserPersonalViewModel { FirstName = x.FirstName,LastName=x.LastName,Summary=x.Summary,DOB=x.DOB, UserPersonalDetailID = x.UserPersonalDetailId, Gender = x.Gender,CityName = x.City.CityName, CountryName = x.City.Country.CountryName }).SingleOrDefault();
@@ -54,6 +61,7 @@ namespace Tech_In.Controllers
             return View(PVM);
         }
 
+        //Personal Details
         public async Task<IActionResult> UpdatePersonalDetail(int Id)
         {
             var user = await _userManager.GetCurrentUser(HttpContext);
@@ -348,16 +356,6 @@ namespace Tech_In.Controllers
             ViewBag.CitiesList = new SelectList(cities, "CityId", "CityName");
             return PartialView("CitiesPartial");
         }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> GetID()
-        {
-            var user = await _userManager.GetCurrentUser(HttpContext);
-            if (user == null)
-                return View("Null");
-            return Content(user.Id);
-        }
-
-
+        
     }
 }
