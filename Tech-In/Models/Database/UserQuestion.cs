@@ -21,6 +21,7 @@ namespace Tech_In.Models.Database
         public DateTime PostTime { get; set; }
 
         //AspNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
