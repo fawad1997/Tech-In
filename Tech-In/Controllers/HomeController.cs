@@ -28,80 +28,68 @@ namespace Tech_In.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            if(user == null)
+            {
+                return View();
+            }
+            else
+            {
+                var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+                if (userPersonalRow == null)
+                {
+                    return RedirectToAction("CompleteProfile", "Home");
+                }
+            }
+            return View("Welcome");
         }
 
         [Authorize]
         public IActionResult CompleteProfile()
         {
             CompleteProfileVM vm = new CompleteProfileVM();
-            var countries = _context.Country.ToList();
-            var cities = _context.City.ToList();
-            foreach(var city in cities)
-            {
-                vm.Cities.Add(new SelectListItem { Value = city.CityID.ToString(), Text = city.CityName });
-            }
-            foreach(var country in countries)
-            {
-                vm.Countries.Add(new SelectListItem { Value = country.CountryID.ToString(), Text = country.CountryName });
-            }
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
             return View(vm);
         }
+        
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddPersonalDetails(CompleteProfileVM profileVM)
+        public async Task<IActionResult> CompleteProfile(CompleteProfileVM vm)
         {
-            var user = new ApplicationUser();
-
-            UserPersonalDetail personalDetails = new UserPersonalDetail
+            if (ModelState.IsValid)
             {
-                ////PersonalDetails.UserPersonalDetailID = 1;
-                FirstName = profileVM.FirstName,
-                LastName = profileVM.LastName,
-                //DOB = profileVM.DOB,
-                //IsDOBPublic = profileVM.DOBVisibility,
-                ////PersonalDetails.Gender = profileVM.Gender;
-                //CVImage = profileVM.CVImage,
-                //City = profileVM.City,
-                //CityID = profileVM.City.CityID
-                DOB = new DateTime(),
-                IsDOBPublic=true,
-                Gender=Models.Model.Gender.Male,
-                CityID=1
-            };
-            //user.UserPersonalDetails.Add(personalDetails);
-            //var result = _userManager.CreateAsync(user);
-            
-            return RedirectToAction("Index", "User");
-            
-            //return Content("Error");
-            //_context.UserPersonalDetail.Add(PersonalDetails);
-           // _context.SaveChanges();
+                var user = await _userManager.GetCurrentUser(HttpContext);
+                UserPersonalDetail userPersonal = new UserPersonalDetail();
+                userPersonal.CityId = vm.CityId;
+                userPersonal.FirstName = vm.FirstName;
+                userPersonal.LastName = vm.LastName;
+                userPersonal.IsDOBPublic = vm.DOBVisibility;
+                userPersonal.DOB = vm.DOB;
+                if (vm.Gender == 0)
+                {
+                    userPersonal.Gender = Models.Model.Gender.Male;
+                }
+                else
+                {
+                    userPersonal.Gender = Models.Model.Gender.Female;
+                }
+                userPersonal.UserId = user.Id;
+                _context.UserPersonalDetail.Add(userPersonal);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "User");
+            }
+            ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+            return View("CompleteProfile");
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> CompleteProfileAsync(CompleteProfileVM vM)
+        public List<Country> GetCountryList()
         {
-            var user = await _userManager.GetCurrentUser(HttpContext);
-            UserPersonalDetail userPersonal = new UserPersonalDetail();
-            userPersonal.City = vM.City;
-            userPersonal.CityID = vM.City.CityID;
-            userPersonal.CVImage = vM.CVImage;
-            userPersonal.DOB = vM.DOB;
-            userPersonal.IsDOBPublic = vM.DOBVisibility;
-            //userPersonal.Gender = vM.Gender;
-            userPersonal.IsEmailPublic = true;
-            userPersonal.IsPhonePublic = false;
-            userPersonal.LastName = vM.LastName;
-            userPersonal.FirstName = vM.FirstName;
-            userPersonal.AUserId.Id = user.Id;
-            _context.UserPersonalDetail.Add(userPersonal);
-            await _context.SaveChangesAsync();
-            return View("Index");
+            List<Country> countries = _context.Country.ToList();
+            return countries;
         }
 
         public IActionResult Error()

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tech_In.Models.Model
+namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
-    public class UserEducation
+    public class EducationVM
     {
-        [Key]
-        public int UserEducationId { get; set; }
+        public int UserEducationID { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3), Required]
         public string Title { get; set; }
         [StringLength(maximumLength: 100, MinimumLength = 3), Required]
@@ -28,12 +26,11 @@ namespace Tech_In.Models.Model
         public Boolean CurrentStatusCheck { get; set; }
 
         public int CityId { get; set; }
-        public City City { get; set; }
-
-        [StringLength(maximumLength:450)]
+        public int CountryId { get; set; }
+        public string CityName { get; set; }
+        public string CountryName { get; set; }
+        [StringLength(maximumLength: 450)]
         public string UserId { get; set; }
-        //ApNetUser
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+
     }
 }

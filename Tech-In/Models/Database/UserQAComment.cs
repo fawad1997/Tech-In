@@ -17,10 +17,13 @@ namespace Tech_In.Models.Database
         public Boolean Visibility { get; set; }
 
         public Boolean IsAnswer { get; set; }
+        public Nullable<int> UserQuestionId { get; set; }
+        public Nullable<int> UserQAnswerId { get; set; }
 
-        public UserQuestion Question { get; set; }
-        public UserQAnswer Answer { get; set; }
-        //AspNetUser
+        public virtual UserQuestion UserQuestion { get; set; }
+        public virtual UserQAnswer UserQAnswer { get; set; }
+        //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

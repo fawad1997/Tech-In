@@ -1848,16 +1848,31 @@ a div p{
     position:relative;
     width:150px;
 }
-.round-icon-back{
+.round-icon-back {
+    background: #FAFAFA;
+    width: 40px;
+    font-size: 1.7em;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.round-icon-back:hover {
+    cursor: pointer;
+    color: #6195FF;
+    transition: all .3s;
+    outline: none;
+    box-shadow: 0 2px 5px 1px rgba(57,73,76,.2),0 1px 2px rgba(57,73,76,.25);
+}
+.round-icon-back-del{
     background:#FAFAFA;
     width:40px;
-    font-size:1.7em;
+    font-size:1.5em;
     text-align:center;
     border-radius:50%;
 }
-.round-icon-back:hover{
+.round-icon-back-del:hover{
     cursor: pointer;
-    color: #6195FF;
+    color: red;
     transition: all .3s;
     outline: none;
     box-shadow: 0 2px 5px 1px rgba(57,73,76,.2),0 1px 2px rgba(57,73,76,.25);
@@ -2000,6 +2015,30 @@ hr{
 @media only screen and (max-width: 420px) {
     .edit-exp-round{
         margin: -40px auto 4% 76%;
+    }
+}
+
+.delete-exp-round {
+    margin: -40px auto 4% 81%;
+    position: absolute;
+    width: 100px;
+}
+
+@media only screen and (max-width: 1100px) {
+    .delete-exp-round {
+        margin: -40px auto 4% 78%;
+    }
+}
+
+@media only screen and (max-width: 570px) {
+    .delete-exp-round {
+        margin: -40px auto 4% 76%;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .delete-exp-round {
+        margin: -40px auto 4% 73%;
     }
 }
 .index-background {
@@ -2153,4 +2192,18 @@ input:checked + .slider:before {
 
 .blue-border{
     border: 1px solid blue;
+}
+.red{
+    color:red;
+}
+.cent {
+    margin: auto;
+    height: 200px;
+    width: 200px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
 }

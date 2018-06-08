@@ -10,7 +10,7 @@ namespace Tech_In.Models.Database
     public class UserQAnswer
     {
         [Key]
-        public int UserQAnswerID { get; set; }
+        public int UserQAnswerId { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3), Required]
 
         public string Description { get; set; }
@@ -19,11 +19,12 @@ namespace Tech_In.Models.Database
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime PostTime { get; set; }
 
-        public int QuestionID { get; set; }
-        public UserQuestion Question { get; set; }
+        public int UserQuestionId { get; set; }
+        public virtual UserQuestion UserQuestion { get; set; }
 
 
-        //AspNetUser
+        //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
