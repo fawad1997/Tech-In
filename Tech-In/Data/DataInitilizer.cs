@@ -6,59 +6,56 @@ using Tech_In.Data;
 
 namespace Tech_In.Models.Database
 {
-    public class DataInitilizer
+    public static class DataInitilizer
     {
-        public DataInitilizer()
-        {
-            //using (var initObject = new ApplicationDbContext())
-            //{
-            //    Country country = new Country()
-            //    {
-            //        CountryID = 1,
-            //        CountryCode = "46000",
-            //        CountryName = "Pakistan",
-            //        CountryPhoneCode = "+92"
-            //    };
-            //    City city = new City()
-            //    {
-            //        CityID = 1,
-            //        CityName = "Islamabad",
-            //        Country = country,
-            //        CountryID = 1
-            //    };
-            //    SkillTag skillTag = new SkillTag()
-            //    {
-            //        SkillName = "ASP.NET",
-            //        AddedByUserId = "1",
-            //        SkillTagID = 1,
-            //        ApprovedStatus = true,
-            //        TimeApproved = DateTime.Now
-            //    };
-            //    UserQuestion userQuestion = new UserQuestion()
-            //    {
-            //        UserQuestionID = 1,
-            //        Title="I can't get the database connection!",
-            //        Description="Where should i get my database connection in MySql",
-            //        PostTime=DateTime.Now,
-            //    };
-            //    QuestionSkill questionSkill = new QuestionSkill()
-            //    {
-            //        QuestionSkillID = 1,
-            //        Tag = skillTag,
-            //        Question = userQuestion
-            //    };
-            //    UserCertification userCertification = new UserCertification()
-            //    {
-            //        UserCertificationID = 1,
-            //        Name = "Microsoft Certified Developer",
-            //        URL = "www.xyz.com",
-            //        CertificationDate = DateTime.Now,
-            //        ExpirationDate=DateTime.Now,
-            //        LiscenceNo="A15D7EADS225"
-                    
-            //    };
-                
-            //}
+        
+        public static void Initilize(ApplicationDbContext context)
+            {
+            context.Database.EnsureCreated();
+
+           if (context.Country.Any())
+            {
+                return;   // DB has been seeded
+            }
+            if (context.City.Any())
+            {
+                return;   // DB has been seeded
+            }
+            var countries = new Country[]
+                {
+                    new Country {CountryId=1, CountryCode = "AF", CountryName = "Afghanistan", CountryPhoneCode = "+93" },
+                    new Country {CountryId=2, CountryCode = "AU", CountryName = "Australia", CountryPhoneCode = "+78" },
+                    new Country {CountryId=3, CountryCode = "AS", CountryName = "Austria", CountryPhoneCode = "+56" }
+                }.ToList();
+            foreach (Country c in countries)
+            {
+                context.Country.Add(c);
+            }
+            context.SaveChanges();
+
+            var cities = new City[] {
+                    new City { CityId = 11, CityName = "Kabul", CountryId = 1 },
+                    new City { CityId = 12, CityName = "Herat", CountryId = 1 },
+                    new City { CityId = 13, CityName = "Jallabad", CountryId = 1 },
+
+                    new City { CityId = 14, CityName = "Sydney", CountryId = 2 },
+                    new City { CityId = 15, CityName = "Melbourne", CountryId = 2 },
+                    new City { CityId = 16, CityName = "Perth", CountryId = 2 },
+
+                    new City { CityId = 17, CityName = "Vienna", CountryId = 3 },
+                    new City { CityId = 18, CityName = "Salzburg", CountryId = 3 },
+                    new City { CityId = 19, CityName = "Graz", CountryId = 3 },
+                }.ToList();
+            foreach (City ct in cities)
+            {
+                context.City.Add(ct);
+            }
+            context.SaveChanges();
+
+
+
+
+
         }
     }
-}
+    }
