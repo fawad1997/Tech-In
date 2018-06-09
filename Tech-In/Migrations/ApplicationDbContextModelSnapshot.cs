@@ -182,8 +182,7 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.City", b =>
                 {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CityId");
 
                     b.Property<string>("CityName")
                         .HasMaxLength(50);
@@ -199,8 +198,7 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Country", b =>
                 {
-                    b.Property<int>("CountryId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()

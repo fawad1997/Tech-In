@@ -12,6 +12,10 @@
     <Compile Remove="Migrations\20180527070006_test1.Designer.cs" />
     <Compile Remove="Migrations\20180527071829_test1.cs" />
     <Compile Remove="Migrations\20180527071829_test1.Designer.cs" />
+    <Compile Remove="Migrations\20180609102536_test.cs" />
+    <Compile Remove="Migrations\20180609102536_test.Designer.cs" />
+    <Compile Remove="Migrations\20180609125242_con.cs" />
+    <Compile Remove="Migrations\20180609125242_con.Designer.cs" />
   </ItemGroup>
 
 

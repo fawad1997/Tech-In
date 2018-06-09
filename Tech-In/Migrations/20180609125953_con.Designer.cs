@@ -12,8 +12,8 @@ using Tech_In.Models.Model;
 namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180609102536_test")]
-    partial class test
+    [Migration("20180609125953_con")]
+    partial class con
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,8 +183,7 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.City", b =>
                 {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CityId");
 
                     b.Property<string>("CityName")
                         .HasMaxLength(50);
@@ -200,8 +199,7 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Country", b =>
                 {
-                    b.Property<int>("CountryId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
