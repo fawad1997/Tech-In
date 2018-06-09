@@ -307,24 +307,27 @@
         Get started for free — join the
         <strong>IT World</strong>
     </p>
-    <div class="row">
-        <div class="container">
-            <div class="col-sm-3">
-                <input type="text" class="input" placeholder="Pick a username" aria-labelledby="Username" />
-            </div>
-            <div class="col-sm-3">
-                <input type="email" class="input" placeholder="Your email address" aria-labelledby="Email" />
-            </div>
-            <div class="col-sm-3">
-                <input type="password" class="input" placeholder="Create a password" aria-labelledby="Password" />
-            </div>
-            <div class="col-sm-3">
-                <button class="main-btn btn-block blue-g-btn">
-                    <b>Sign up for TechIn</b>
-                </button>
+    @model RegisterViewModel
+    <form  method="post" asp-controller="Account" asp-action="Register">
+        <div class="row">
+            <div class="container">
+                <div class="col-sm-3">
+                    <input asp-for="Email" class="input" placeholder="Your email address" aria-labelledby="Username" />
+                </div>
+                <div class="col-sm-3">
+                    <input asp-for="Password" class="input" placeholder="Create a password" aria-labelledby="Email" />
+                </div>
+                <div class="col-sm-3">
+                    <input asp-for="ConfirmPassword" class="input" placeholder="Confirm your Password" aria-labelledby="Password" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="main-btn btn-block blue-g-btn">
+                        <b>Sign up for TechIn</b>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
     <p class="sm-signup-p">
         By clicking "Sign up for TechIn", you agree to our terms of service and privacy policy. We’ll occasionally send you account
         related emails.

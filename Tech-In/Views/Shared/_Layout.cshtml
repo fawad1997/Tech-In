@@ -108,15 +108,24 @@
                             <!--RIght Login-->
                             <div class="col-md-5 col-sm-6 col-xs-10 custom-xs-push-1">
                                 <div class="jumbotron white-background index-sign-div">
-                                    <form class="contact-form">
+                                    @model LoginViewModel
+                                    <form asp-controller="Account" asp-action="Login" method="post" class="contact-form">
                                         <h3>Login</h3>
                                         <label class="signup-label">Email</label>
                                         <br />
-                                        <input aria-labelledby="Email" type="email" class="input" placeholder="you@example.com" />
+                                        <input asp-for="Email" aria-labelledby="Email" class="input" placeholder="you@example.com" />
                                         <br />
                                         <label aria-labelledby="Password" class="signup-label">Password</label>
-                                        <input type="password" class="input" placeholder="Password" />
-                                        <button class="main-btn btn-block blue-g-btn">
+                                        <input asp-for="Password" class="input" placeholder="Password" />
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label asp-for="RememberMe">
+                                                    <input asp-for="RememberMe" />
+                                                    @Html.DisplayNameFor(m => m.RememberMe)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="main-btn btn-block blue-g-btn">
                                             <b>Sign in</b>
                                         </button>
 

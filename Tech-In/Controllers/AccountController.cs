@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +16,8 @@ using Tech_In.Data;
 using Tech_In.Models;
 using Tech_In.Models.AccountViewModels;
 using Tech_In.Services;
+using MimeKit;
+
 
 namespace Tech_In.Controllers
 {
@@ -26,19 +30,22 @@ namespace Tech_In.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private ApplicationDbContext _context;
+        private IHostingEnvironment _hostingEnvironment;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IHostingEnvironment hostingEnviroment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _context = context;
+            _hostingEnvironment = hostingEnviroment;
         }
 
         [TempData]
@@ -67,9 +74,9 @@ namespace Tech_In.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                // This does count login failures towards account lockout
+                
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(model.Email);
@@ -98,6 +105,7 @@ namespace Tech_In.Controllers
                 }
                 else
                 {
+                    
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
@@ -241,22 +249,60 @@ namespace Tech_In.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    
+                    //var callbackUrl = Url.Action(nameof(Login), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                    String Message = "Please confirm your account by clicking this link: <a href=\""+callbackUrl+"\">link</a>";
+                    //Body of Email
 
+                    var webRoot = _hostingEnvironment.WebRootPath;//get wwwroot folder
+
+                    //get template file
+                    var pathToFile = _hostingEnvironment.WebRootPath
+                            + Path.DirectorySeparatorChar.ToString()
+                            + "Templates"
+                            + Path.DirectorySeparatorChar.ToString()
+                            + "Email Template"
+                            + Path.DirectorySeparatorChar.ToString()
+                            + "Register_Email_Template.html";
+
+                    var subject = "Confirm Account Registration";
+                    
+                    var builder = new BodyBuilder();
+                    using (StreamReader SourceReader = System.IO.File.OpenText(pathToFile))
+                    {
+                        builder.HtmlBody = SourceReader.ReadToEnd();                        
+                    }
+                    
+                    string messageBody = string.Format(builder.HtmlBody,
+                        //subject,
+                        //String.Format("{0:dddd, d MMMM yyyy}", DateTime.Now),
+                        //model.Email,
+                        model.Email,
+                        //model.Password,
+                        //Message,
+                        callbackUrl
+                        );
+                    //ViewBag["messageBody"] = messageBody;
+                    //await _emailSender.SendEmailAsync(model.Email, subject, messageBody);
+                    await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl, messageBody);
                     //await _signInManager.SignInAsync(user, isPersistent: false);
+                    ViewData["Message"] = $"Please confirm your account by clicking this link: <a href='{callbackUrl}' class='btn btn-primary'>Confirmation Link</a>";
+                    ViewData["MessageValue"] = "1";
                     _logger.LogInformation("User created a new account with password.");
                     TempData["success"] = true;
                     //return RedirectToLocal(returnUrl);
                     //return RedirectToAction("Login");
-                    return RedirectToAction("Login");
+                    return RedirectToAction(nameof(Login));
                 }
+                ViewData["Message"] = $"Error creating user. Please try again later";
+                ViewData["MessageValue"] = "0";
                 AddErrors(result);
             }
 
@@ -366,7 +412,7 @@ namespace Tech_In.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "Login" : "Error");
+            return RedirectToAction(result.Succeeded ? "Login" : "Error");
         }
 
         [HttpGet]
