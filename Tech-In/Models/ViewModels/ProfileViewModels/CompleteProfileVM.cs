@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Tech_In.Models.Model;
 
 namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
@@ -11,37 +12,34 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
     {
         [Required]
         [StringLength(50, MinimumLength = 2)]
-        [Display(Name ="First Name ")]
+        [Display(Name = "First Name ")]
+        [RegularExpression(@"^[a-zA-Z\s]+$",ErrorMessage ="First Name can only contain aplhabets")]
         public string FirstName { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
-        [Display(Name ="Last Name")]
+        [Display(Name = "Last Name")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Last Name can only contain aplhabets")]
         public string LastName { get; set; }
-     
+
         //AspNetUsers
         public string UserID { get; set; }
 
         public byte[] CVImage { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name ="Date of Birth")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true,NullDisplayText ="Date of Birth can't be Null")]
+        [Display(Name = "Date of Birth")]
         public DateTime DOB { get; set; }
 
-        [Display(Name ="Date of Birth Visibility")]
+        [Display(Name = "Date of Birth Visibility")]
         public Boolean DOBVisibility { get; set; }
 
         public Gender Gender { get; set; }
 
-        public City City { get; set; }
-        public List<SelectListItem> Cities { get; set; } = new List<SelectListItem>();
+        [Required]
+        public int CityId { get; set; }
 
-        public Country Country { get; set; }
-        public List<SelectListItem> Countries { get; set; } = new List<SelectListItem>();
-    }
+        public int CountryId { get; set; }
 
-    public enum Gender
-    {
-        Male, Female
     }
 }

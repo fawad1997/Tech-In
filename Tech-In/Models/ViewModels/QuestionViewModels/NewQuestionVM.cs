@@ -8,6 +8,9 @@ namespace Tech_In.Models.ViewModels.QuestionViewModels
 {
     public class NewQuestionVM
     {
+        
+        public int UserQuestionID { get; set; }
+
         [MinLength(10)]
         [Required]
         public string Title { get; set; }

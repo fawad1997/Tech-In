@@ -9,15 +9,28 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/images/logotop.png" />
     <title>Complete Profile</title>
     <!-- Bootstrap -->
     <link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
 
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-
+    <script src="~/js/jquery.min.js"></script>
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="~/css/style.css" />
+    <style>
+        .form-group > label {
+            color: black;
+        }
+
+        body {
+            background-image: url("/images/whiteback.png");
+        }
+        input[type="text"], input[type="date"]{
+            background: white;
+        }
+    </style>
 </head>
 <body>
     <!-- Nav -->
@@ -39,9 +52,13 @@
                 <!-- /Collapse nav button -->
             </div>
             <!--  Main navigation  -->
-
-
-            @await Html.PartialAsync("_LoginPartial")
+            <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+                <ul class="nav navbar-nav navbar-right main-nav">
+                    <li>
+                        <a><button type="submit" class="btn-link navbar-link">Log out</button></a>
+                    </li>
+                </ul>
+            </form>
             <!-- /Main navigation -->
 
         </div>
@@ -50,25 +67,25 @@
     <br />
     <div class="container">
         <center>
-            <h3>Almost there! <small>One Last Step</small></h3>
+            <h3>Almost there! <br /><small>One Last Step</small></h3>
         </center>
         <hr />
         <div class="row">
             <div class="col-md-push-2 col-md-8">
-                <form asp-action="AddPersonalDetails" method="post">
+                <form asp-action="CompleteProfile" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label asp-for="FirstName" class="control-label"></label>
-                                <input asp-for="FirstName" class="form-control" />
+                                <label asp-for="FirstName" class="control-label"></label><strong class="text-danger"> *</strong>
+                                <input asp-for="FirstName" placeholder="First Name" class="input" required />
                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label asp-for="LastName" class="control-label"></label>
-                                <input asp-for="LastName" class="form-control" />
+                                <input asp-for="LastName" placeholder="Last Name" class="input" />
                                 <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
                         </div>
@@ -77,29 +94,32 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label asp-for="DOB" class="control-label"></label>
-                                <input asp-for="DOB" class="form-control" />
+                                <label asp-for="DOB" class="control-label"></label><strong class="text-danger"> *</strong>
+                                <input asp-for="DOB" class="input" min="1930-01-01" max="2014-01-01" required/>
                                 <span asp-validation-for="DOB" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-xs-6">
-                            <label asp-for="DOBVisibility" class="control-label"></label>
-                            <br />
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
+                            <div class="form-group">
+                                <label class="control-label">Public or Private</label>
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBoxFor(m => m.DOBVisibility)
+                                        Make Date of Birth Public.
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-6">
-                            <label asp-for="Gender" class="control-label"></label>
                             <div class="form-group">
+                                <label asp-for="Gender" class="control-label"></label><br />
                                 <label class="radio-inline">
-                                    <input type="radio" asp-for="Gender" value="1" checked> Male
+                                    <input type="radio" asp-for="Gender" value="0" checked> Male
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" asp-for="Gender" value="2"> Female
+                                    <input type="radio" asp-for="Gender" value="1"> Female
                                 </label>
                                 <span asp-validation-for="Gender" class="text-danger"></span>
                             </div>
@@ -112,33 +132,57 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label asp-for="City" class="control-label"></label>
-                                <select class="form-control" asp-for="City.CityID" asp-items="Model.Cities"></select>
+                                <label class="control-label">Country <strong class="text-danger"> *</strong></label>
+                                @if (ViewBag.CountryList != null)
+                                {
+                                    @Html.DropDownListFor(model => model.CountryId, ViewBag.CountryList as SelectList, "--Select--", new { @class = "form-control" })
+                                }
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label asp-for="Country" class="control-label"></label>
-                                <select class="form-control" asp-for="Country" asp-items="Model.Countries"></select>
+                                <label class="control-label">City<strong class="text-danger"> *</strong></label>
+                                @Html.DropDownListFor(m => m.CityId, new SelectList(""), "--Select--", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.CityId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Save & Continue</button>
-</div>
+                        <center><button type="submit" class="main-btn blue-g-btn">Save & Continue</button></center>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
     <script src="~/js/main.js"></script>
+    <script>
+        //For DIsplaying Cities List
+        $("#CountryId").change(function () {
+            var countryId = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                url: "/User/GetCitiesList?CountryId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+
+                    $("#CityId").empty();
+                    $("#CityId").append(response);
+
+                }
+
+            })
+        })
+    </script>
     @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        @await Html.PartialAsync("_ValidationScriptsPartial")
     }
+
 </body>
 </html>

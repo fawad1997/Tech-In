@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Tech_In.Migrations
 {
-    public partial class test1 : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace Tech_In.Migrations
                 name: "Country",
                 columns: table => new
                 {
-                    CountryID = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CountryCode = table.Column<string>(maxLength: 3, nullable: false),
                     CountryName = table.Column<string>(maxLength: 50, nullable: false),
@@ -60,23 +60,7 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.CountryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SkillTag",
-                columns: table => new
-                {
-                    SkillTagID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AddedByUserId = table.Column<string>(maxLength: 450, nullable: true),
-                    ApprovedStatus = table.Column<bool>(nullable: false),
-                    SkillName = table.Column<string>(maxLength: 20, nullable: false),
-                    TimeApproved = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SkillTag", x => x.SkillTagID);
+                    table.PrimaryKey("PK_Country", x => x.CountryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,10 +170,52 @@ namespace Tech_In.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SkillTag",
+                columns: table => new
+                {
+                    SkillTagId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ApprovedStatus = table.Column<bool>(nullable: false),
+                    SkillName = table.Column<string>(maxLength: 20, nullable: false),
+                    TimeApproved = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SkillTag", x => x.SkillTagId);
+                    table.ForeignKey(
+                        name: "FK_SkillTag_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAcheivement",
+                columns: table => new
+                {
+                    UserAchievementId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(maxLength: 70, nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAcheivement", x => x.UserAchievementId);
+                    table.ForeignKey(
+                        name: "FK_UserAcheivement_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserCertification",
                 columns: table => new
                 {
-                    UserCertificationID = table.Column<int>(nullable: false)
+                    UserCertificationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CertificationDate = table.Column<DateTime>(nullable: false),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
@@ -200,9 +226,72 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserCertification", x => x.UserCertificationID);
+                    table.PrimaryKey("PK_UserCertification", x => x.UserCertificationId);
                     table.ForeignKey(
                         name: "FK_UserCertification_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserHobby",
+                columns: table => new
+                {
+                    UserHobbyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    HobbyOrIntrest = table.Column<string>(maxLength: 20, nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserHobby", x => x.UserHobbyId);
+                    table.ForeignKey(
+                        name: "FK_UserHobby_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserLanguageSkill",
+                columns: table => new
+                {
+                    LanguageSkillId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SkillName = table.Column<string>(maxLength: 20, nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserLanguageSkill", x => x.LanguageSkillId);
+                    table.ForeignKey(
+                        name: "FK_UserLanguageSkill_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPublication",
+                columns: table => new
+                {
+                    UserPublicationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ConferenceOrJournal = table.Column<bool>(nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    PublishYear = table.Column<DateTime>(nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPublication", x => x.UserPublicationId);
+                    table.ForeignKey(
+                        name: "FK_UserPublication_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -213,7 +302,7 @@ namespace Tech_In.Migrations
                 name: "UserQuestion",
                 columns: table => new
                 {
-                    UserQuestionID = table.Column<int>(nullable: false)
+                    UserQuestionId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 200, nullable: false),
                     PostTime = table.Column<DateTime>(nullable: false),
@@ -222,7 +311,7 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserQuestion", x => x.UserQuestionID);
+                    table.PrimaryKey("PK_UserQuestion", x => x.UserQuestionId);
                     table.ForeignKey(
                         name: "FK_UserQuestion_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -235,19 +324,19 @@ namespace Tech_In.Migrations
                 name: "City",
                 columns: table => new
                 {
-                    CityID = table.Column<int>(nullable: false)
+                    CityId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CityName = table.Column<string>(maxLength: 50, nullable: true),
-                    CountryID = table.Column<int>(nullable: false)
+                    CountryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.CityID);
+                    table.PrimaryKey("PK_City", x => x.CityId);
                     table.ForeignKey(
-                        name: "FK_City_Country_CountryID",
-                        column: x => x.CountryID,
+                        name: "FK_City_Country_CountryId",
+                        column: x => x.CountryId,
                         principalTable: "Country",
-                        principalColumn: "CountryID",
+                        principalColumn: "CountryId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -257,18 +346,18 @@ namespace Tech_In.Migrations
                 {
                     UserSkillID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SkillTagID = table.Column<int>(nullable: true),
+                    SkillTagId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserSkill", x => x.UserSkillID);
                     table.ForeignKey(
-                        name: "FK_UserSkill_SkillTag_SkillTagID",
-                        column: x => x.SkillTagID,
+                        name: "FK_UserSkill_SkillTag_SkillTagId",
+                        column: x => x.SkillTagId,
                         principalTable: "SkillTag",
-                        principalColumn: "SkillTagID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "SkillTagId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserSkill_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -281,79 +370,79 @@ namespace Tech_In.Migrations
                 name: "QuestionSkill",
                 columns: table => new
                 {
-                    QuestionSkillID = table.Column<int>(nullable: false)
+                    QuestionSkillId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    QuestionUserQuestionID = table.Column<int>(nullable: true),
-                    TagSkillTagID = table.Column<int>(nullable: true)
+                    SkillTagId = table.Column<int>(nullable: false),
+                    UserQuestionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionSkill", x => x.QuestionSkillID);
+                    table.PrimaryKey("PK_QuestionSkill", x => x.QuestionSkillId);
                     table.ForeignKey(
-                        name: "FK_QuestionSkill_UserQuestion_QuestionUserQuestionID",
-                        column: x => x.QuestionUserQuestionID,
-                        principalTable: "UserQuestion",
-                        principalColumn: "UserQuestionID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_QuestionSkill_SkillTag_TagSkillTagID",
-                        column: x => x.TagSkillTagID,
+                        name: "FK_QuestionSkill_SkillTag_SkillTagId",
+                        column: x => x.SkillTagId,
                         principalTable: "SkillTag",
-                        principalColumn: "SkillTagID",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "SkillTagId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QuestionSkill_UserQuestion_UserQuestionId",
+                        column: x => x.UserQuestionId,
+                        principalTable: "UserQuestion",
+                        principalColumn: "UserQuestionId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserQAnswer",
                 columns: table => new
                 {
-                    UserQAnswerID = table.Column<int>(nullable: false)
+                    UserQAnswerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     PostTime = table.Column<DateTime>(nullable: false),
-                    QuestionID = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true),
+                    UserQuestionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserQAnswer", x => x.UserQAnswerID);
-                    table.ForeignKey(
-                        name: "FK_UserQAnswer_UserQuestion_QuestionID",
-                        column: x => x.QuestionID,
-                        principalTable: "UserQuestion",
-                        principalColumn: "UserQuestionID",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_UserQAnswer", x => x.UserQAnswerId);
                     table.ForeignKey(
                         name: "FK_UserQAnswer_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAnswer_UserQuestion_UserQuestionId",
+                        column: x => x.UserQuestionId,
+                        principalTable: "UserQuestion",
+                        principalColumn: "UserQuestionId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserEducation",
                 columns: table => new
                 {
-                    UserEducationID = table.Column<int>(nullable: false)
+                    UserEducationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CityID = table.Column<int>(nullable: false),
+                    CityId = table.Column<int>(nullable: false),
                     CurrentStatusCheck = table.Column<bool>(nullable: false),
                     Details = table.Column<string>(maxLength: 200, nullable: true),
                     EndDate = table.Column<DateTime>(nullable: false),
                     SchoolName = table.Column<string>(maxLength: 100, nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
-                    UserId = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(maxLength: 450, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEducation", x => x.UserEducationID);
+                    table.PrimaryKey("PK_UserEducation", x => x.UserEducationId);
                     table.ForeignKey(
-                        name: "FK_UserEducation_City_CityID",
-                        column: x => x.CityID,
+                        name: "FK_UserEducation_City_CityId",
+                        column: x => x.CityId,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserEducation_AspNetUsers_UserId",
@@ -367,7 +456,7 @@ namespace Tech_In.Migrations
                 name: "UserExperience",
                 columns: table => new
                 {
-                    UserExperienceID = table.Column<int>(nullable: false)
+                    UserExperienceId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CityID = table.Column<int>(nullable: false),
                     CompanyName = table.Column<string>(maxLength: 100, nullable: true),
@@ -380,12 +469,12 @@ namespace Tech_In.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserExperience", x => x.UserExperienceID);
+                    table.PrimaryKey("PK_UserExperience", x => x.UserExperienceId);
                     table.ForeignKey(
                         name: "FK_UserExperience_City_CityID",
                         column: x => x.CityID,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserExperience_AspNetUsers_UserId",
@@ -399,10 +488,11 @@ namespace Tech_In.Migrations
                 name: "UserPersonalDetail",
                 columns: table => new
                 {
-                    UserPersonalDetailID = table.Column<int>(nullable: false)
+                    UserPersonalDetailId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CVImage = table.Column<byte[]>(nullable: true),
-                    CityID = table.Column<int>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    CityId = table.Column<int>(nullable: false),
+                    CoverImage = table.Column<string>(nullable: true),
                     DOB = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     Gender = table.Column<int>(nullable: false),
@@ -410,17 +500,18 @@ namespace Tech_In.Migrations
                     IsEmailPublic = table.Column<bool>(nullable: false),
                     IsPhonePublic = table.Column<bool>(nullable: false),
                     LastName = table.Column<string>(maxLength: 100, nullable: true),
+                    ProfileImage = table.Column<string>(nullable: true),
                     Summary = table.Column<string>(maxLength: 300, nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserPersonalDetail", x => x.UserPersonalDetailID);
+                    table.PrimaryKey("PK_UserPersonalDetail", x => x.UserPersonalDetailId);
                     table.ForeignKey(
-                        name: "FK_UserPersonalDetail_City_CityID",
-                        column: x => x.CityID,
+                        name: "FK_UserPersonalDetail_City_CityId",
+                        column: x => x.CityId,
                         principalTable: "City",
-                        principalColumn: "CityID",
+                        principalColumn: "CityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserPersonalDetail_AspNetUsers_UserId",
@@ -436,33 +527,33 @@ namespace Tech_In.Migrations
                 {
                     UserQACommentID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AnswerUserQAnswerID = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     IsAnswer = table.Column<bool>(nullable: false),
-                    QuestionUserQuestionID = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
+                    UserQAnswerId = table.Column<int>(nullable: true),
+                    UserQuestionId = table.Column<int>(nullable: true),
                     Visibility = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserQAComment", x => x.UserQACommentID);
                     table.ForeignKey(
-                        name: "FK_UserQAComment_UserQAnswer_AnswerUserQAnswerID",
-                        column: x => x.AnswerUserQAnswerID,
-                        principalTable: "UserQAnswer",
-                        principalColumn: "UserQAnswerID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserQAComment_UserQuestion_QuestionUserQuestionID",
-                        column: x => x.QuestionUserQuestionID,
-                        principalTable: "UserQuestion",
-                        principalColumn: "UserQuestionID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_UserQAComment_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAComment_UserQAnswer_UserQAnswerId",
+                        column: x => x.UserQAnswerId,
+                        principalTable: "UserQAnswer",
+                        principalColumn: "UserQAnswerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAComment_UserQuestion_UserQuestionId",
+                        column: x => x.UserQuestionId,
+                        principalTable: "UserQuestion",
+                        principalColumn: "UserQuestionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -472,10 +563,10 @@ namespace Tech_In.Migrations
                 {
                     UserQAVotingID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AnswerUserQAnswerID = table.Column<int>(nullable: true),
                     IsAnswer = table.Column<bool>(nullable: false),
-                    QuestionUserQuestionID = table.Column<int>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
+                    UserQAnswerId = table.Column<int>(nullable: true),
+                    UserQuestionId = table.Column<int>(nullable: true),
                     Value = table.Column<int>(nullable: false),
                     Visibility = table.Column<bool>(nullable: false)
                 },
@@ -483,22 +574,22 @@ namespace Tech_In.Migrations
                 {
                     table.PrimaryKey("PK_UserQAVoting", x => x.UserQAVotingID);
                     table.ForeignKey(
-                        name: "FK_UserQAVoting_UserQAnswer_AnswerUserQAnswerID",
-                        column: x => x.AnswerUserQAnswerID,
-                        principalTable: "UserQAnswer",
-                        principalColumn: "UserQAnswerID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserQAVoting_UserQuestion_QuestionUserQuestionID",
-                        column: x => x.QuestionUserQuestionID,
-                        principalTable: "UserQuestion",
-                        principalColumn: "UserQuestionID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_UserQAVoting_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAVoting_UserQAnswer_UserQAnswerId",
+                        column: x => x.UserQAnswerId,
+                        principalTable: "UserQAnswer",
+                        principalColumn: "UserQAnswerId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_UserQAVoting_UserQuestion_UserQuestionId",
+                        column: x => x.UserQuestionId,
+                        principalTable: "UserQuestion",
+                        principalColumn: "UserQuestionId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -542,19 +633,29 @@ namespace Tech_In.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_City_CountryID",
+                name: "IX_City_CountryId",
                 table: "City",
-                column: "CountryID");
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionSkill_QuestionUserQuestionID",
+                name: "IX_QuestionSkill_SkillTagId",
                 table: "QuestionSkill",
-                column: "QuestionUserQuestionID");
+                column: "SkillTagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionSkill_TagSkillTagID",
+                name: "IX_QuestionSkill_UserQuestionId",
                 table: "QuestionSkill",
-                column: "TagSkillTagID");
+                column: "UserQuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SkillTag_UserId",
+                table: "SkillTag",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAcheivement_UserId",
+                table: "UserAcheivement",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserCertification_UserId",
@@ -562,9 +663,9 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserEducation_CityID",
+                name: "IX_UserEducation_CityId",
                 table: "UserEducation",
-                column: "CityID");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEducation_UserId",
@@ -582,9 +683,19 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserPersonalDetail_CityID",
+                name: "IX_UserHobby_UserId",
+                table: "UserHobby",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLanguageSkill_UserId",
+                table: "UserLanguageSkill",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPersonalDetail_CityId",
                 table: "UserPersonalDetail",
-                column: "CityID");
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserPersonalDetail_UserId",
@@ -592,14 +703,9 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserQAComment_AnswerUserQAnswerID",
-                table: "UserQAComment",
-                column: "AnswerUserQAnswerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserQAComment_QuestionUserQuestionID",
-                table: "UserQAComment",
-                column: "QuestionUserQuestionID");
+                name: "IX_UserPublication_UserId",
+                table: "UserPublication",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserQAComment_UserId",
@@ -607,9 +713,14 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserQAnswer_QuestionID",
-                table: "UserQAnswer",
-                column: "QuestionID");
+                name: "IX_UserQAComment_UserQAnswerId",
+                table: "UserQAComment",
+                column: "UserQAnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserQAComment_UserQuestionId",
+                table: "UserQAComment",
+                column: "UserQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserQAnswer_UserId",
@@ -617,14 +728,9 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserQAVoting_AnswerUserQAnswerID",
-                table: "UserQAVoting",
-                column: "AnswerUserQAnswerID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserQAVoting_QuestionUserQuestionID",
-                table: "UserQAVoting",
-                column: "QuestionUserQuestionID");
+                name: "IX_UserQAnswer_UserQuestionId",
+                table: "UserQAnswer",
+                column: "UserQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserQAVoting_UserId",
@@ -632,14 +738,24 @@ namespace Tech_In.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserQAVoting_UserQAnswerId",
+                table: "UserQAVoting",
+                column: "UserQAnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserQAVoting_UserQuestionId",
+                table: "UserQAVoting",
+                column: "UserQuestionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserQuestion_UserId",
                 table: "UserQuestion",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSkill_SkillTagID",
+                name: "IX_UserSkill_SkillTagId",
                 table: "UserSkill",
-                column: "SkillTagID");
+                column: "SkillTagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserSkill_UserId",
@@ -668,6 +784,9 @@ namespace Tech_In.Migrations
                 name: "QuestionSkill");
 
             migrationBuilder.DropTable(
+                name: "UserAcheivement");
+
+            migrationBuilder.DropTable(
                 name: "UserCertification");
 
             migrationBuilder.DropTable(
@@ -677,7 +796,16 @@ namespace Tech_In.Migrations
                 name: "UserExperience");
 
             migrationBuilder.DropTable(
+                name: "UserHobby");
+
+            migrationBuilder.DropTable(
+                name: "UserLanguageSkill");
+
+            migrationBuilder.DropTable(
                 name: "UserPersonalDetail");
+
+            migrationBuilder.DropTable(
+                name: "UserPublication");
 
             migrationBuilder.DropTable(
                 name: "UserQAComment");

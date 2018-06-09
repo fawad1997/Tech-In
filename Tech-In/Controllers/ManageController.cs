@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Tech_In.Data;
 using Tech_In.Models;
 using Tech_In.Models.ManageViewModels;
 using Tech_In.Services;
@@ -25,6 +26,7 @@ namespace Tech_In.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly ApplicationDbContext _context;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -34,13 +36,15 @@ namespace Tech_In.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _context = context;
         }
 
         [TempData]
@@ -50,6 +54,12 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
+            //Check User Profile is complete or not
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -138,6 +148,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> ChangePassword()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -186,6 +201,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> SetPassword()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -234,6 +254,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> ExternalLogins()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -266,6 +291,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> LinkLoginCallback()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -315,6 +345,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> TwoFactorAuthentication()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -334,6 +369,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> Disable2faWarning()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -371,6 +411,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> EnableAuthenticator()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -420,8 +465,14 @@ namespace Tech_In.Controllers
         }
 
         [HttpGet]
-        public IActionResult ShowRecoveryCodes()
+        public async Task<IActionResult> ShowRecoveryCodes()
         {
+            var user = await _userManager.GetCurrentUser(HttpContext);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             var recoveryCodes = (string[])TempData[RecoveryCodesKey];
             if (recoveryCodes == null)
             {
@@ -459,6 +510,11 @@ namespace Tech_In.Controllers
         public async Task<IActionResult> GenerateRecoveryCodesWarning()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userPersonalRow = _context.UserPersonalDetail.Where(a => a.UserId == user.Id).SingleOrDefault();
+            if (userPersonalRow == null)
+            {
+                return RedirectToAction("CompleteProfile", "Home");
+            }
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

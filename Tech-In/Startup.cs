@@ -41,7 +41,7 @@ namespace Tech_In
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
-
+           
             //Configure AutthMessageSenderOptions to get the sedGrid key
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }

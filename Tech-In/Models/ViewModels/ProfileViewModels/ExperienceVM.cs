@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tech_In.Models.Model
+namespace Tech_In.Models.ViewModels.ProfileViewModels
 {
-    public class UserEducation
+    public class ExperienceVM
     {
-        [Key]
-        public int UserEducationId { get; set; }
+        public int UserExperienceId { get; set; }
         [StringLength(maximumLength: 50, MinimumLength = 3), Required]
         public string Title { get; set; }
-        [StringLength(maximumLength: 100, MinimumLength = 3), Required]
-        public string SchoolName { get; set; }
         [StringLength(maximumLength: 200, MinimumLength = 10)]
-        public string Details { get; set; }
+        public string Description { get; set; }
+        [StringLength(maximumLength: 100, MinimumLength = 2)]
+        public string CompanyName { get; set; }
+        public Boolean CurrentWorkCheck { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
@@ -25,15 +24,16 @@ namespace Tech_In.Models.Model
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
-        public Boolean CurrentStatusCheck { get; set; }
-
         public int CityId { get; set; }
-        public City City { get; set; }
 
-        [StringLength(maximumLength:450)]
-        public string UserId { get; set; }
+        public int CountryId { get; set; }
+
         //ApNetUser
-        [ForeignKey("UserId")]
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
+
+
+        public string CountryName { get; set; }
+        public string CityName { get; set; }
+
     }
 }

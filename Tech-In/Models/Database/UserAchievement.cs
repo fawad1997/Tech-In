@@ -7,21 +7,12 @@ using System.Threading.Tasks;
 
 namespace Tech_In.Models.Database
 {
-    public class UserQAComment
+    public class UserAcheivement
     {
         [Key]
-        public int UserQACommentID { get; set; }
-
+        public int UserAchievementId { get; set; }
+        [StringLength(maximumLength: 70, MinimumLength = 5), Required]
         public string Description { get; set; }
-
-        public Boolean Visibility { get; set; }
-
-        public Boolean IsAnswer { get; set; }
-        public Nullable<int> UserQuestionId { get; set; }
-        public Nullable<int> UserQAnswerId { get; set; }
-
-        public virtual UserQuestion UserQuestion { get; set; }
-        public virtual UserQAnswer UserQAnswer { get; set; }
         //ApNetUser
         public string UserId { get; set; }
         [ForeignKey("UserId")]

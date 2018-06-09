@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Tech_In.Models.Database
 {
-    public class UserSkill
+    public class UserHobby
     {
         [Key]
-        public int UserSkillID { get; set; }
-        public int SkillTagId { get; set; }
-
-        public virtual SkillTag SkillTag { get; set; }
+        public int UserHobbyId { get; set; }
+        [StringLength(maximumLength: 20, MinimumLength = 3), Required]
+        public string HobbyOrIntrest { get; set; }
         //ApNetUser
         public string UserId { get; set; }
         [ForeignKey("UserId")]

@@ -9,8 +9,10 @@ namespace Tech_In.Models.Database
     public class QuestionSkill
     {
         [Key]
-        public int QuestionSkillID { get; set; }
-        public SkillTag Tag { get; set; }
-        public UserQuestion Question { get; set; }
+        public int QuestionSkillId { get; set; }
+        public int SkillTagId { get; set; }
+        public int UserQuestionId { get; set; }
+        public SkillTag SkillTag { get; set; }
+        public UserQuestion UserQuestion { get; set; }
     }
 }

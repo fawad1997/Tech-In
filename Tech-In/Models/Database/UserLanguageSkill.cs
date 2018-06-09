@@ -7,24 +7,16 @@ using System.Threading.Tasks;
 
 namespace Tech_In.Models.Database
 {
-    public class SkillTag
+    public class UserLanguageSkill
     {
         [Key]
-        public int SkillTagId { get; set; }
-
-        [Required,StringLength(maximumLength:20,MinimumLength =1)]
+        public int LanguageSkillId { get; set; }
+        [StringLength(maximumLength: 20, MinimumLength = 3), Required]
         public string SkillName { get; set; }
-
-        public Boolean ApprovedStatus { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
-        public DateTime TimeApproved { get; set; }
-
-
-        //ApNetUser Added By
+        //ApNetUser
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
     }
 }

@@ -1,0 +1,124 @@
+﻿@model CertificationVM
+
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<form id="certForm">
+    @Html.HiddenFor(m => m.UserCertificationId)
+    <!--Name-->
+    <div class="form-group">
+        <label for="recipient-name" class="control-label">Centification Name:</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "input", @placeholder = "Centification Name" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "red" })
+    </div>
+    <!--/Name-->
+    <!--URL-->
+    <div class="form-group">
+        <label for="recipient-name" class="control-label">URL:</label>
+        @Html.TextBoxFor(m => m.URL, new { @class = "input", @placeholder = "Certification URL" })
+        @Html.ValidationMessageFor(m => m.URL, "", new { @class = "red" })
+    </div>
+    <!--/URL-->
+    <!--Liscence No-->
+    <div class="form-group">
+        <label for="recipient-name" class="control-label">Liscence No:</label>
+        @Html.TextBoxFor(m => m.LiscenceNo, new { @class = "input", @placeholder = "Liscence No" })
+        @Html.ValidationMessageFor(m => m.LiscenceNo, "", new { @class = "red" })
+    </div>
+    <!--/Liscence No-->
+
+    <div class="row">
+        <div class="col-sm-6">
+            <!--Start Date-->
+            <div class="form-group">
+                <label for="recipient-name" class="control-label">Certification Date:</label>
+                <input type="date" class="input" asp-for="CertificationDate">
+                @Html.ValidationMessageFor(m => m.CertificationDate, "", new { @class = "red" })
+            </div>
+            <!--/Start Date-->
+        </div>
+        <div class="col-sm-6">
+            <!--End Date-->
+            <div class="form-group" id="EndDateDiv">
+                <label for="recipient-name" class="control-label">Expiration Date:</label>
+                @Html.TextBoxFor(m => m.ExpirationDate, new { @class = "input", @type = "date" })
+            </div>
+            <!--/End Date-->
+        </div>
+    </div>
+    <div class="form-group">
+        <button id="certSubmit" type="button" class="main-btn btn-block">
+            @if (Model.UserCertificationId > 0)
+            {
+
+                <span>Update</span>
+            }
+            else
+            {
+
+                <span>Save</span>
+            }
+        </button>
+    </div>
+    <div class="cent" id="loaderDiv">
+        <img src="~/images/load.gif" />
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        //Submit Form
+        debugger
+        $("#certSubmit").click(function () {
+            if (!$("#certForm").valid()) {
+                return false;
+            }
+            $("#loaderDiv").show();
+            debugger
+            var expFormData = $("#certForm").serialize();
+            $.ajax({
+
+                type: "POST",
+                url: "/User/UpdateCertification",
+                data: expFormData,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myCert").modal("hide");
+                    window.location.href = "/User/Index";
+
+                }
+
+            })
+
+        })
+
+
+        //For DIsplaying Cities List
+        $("#CountryId").change(function () {
+            var countryId = $(this).val();
+
+            $.ajax({
+                type: "POST",
+                url: "/User/GetCitiesList?CountryId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+
+                    $("#CityId").empty();
+                    $("#CityId").append(response);
+
+                }
+
+            })
+        })
+        //For Current Work Status
+        $("#CurrentStatusCheck").change(function () {
+            if (this.checked) {
+                $("#EndDateDiv").hide();
+
+            } else {
+                $("#EndDateDiv").show();
+
+            }
+
+        })
+
+    })
+</script>

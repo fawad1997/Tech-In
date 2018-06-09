@@ -10,7 +10,7 @@ namespace Tech_In.Models.Model
     public class UserPersonalDetail
     {
         [Key]
-        public int UserPersonalDetailID { get; set; }
+        public int UserPersonalDetailId { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 2)]
@@ -22,7 +22,9 @@ namespace Tech_In.Models.Model
         [StringLength(maximumLength:300,MinimumLength =50)]
         public string Summary { get; set; }
         
-        public byte[] CVImage { get; set; }
+        public string ProfileImage { get; set; }
+        public string CoverImage { get; set; }
+        public string Address { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-mm-dd}",ApplyFormatInEditMode =true)]
@@ -33,11 +35,12 @@ namespace Tech_In.Models.Model
 
         public Gender Gender { get; set; }
 
-        public int CityID { get; set; }
+        public int CityId { get; set; }
         public City City { get; set; }
         //ApNetUser
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public virtual ApplicationUser AUserId { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 
     public enum Gender
