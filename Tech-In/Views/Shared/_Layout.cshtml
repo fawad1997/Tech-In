@@ -245,7 +245,7 @@
                 <div class="col-md-4 col-xs-12">
                     <!-- footer logo -->
                     <div class="footer-logo">
-                        <a href="index.html">
+                        <a asp-controller="Home" asp-action="Index">
                             <img src="~/images/logo-alt.png" alt="logo">
                         </a>
                     </div>
@@ -257,7 +257,7 @@
                     <!-- footer copyright -->
                     <div class="footer-copyright">
                         <p>
-                            Copyright © 2018
+                            Copyright © @DateTime.Now.Year
                         </p>
                     </div>
                     <!-- /footer copyright -->

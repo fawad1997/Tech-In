@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Tech_In.Migrations
 {
-    public partial class test : Migration
+    public partial class con : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,8 +52,7 @@ namespace Tech_In.Migrations
                 name: "Country",
                 columns: table => new
                 {
-                    CountryId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CountryId = table.Column<int>(nullable: false),
                     CountryCode = table.Column<string>(maxLength: 3, nullable: false),
                     CountryName = table.Column<string>(maxLength: 50, nullable: false),
                     CountryPhoneCode = table.Column<string>(maxLength: 5, nullable: true)
@@ -324,8 +323,7 @@ namespace Tech_In.Migrations
                 name: "City",
                 columns: table => new
                 {
-                    CityId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CityId = table.Column<int>(nullable: false),
                     CityName = table.Column<string>(maxLength: 50, nullable: true),
                     CountryId = table.Column<int>(nullable: false)
                 },

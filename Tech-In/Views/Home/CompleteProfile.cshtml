@@ -23,6 +23,9 @@
         .form-group > label {
             color: black;
         }
+        #footer > div >div>div>ul>li> a{
+            cursor:not-allowed;
+        }
 
         body {
             background-image: url("/images/whiteback.png");
@@ -72,7 +75,7 @@
         <hr />
         <div class="row">
             <div class="col-md-push-2 col-md-8">
-                <form asp-action="CompleteProfile" method="post">
+                <form asp-action="CompleteProfile" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="col-xs-6">
@@ -95,7 +98,7 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label asp-for="DOB" class="control-label"></label><strong class="text-danger"> *</strong>
-                                <input asp-for="DOB" class="input" min="1930-01-01" max="2014-01-01" required/>
+                                <input asp-for="DOB" class="input" min="1930-01-01" max="2014-01-01" required />
                                 <span asp-validation-for="DOB" class="text-danger"></span>
                             </div>
                         </div>
@@ -126,9 +129,9 @@
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
-                                <label asp-for="CVImage" class="control-label"></label>
-                                <input asp-for="CVImage" type="file" />
-                                <span asp-validation-for="CVImage" class="text-danger"></span>
+                                <label asp-for="ProfileImage" class="control-label"></label>
+                                <input asp-for="ProfileImage" type="file" />
+                                <span asp-validation-for="ProfileImage" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -159,6 +162,137 @@
             </div>
         </div>
     </div>
+    <!-- Footer -->
+    <footer id="footer" class="sm-padding bg-dark">
+
+        <!-- Container -->
+        <div class="container">
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Features</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Questions
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Articles
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Jobs
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Network
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Platform</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Policies
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Terms
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <!-- footer logo -->
+                    <div class="footer-logo">
+                        <a asp-controller="Home" asp-action="Index">
+                            <img src="~/images/logo-alt.png" alt="logo">
+                        </a>
+                    </div>
+                    <!-- /footer logo -->
+                    <div class="center">
+                        <img style="height:70px;" src="~/images/logotop.png" alt="">
+                    </div>
+
+                    <!-- footer copyright -->
+                    <div class="footer-copyright">
+                        <p>
+                            Copyright © @DateTime.Now.Year
+                        </p>
+                    </div>
+                    <!-- /footer copyright -->
+
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Company</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                About
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Developers
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                    <ul>
+                        <li style="margin-bottom:2%;">
+                            <strong>Resources</strong>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Contact
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Help
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Privacy
+                            </a>
+                        </li>
+                        <li>
+                            <a class="footer-li-a">
+                                Security
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- /Row -->
+
+        </div>
+        <!-- /Container -->
+
+    </footer>
+    <!-- /Footer -->
 
     <script src="~/js/main.js"></script>
     <script>
@@ -179,6 +313,11 @@
 
             })
         })
+        let onchange = function () {
+            let _this = $(this)[0];
+            let f = new FormData();
+            f.append('ProfileImage', _this.files[0]);
+        }
     </script>
     @section Scripts {
         @await Html.PartialAsync("_ValidationScriptsPartial")

@@ -17,7 +17,17 @@
                 </div>
                 <!--Cover Div-->
                 <div class="profile-pic-align">
-                    <img src="~/images/noimg.svg" class="img-responsive img-rounded profile-pic" />
+                    @if (Model.UserPersonalVM.ProfileImage == null)
+    {
+                <img src="~/images/noimg.svg" class="img-responsive img-rounded profile-pic" />
+
+}
+else
+{
+                <img src="@Model.UserPersonalVM.ProfileImage" class="img-rounded profile-pic" />
+
+}
+
                 </div>
                 <!--/Profile Picture-->
                 <!--Edit-->

@@ -36,7 +36,8 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         //AspNetUsers
         public string UserID { get; set; }
 
-        public byte[] CVImage { get; set; }
+        public string ProfileImage { get; set; }
+        public string CoverImage { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]

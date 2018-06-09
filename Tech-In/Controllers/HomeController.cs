@@ -13,6 +13,8 @@ using Tech_In.Models.Model;
 using Tech_In.Models.Database;
 using Tech_In.Models.ViewModels.ProfileViewModels;
 using Tech_In.Services;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Tech_In.Controllers
 {
@@ -20,11 +22,13 @@ namespace Tech_In.Controllers
     {
         private readonly ApplicationDbContext _context;
         private UserManager<ApplicationUser> _userManager;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _userManager = userManager;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -62,7 +66,35 @@ namespace Tech_In.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetCurrentUser(HttpContext);
+                var file = vm.ProfileImage;
                 UserPersonalDetail userPersonal = new UserPersonalDetail();
+                if (file != null)
+                {
+                    if (file.Length > 0)
+                    {
+                        if ((file.Length / 1000) > 5000)
+                        {
+                            ViewBag.ProfilePic = "Image can't exceed 5Mb size";
+                            return View();
+                        }
+                        string path = Path.Combine(_hostingEnvironment.WebRootPath, "images/users");
+                        string extension = Path.GetExtension(file.FileName).Substring(1);
+                        if (!(extension.ToLower() == "png" || extension.ToLower() == "jpg" || extension.ToLower() == "jpeg"))
+                        {
+                            ViewBag.ProfilePic = "Only png, jpg & jpeg are allowed";
+                            return View();
+                        }
+                        string fileNam = user.Id.Substring(24) + "p." + extension;
+                        using (var vs = new FileStream(Path.Combine(path, fileNam), FileMode.CreateNew))
+                        {
+                            await file.CopyToAsync(vs);
+                        }
+                        using (var img = SixLabors.ImageSharp.Image.Load(Path.Combine(path, fileNam)))
+                        {
+                            userPersonal.ProfileImage = $"/images/users/{fileNam}";
+                        }
+                    }
+                }
                 userPersonal.CityId = vm.CityId;
                 userPersonal.FirstName = vm.FirstName;
                 userPersonal.LastName = vm.LastName;
@@ -70,11 +102,11 @@ namespace Tech_In.Controllers
                 userPersonal.DOB = vm.DOB;
                 if (vm.Gender == 0)
                 {
-                    userPersonal.Gender = Models.Model.Gender.Male;
+                    userPersonal.Gender = Gender.Male;
                 }
                 else
                 {
-                    userPersonal.Gender = Models.Model.Gender.Female;
+                    userPersonal.Gender = Gender.Female;
                 }
                 userPersonal.UserId = user.Id;
                 _context.UserPersonalDetail.Add(userPersonal);

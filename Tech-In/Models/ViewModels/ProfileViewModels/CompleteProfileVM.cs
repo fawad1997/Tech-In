@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,8 @@ namespace Tech_In.Models.ViewModels.ProfileViewModels
         //AspNetUsers
         public string UserID { get; set; }
 
-        public byte[] CVImage { get; set; }
+        [Display(Name ="Profile Picture")]
+        public IFormFile ProfileImage { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true,NullDisplayText ="Date of Birth can't be Null")]
