@@ -1,0 +1,196 @@
+﻿@media only screen and (max-width:480px) {
+    @-ms-viewport {
+        width: 320px;
+    }
+
+    @viewport {
+        width: 320px;
+    }
+}
+@import url(https://d2yjfm58htokf8.cloudfront.net/static/fonts/averta-v2.css);
+p {
+    margin: 0 0 24px 0;
+}
+
+a {
+    color: #00b9ff;
+}
+
+hr {
+    margin: 32px 0;
+    border-top: 1px #e2e6e8;
+}
+
+dt {
+    font-size: 13px;
+    margin-left: 0;
+}
+
+dd {
+    color: #37517e;
+    margin-bottom: 24px;
+    margin-left: 0;
+}
+
+h5 {
+    font-family: TW-Averta-SemiBold, Averta, Helvetica, Arial;
+    font-size: 16px;
+    line-height: 24px;
+    color: #2e4369;
+}
+
+pre {
+    display: block;
+    padding: 16px;
+    padding: 12px 24px;
+    margin: 0 0 48px;
+    font-size: 14px;
+    line-height: 24px;
+    color: #4a5860;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f2f5f7;
+    border-radius: 3px;
+}
+
+.body-wrapper {
+    background: #f2f5f7 url('https://d2yjfm58htokf8.cloudfront.net/static/images/background-v1.png') no-repeat center top;
+    padding: 0px;
+    margin: auto;
+}
+
+.content-wrapper {
+    max-width: 536px;
+    padding: 32px;
+    padding-bottom: 48px;
+}
+
+.footer-wrapper div {
+    color: #37517e !important;
+}
+
+    .footer-wrapper div a {
+        color: #00b9ff !important;
+    }
+
+.hero {
+    font-family: TW-Averta-Bold, Averta, Helvetica, Arial;
+    color: #37517e;
+    font-size: 22px;
+    line-height: 30px;
+}
+
+.page-header {
+    border-bottom: 1px solid #eaebed;
+    padding-bottom: 16px;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.btn {
+    box-sizing: border-box;
+    display: inline-block;
+    min-height: 36px;
+    padding: 12px 24px;
+    margin: 0 0 24px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #00b9ff;
+    text-decoration: none;
+    -webkit-transition: all .15s ease-in-out;
+    -o-transition: all .15s ease-in-out;
+    transition: all .15s ease-in-out;
+}
+
+    .btn:hover {
+        background-color: #00a4df;
+    }
+
+    .btn:active {
+        background-color: #008ec0;
+    }
+
+@media screen and (min-width: 576px) and (max-width: 768px) {
+    .body-wrapper {
+        padding: 24px !important;
+    }
+
+    .content-wrapper {
+        max-width: 504px !important;
+        padding: 48px !important;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .body-wrapper {
+        padding: 48px !important;
+    }
+
+    .content-wrapper {
+        max-width: 456px !important;
+        padding: 72px !important;
+        padding-top: 48px !important;
+    }
+}
+@media only screen and (min-width:480px) {
+    .mj-column-per-100 {
+        width: 100% !important;
+    }
+}
+
+#outlook a {
+    padding: 0;
+}
+
+.ReadMsgBody {
+    width: 100%;
+}
+
+.ExternalClass {
+    width: 100%;
+}
+
+    .ExternalClass * {
+        line-height: 100%;
+    }
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+table, td {
+    border-collapse: collapse;
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+}
+
+img {
+    border: 0;
+    height: auto;
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+    -ms-interpolation-mode: bicubic;
+}
+
+p {
+    display: block;
+    margin: 13px 0;
+}

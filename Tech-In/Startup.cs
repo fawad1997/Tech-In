@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Tech_In.Data;
 using Tech_In.Models;
 using Tech_In.Services;
@@ -31,6 +32,10 @@ namespace Tech_In
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 config.SignIn.RequireConfirmedEmail = true;
+                // Lockout settings
+                config.Lockout.AllowedForNewUsers = true;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                config.Lockout.MaxFailedAccessAttempts = 2;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
