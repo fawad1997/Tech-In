@@ -22,7 +22,9 @@ namespace Tech_In.Models.Model
         [StringLength(maximumLength:300,MinimumLength =50)]
         public string Summary { get; set; }
         
-        public byte[] CVImage { get; set; }
+        public string ProfileImage { get; set; }
+        public string CoverImage { get; set; }
+        public string Address { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-mm-dd}",ApplyFormatInEditMode =true)]

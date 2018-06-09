@@ -12,8 +12,8 @@ using Tech_In.Models.Model;
 namespace Tech_In.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180604041915_test1")]
-    partial class test1
+    [Migration("20180609102536_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -259,6 +259,24 @@ namespace Tech_In.Migrations
                     b.ToTable("SkillTag");
                 });
 
+            modelBuilder.Entity("Tech_In.Models.Database.UserAcheivement", b =>
+                {
+                    b.Property<int>("UserAchievementId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(70);
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserAchievementId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAcheivement");
+                });
+
             modelBuilder.Entity("Tech_In.Models.Database.UserCertification", b =>
                 {
                     b.Property<int>("UserCertificationId")
@@ -285,6 +303,67 @@ namespace Tech_In.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserCertification");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserHobby", b =>
+                {
+                    b.Property<int>("UserHobbyId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("HobbyOrIntrest")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserHobbyId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserHobby");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserLanguageSkill", b =>
+                {
+                    b.Property<int>("LanguageSkillId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("LanguageSkillId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLanguageSkill");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserPublication", b =>
+                {
+                    b.Property<int>("UserPublicationId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("ConferenceOrJournal");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("PublishYear");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("UserPublicationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPublication");
                 });
 
             modelBuilder.Entity("Tech_In.Models.Database.UserQAComment", b =>
@@ -481,12 +560,14 @@ namespace Tech_In.Migrations
 
             modelBuilder.Entity("Tech_In.Models.Model.UserPersonalDetail", b =>
                 {
-                    b.Property<int>("UserPersonalDetailID")
+                    b.Property<int>("UserPersonalDetailId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("CVImage");
+                    b.Property<string>("Address");
 
-                    b.Property<int>("CityID");
+                    b.Property<int>("CityId");
+
+                    b.Property<string>("CoverImage");
 
                     b.Property<DateTime>("DOB");
 
@@ -505,14 +586,16 @@ namespace Tech_In.Migrations
                     b.Property<string>("LastName")
                         .HasMaxLength(100);
 
+                    b.Property<string>("ProfileImage");
+
                     b.Property<string>("Summary")
                         .HasMaxLength(300);
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("UserPersonalDetailID");
+                    b.HasKey("UserPersonalDetailId");
 
-                    b.HasIndex("CityID");
+                    b.HasIndex("CityId");
 
                     b.HasIndex("UserId");
 
@@ -592,10 +675,38 @@ namespace Tech_In.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("Tech_In.Models.Database.UserAcheivement", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserAcheivements")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Tech_In.Models.Database.UserCertification", b =>
                 {
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("UserCertifications")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserHobby", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserHobbies")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserLanguageSkill", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserLanguageSkills")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Tech_In.Models.Database.UserPublication", b =>
+                {
+                    b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("UserPublications")
                         .HasForeignKey("UserId");
                 });
 
@@ -688,7 +799,7 @@ namespace Tech_In.Migrations
                 {
                     b.HasOne("Tech_In.Models.City", "City")
                         .WithMany()
-                        .HasForeignKey("CityID")
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Tech_In.Models.ApplicationUser", "ApplicationUser")

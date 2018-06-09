@@ -26,6 +26,10 @@ namespace Tech_In.Data
         public DbSet<UserExperience> UserExperience { get; set; }
         public DbSet<UserEducation> UserEducation { get; set; }
         public DbSet<UserCertification> UserCertification { get; set; }
+        public DbSet<UserHobby> UserHobby { get; set; }
+        public DbSet<UserLanguageSkill> UserLanguageSkill { get; set; }
+        public DbSet<UserPublication> UserPublication { get; set; }
+        public DbSet<UserAcheivement> UserAcheivement { get; set; }
         public DbSet<SkillTag> SkillTag { get; set; }
 
         public DbSet<UserQAComment> UserQAComment { get; set; }
